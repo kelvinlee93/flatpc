@@ -31,7 +31,6 @@
                 <input type="checkbox" value="remember-me"> Ghi nhớ đăng nhập
                 <span class="pull-right">
                     <a data-toggle="modal" href="#myModal"> Forgot Password?</a>
-
                 </span>
             </label>
             <button class="btn btn-lg btn-login btn-block" type="submit">Đăng nhập</button>
