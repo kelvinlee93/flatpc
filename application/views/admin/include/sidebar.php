@@ -4,161 +4,62 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
                   <li>
-                      <a href="index.html">
+                      <a href="<?=base_url()?>admin" <?php if($page=='dashboard') echo 'class="active"'?>>
                           <i class="icon-dashboard"></i>
-                          <span>Dashboard</span>
+                          <span>Bảng thông tin</span>
                       </a>
                   </li>
 
                   <li class="sub-menu">
-                      <a href="javascript:;">
-                          <i class="icon-laptop"></i>
-                          <span>Layouts</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="boxed_page.html">Boxed Page</a></li>
-                          <li><a  href="horizontal_menu.html">Horizontal Menu</a></li>
-                          <li><a  href="language_switch_bar.html">Language Switch Bar</a></li>
-                      </ul>
-                  </li>
-
-                  <li class="sub-menu">
-                      <a href="javascript:;">
-                          <i class="icon-book"></i>
-                          <span>UI Elements</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="general.html">General</a></li>
-                          <li><a  href="buttons.html">Buttons</a></li>
-                          <li><a  href="widget.html">Widget</a></li>
-                          <li><a  href="slider.html">Slider</a></li>
-                          <li><a  href="nestable.html">Nestable</a></li>
-                          <li><a  href="font_awesome.html">Font Awesome</a></li>
-                      </ul>
-                  </li>
-
-                  <li class="sub-menu">
-                      <a href="javascript:;">
-                          <i class="icon-cogs"></i>
-                          <span>Components</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="grids.html">Grids</a></li>
-                          <li><a  href="calendar.html">Calendar</a></li>
-                          <li><a  href="gallery.html">Gallery</a></li>
-                          <li><a  href="todo_list.html">Todo List</a></li>
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="icon-tasks"></i>
-                          <span>Form Stuff</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="form_component.html">Form Components</a></li>
-                          <li><a  href="advanced_form_components.html">Advanced Components</a></li>
-                          <li><a  href="form_wizard.html">Form Wizard</a></li>
-                          <li><a  href="form_validation.html">Form Validation</a></li>
-                          <li><a  href="dropzone.html">Dropzone File Upload</a></li>
-                          <li><a  href="inline_editor.html">Inline Editor</a></li>
-                          <li><a  href="image_cropping.html">Image Cropping</a></li>
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;">
-                          <i class="icon-th"></i>
-                          <span>Data Tables</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="basic_table.html">Basic Table</a></li>
-                          <li><a  href="responsive_table.html">Responsive Table</a></li>
-                          <li><a  href="dynamic_table.html">Dynamic Table</a></li>
-                          <li><a  href="advanced_table.html">Advanced Table</a></li>
-                          <li><a  href="editable_table.html">Editable Table</a></li>
-                      </ul>
-                  </li>
-                  <li>
-                      <a  href="inbox.html">
-                          <i class="icon-envelope"></i>
-                          <span>Mail </span>
-                          <span class="label label-danger pull-right mail-info">2</span>
-                      </a>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;">
-                          <i class=" icon-bar-chart"></i>
-                          <span>Charts</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="morris.html">Morris</a></li>
-                          <li><a  href="chartjs.html">Chartjs</a></li>
-                          <li><a  href="flot_chart.html">Flot Charts</a></li>
-                          <li><a  href="xchart.html">xChart</a></li>
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;">
-                          <i class="icon-shopping-cart"></i>
-                          <span>Shop</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="product_list.html">List View</a></li>
-                          <li><a  href="product_details.html">Details View</a></li>
-                      </ul>
-                  </li>
-                  <li>
-                      <a href="google_maps.html" >
-                          <i class="icon-map-marker"></i>
-                          <span>Google Maps </span>
-                      </a>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" class="active" >
-                          <i class="icon-glass"></i>
-                          <span>Extra</span>
-                      </a>
-                      <ul class="sub">
-                          <li class="active"><a  href="blank.html">Blank Page</a></li>
-                          <li><a  href="lock_screen.html">Lock Screen</a></li>
-                          <li><a  href="profile.html">Profile</a></li>
-                          <li><a  href="invoice.html">Invoice</a></li>
-                          <li><a  href="search_result.html">Search Result</a></li>
-                          <li><a  href="404.html">404 Error</a></li>
-                          <li><a  href="500.html">500 Error</a></li>
-                      </ul>
-                  </li>
-                  <li>
-                      <a  href="login.html">
+                      <a href="<?=base_url()?>admin/nguoidung" <?php if($page=='user') echo 'class="active"'?>>
                           <i class="icon-user"></i>
-                          <span>Login Page</span>
-                      </a>
+                          <span>Người dùng</span>
+                      </a>                    
                   </li>
 
-                  <!--multi level menu start-->
                   <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="icon-sitemap"></i>
-                          <span>Multi level Menu</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="javascript:;">Menu Item 1</a></li>
-                          <li class="sub-menu">
-                              <a  href="boxed_page.html">Menu Item 2</a>
-                              <ul class="sub">
-                                  <li><a  href="javascript:;">Menu Item 2.1</a></li>
-                                  <li class="sub-menu">
-                                      <a  href="javascript:;">Menu Item 3</a>
-                                      <ul class="sub">
-                                          <li><a  href="javascript:;">Menu Item 3.1</a></li>
-                                          <li><a  href="javascript:;">Menu Item 3.2</a></li>
-                                      </ul>
-                                  </li>
-                              </ul>
-                          </li>
-                      </ul>
+                      <a href="<?=base_url()?>admin/sanpham" <?php if($page=='product') echo 'class="active"'?>>
+                          <i class="icon-desktop"></i>
+                          <span>Sản phẩm</span>
+                      </a>                      
                   </li>
-                  <!--multi level menu end-->
 
+                  <li class="sub-menu">
+                      <a href="<?=base_url()?>admin/hoadon" <?php if($page=='order') echo 'class="active"'?>>
+                          <i class="icon-file-text-alt"></i>
+                          <span>Hóa đơn</span>
+                      </a>                      
+                  </li>
+                  <li class="sub-menu">
+                      <a href="<?=base_url()?>admin/tintuc" <?php if($page=='news') echo 'class="active"'?>>
+                          <i class="icon-rss"></i>
+                          <span>Tin tức</span>
+                      </a>                      
+                  </li>
+                  <li class="sub-menu">
+                      <a href="<?=base_url()?>admin/binhluan" <?php if($page=='comment') echo 'class="active"'?>>
+                          <i class="icon-comment"></i>
+                          <span>Bình luận</span>
+                      </a>                      
+                  </li>
+                  <li>
+                      <a  href="admin/danhgia" <?php if($page=='rating') echo 'class="active"'?>>
+                          <i class="icon-thumbs-up"></i>
+                          <span>Đánh giá</span>                          
+                      </a>
+                  </li>
+                  <li class="sub-menu">
+                      <a target="_blank" href="<?=base_url()?>">
+                          <i class="icon-home"></i>
+                          <span>Xem trang web</span>
+                      </a>                      
+                  </li>   
+                  <li class="sub-menu">
+                      <a href="<?=base_url()?>dangxuat">
+                          <i class="icon-signout"></i>
+                          <span>Đăng xuất</span>
+                      </a>                      
+                  </li>                  
               </ul>
               <!-- sidebar menu end-->
           </div>
