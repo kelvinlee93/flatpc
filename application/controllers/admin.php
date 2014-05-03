@@ -24,6 +24,7 @@ Class admin extends CI_Controller{
 			else{				
 				$this->data['title'] = 'Bảng thông tin';
 				$this->data['page'] = 'dashboard';
+				$this->data['subpage'] = 'dashboard';
 
 				$this->load->view('admin/home/header',$this->data);
 				$this->load->view('admin/include/sidebar',$this->data);									
@@ -43,23 +44,33 @@ Class admin extends CI_Controller{
 			$role = $this->data['Role'];
 			if($role == 0)
 				return redirect(base_url());
-			else{
-				$this->data['title'] = 'Người dùng';
+			else{				
 				$this->data['page'] = 'user';
 				$this->load->model('nguoidung_model');								
 				
 				if($chucnang == "view")
 				{
+					$this->data['title'] = 'Người dùng';
+					$this->data['subpage'] = 'user-manage';
 					if(isset($_GET['quyen']) && $_GET['quyen'] > 0)
 						$this->data['result'] = $this->nguoidung_model->get_nguoidung_quyen($_GET['quyen']);
 					else
-						$this->data['result'] = $this->nguoidung_model->get_nguoidung();		
+						$this->data['result'] = $this->nguoidung_model->get_nguoidung();
+
 					$this->load->view('admin/nguoidung/header',$this->data);
 					$this->load->view('admin/include/sidebar',$this->data);									
 					$this->load->view('admin/nguoidung/index',$this->data);				
 					$this->load->view('admin/nguoidung/footer',$this->data);	
 				}
 				elseif ($chucnang == "insert") {
+					$this->data['title'] = 'Thêm người dùng';
+					$this->data['subpage'] = 'user-add';
+
+					$this->load->view('admin/nguoidung/header',$this->data);
+					$this->load->view('admin/include/sidebar',$this->data);									
+					$this->load->view('admin/nguoidung/insert',$this->data);				
+					$this->load->view('admin/nguoidung/footer',$this->data);
+					/*
 					$config = array(	
 		               array(
 		                     'field'   => 'tendangnhap', 
@@ -106,8 +117,9 @@ Class admin extends CI_Controller{
 
 						$tmp = $this->nguoidung_model->insert($Tennguoidung, $Tendangnhap, $Matkhau, $Email, $Namsinh, $Gioitinh, $Diachi, $CMND, $SDT, $Quyen, $Trangthai, $HinhDaiDien);
 						if($tmp) echo redirect(base_url('admin/'.$this->data['page']));
-						else echo redirect(base_url('admin/error/insert'));
+						else echo redirect(base_url('admin/error/insert'));					
 					}
+					*/
 				}
 				elseif ($chucnang == "edit") {	
 					$this->form_validation->set_rules('tendangnhap','','trim');		

@@ -11,15 +11,11 @@
     <link href="<?=base_url()?>static/admin/css/bootstrap-reset.css" rel="stylesheet">
     <!--external css-->
     <link href="<?=base_url()?>static/admin/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-
-    <link href="<?=base_url()?>static/admin/assets/advanced-datatable/media/css/demo_page.css" rel="stylesheet" />
-    <link href="<?=base_url()?>static/admin/assets/advanced-datatable/media/css/demo_table.css" rel="stylesheet" />
-
-
-
     <!-- Custom styles for this template -->
     <link href="<?=base_url()?>static/admin/css/style.css" rel="stylesheet">
     <link href="<?=base_url()?>static/admin/css/style-responsive.css" rel="stylesheet" />
+    <link href="<?=base_url()?>static/admin/assets/advanced-datatable/media/css/demo_page.css" rel="stylesheet" />
+    <link href="<?=base_url()?>static/admin/assets/advanced-datatable/media/css/demo_table.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -46,7 +42,7 @@
                   <li class="dropdown">
                       <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                           <img alt="" src="<?=base_url()?>static/admin/img/avatar_kelvinlee.jpeg" width="29" heigh="29">
-                          <span class="username">Kelvin Lee</span>
+                          <span class="username"><?=$Name?></span>
                           <b class="caret"></b>
                       </a>
                       <ul class="dropdown-menu extended logout">

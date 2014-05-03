@@ -39,7 +39,7 @@
                   <li class="dropdown">
                       <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                           <img alt="" src="<?=base_url()?>static/admin/img/avatar_kelvinlee.jpeg" width="29" heigh="29">
-                          <span class="username">Kelvin Lee</span>
+                          <span class="username"><?=$Name?></span>
                           <b class="caret"></b>
                       </a>
                       <ul class="dropdown-menu extended logout">

@@ -11,10 +11,15 @@
                   </li>
 
                   <li class="sub-menu">
-                      <a href="<?=base_url()?>admin/nguoidung" <?php if($page=='user') echo 'class="active"'?>>
+                      <a href="javascript:;" <?php if($page=='user') echo 'class="active"'?>>
                           <i class="icon-user"></i>
-                          <span>Người dùng</span>
-                      </a>                    
+                          <span>Người dùng</span>                      
+                      </a>
+                      <ul class="sub">
+                          <li <?php if($subpage=='user-manage') echo 'class="active"'?>><a href="<?=base_url()?>admin/nguoidung">Quản lý</a></li>
+                          <li <?php if($subpage=='user-add') echo 'class="active"'?>><a href="<?=base_url()?>admin/nguoidung/insert">Thêm mới</a></li>
+                          
+                      </ul>
                   </li>
 
                   <li class="sub-menu">
