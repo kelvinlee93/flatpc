@@ -17,7 +17,7 @@
                       </a>
                       <ul class="sub">
                           <li <?php if($subpage=='user-manage') echo 'class="active"'?>><a href="<?=base_url()?>admin/nguoidung">Quản lý</a></li>
-                          <li <?php if($subpage=='user-add') echo 'class="active"'?>><a href="<?=base_url()?>admin/nguoidung/insert">Thêm mới</a></li>
+                          <li <?php if($subpage=='user-add') echo 'class="active"'?>><a href="<?=base_url()?>admin/nguoidung/them">Thêm mới</a></li>
                           
                       </ul>
                   </li>

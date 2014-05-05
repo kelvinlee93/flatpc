@@ -6,11 +6,31 @@
 
     <title><?=$title?> - FlatPC Admin</title>
 
+    <!-- Bootstrap core CSS -->
     <link href="<?=base_url()?>static/admin/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?=base_url()?>static/admin/css/bootstrap-reset.css" rel="stylesheet">    
+    <link href="<?=base_url()?>static/admin/css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
     <link href="<?=base_url()?>static/admin/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-    <link href="<?=base_url()?>static/admin/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="<?=base_url()?>static/admin/css/owl.carousel.css" type="text/css">    
+    <?php if($page=='dashboard')
+        echo '
+    <link href="'.base_url().'static/admin/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="'.base_url().'static/admin/css/owl.carousel.css"rel="stylesheet" type="text/css">
+    '
+    ?>
+    <?php if($subpage=='user-manage')
+        echo '
+    <link href="'.base_url().'static/admin/assets/advanced-datatable/media/css/demo_page.css" rel="stylesheet" />
+    <link href="'.base_url().'static/admin/assets/advanced-datatable/media/css/demo_table.css" rel="stylesheet" />
+    '
+    ?>
+    <?php if($subpage=='user-add')
+        echo '
+    <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/bootstrap-datepicker/css/datepicker.css" />
+    <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/bootstrap-colorpicker/css/colorpicker.css" />
+    <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/bootstrap-daterangepicker/daterangepicker.css" />
+    '
+    ?>
+    <!-- Custom styles for this template -->
     <link href="<?=base_url()?>static/admin/css/style.css" rel="stylesheet">
     <link href="<?=base_url()?>static/admin/css/style-responsive.css" rel="stylesheet" />
 
@@ -19,6 +39,7 @@
       <script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script>
     <![endif]-->
+
   </head>
 
   <body>

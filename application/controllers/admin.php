@@ -26,10 +26,10 @@ Class admin extends CI_Controller{
 				$this->data['page'] = 'dashboard';
 				$this->data['subpage'] = 'dashboard';
 
-				$this->load->view('admin/home/header',$this->data);
+				$this->load->view('admin/include/header',$this->data);
 				$this->load->view('admin/include/sidebar',$this->data);									
 				$this->load->view('admin/home/index',$this->data);				
-				$this->load->view('admin/home/footer',$this->data);	
+				$this->load->view('admin/include/footer',$this->data);	
 			}
 		}
 		else
@@ -37,7 +37,7 @@ Class admin extends CI_Controller{
 	
 	}
 
-	function nguoidung($chucnang = "view"){
+	function nguoidung($chucnang = "xem"){
 		$check = $this->chucnang->ktdangnhap();		
 		if($check == 1 || $check == 2 )
 		{
@@ -45,31 +45,32 @@ Class admin extends CI_Controller{
 			if($role == 0)
 				return redirect(base_url());
 			else{				
-				$this->data['page'] = 'user';
-				$this->load->model('nguoidung_model');								
+				$this->data['page'] = 'user';				
 				
-				if($chucnang == "view")
+				if($chucnang == "xem")
 				{
 					$this->data['title'] = 'Người dùng';
+					$this->data['page'] = 'user';
 					$this->data['subpage'] = 'user-manage';
 					if(isset($_GET['quyen']) && $_GET['quyen'] > 0)
 						$this->data['result'] = $this->nguoidung_model->get_nguoidung_quyen($_GET['quyen']);
 					else
 						$this->data['result'] = $this->nguoidung_model->get_nguoidung();
 
-					$this->load->view('admin/nguoidung/header',$this->data);
+					$this->load->view('admin/include/header',$this->data);
 					$this->load->view('admin/include/sidebar',$this->data);									
 					$this->load->view('admin/nguoidung/index',$this->data);				
-					$this->load->view('admin/nguoidung/footer',$this->data);	
+					$this->load->view('admin/include/footer',$this->data);	
 				}
-				elseif ($chucnang == "insert") {
+				elseif ($chucnang == "them") {
 					$this->data['title'] = 'Thêm người dùng';
+					$this->data['page'] = 'user';
 					$this->data['subpage'] = 'user-add';
 
-					$this->load->view('admin/nguoidung/header',$this->data);
+					$this->load->view('admin/include/header',$this->data);
 					$this->load->view('admin/include/sidebar',$this->data);									
 					$this->load->view('admin/nguoidung/insert',$this->data);				
-					$this->load->view('admin/nguoidung/footer',$this->data);
+					$this->load->view('admin/include/footer',$this->data);
 					/*
 					$config = array(	
 		               array(

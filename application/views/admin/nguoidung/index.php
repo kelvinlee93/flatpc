@@ -1,4 +1,4 @@
-<!--main content start-->
+      <!--main content start-->
       <section id="main-content">
           <section class="wrapper">
               <!-- page start-->
@@ -6,14 +6,15 @@
                   <div class="col-lg-12">
                       <section class="panel">
                           <header class="panel-heading">
-                              <h3><i class="icon-user"></i> <strong><?=$title?></strong> <button type="button" class="btn btn-default btn-xs" onclick="window.location.href='<?=base_url('admin/nguoidung/insert')?>'"><i class="icon-plus"></i> Thêm mới</button></h3>
+                              <h3><i class="icon-user"></i> <strong><?=$title?></strong> <button type="button" class="btn btn-default btn-xs" onclick="window.location.href='<?=base_url('admin/nguoidung/them')?>'"><i class="icon-plus"></i> Thêm mới</button></h3>
                           </header>
                           <div class="panel-body">
                                 <div class="adv-table">
                                     <table  class="display table table-bordered table-striped" id="example">
                                       <thead>
                                       <tr>                                          
-                                          <th>Họ tên</th>
+                                          <th>Họ đệm</th>
+                                          <th>Tên</th>
                                           <th>Tên đăng nhập</th>
                                           <th>Email</th>
                                           <th>Quyền</th>
@@ -24,6 +25,7 @@
                                       <tbody>
                                       <?php foreach ($result as $item) { ?>                             
                                          <tr id="cate_<?=$item['ID'] ?>">                                            
+                                            <td><?=$item['HODEM']?></td>
                                             <td><?=$item['TENNGUOIDUNG']?></td>
                                             <td><?=$item['TENDANGNHAP']?></td>
                                             <td><?=$item['EMAIL']?></td> 
@@ -48,14 +50,14 @@
                                                   if ($Role==2)
                                                   {
                                                       if ($item['QUYEN']!=1) 
-                                                        echo '<a title="Xóa '.$item['TENDANGNHAP'].'" href="#" onclick="DeleteCate('.$item['ID'].',\''.$page.'\')" class="delete-row"><button class="btn btn-danger btn-xs"><i class="icon-trash "></i></button></a>'; 
+                                                        echo '<a title="Khóa tài khoản '.$item['TENDANGNHAP'].'" href="#" onclick="DeleteCate('.$item['ID'].',\''.$page.'\')" class="delete-row"><button class="btn btn-danger btn-xs"><i class="icon-ban-circle"></i></button></a>'; 
                                                       else
-                                                        echo '<a href="#" onclick="DeleteCate('.$item['ID'].',\''.$page.'\')" class="delete-row"><button class="btn btn-danger btn-xs" disabled><i class="icon-trash "></i></button></a>';
+                                                        echo '<a href="#" onclick="DeleteCate('.$item['ID'].',\''.$page.'\')" class="delete-row"><button class="btn btn-danger btn-xs" disabled><i class="icon-ban-circle"></i></button></a>';
                                                   }
                                                   else
-                                                    echo '<a title="Xóa '.$item['TENDANGNHAP'].'" href="#" onclick="DeleteCate('.$item['ID'].',\''.$page.'\')" class="delete-row"><button class="btn btn-danger btn-xs"><i class="icon-trash "></i></button></a>';
+                                                    echo '<a title="Khóa tài khoản '.$item['TENDANGNHAP'].'" href="#" onclick="DeleteCate('.$item['ID'].',\''.$page.'\')" class="delete-row"><button class="btn btn-danger btn-xs"><i class="icon-ban-circle"></i></button></a>';
                                               }
-                                              else echo '<a href="#" onclick="DeleteCate('.$item['ID'].',\''.$page.'\')" class="delete-row"><button class="btn btn-danger btn-xs" disabled><i class="icon-trash "></i></button></a>';
+                                              else echo '<a href="#" onclick="DeleteCate('.$item['ID'].',\''.$page.'\')" class="delete-row"><button class="btn btn-danger btn-xs" disabled><i class="icon-ban-circle"></i></button></a>';
                                               ?>
                                             </td>
                                          </tr>     
@@ -63,7 +65,8 @@
                                       </tbody>
                                       <tfoot>
                                       <tr>                                          
-                                          <th>Họ tên</th>
+                                          <th>Họ đệm</th>
+                                          <th>Tên</th>
                                           <th>Tên đăng nhập</th>
                                           <th>Email</th>
                                           <th>Quyền</th>
@@ -80,4 +83,4 @@
               <!-- page end-->
           </section>
       </section>
-<!--main content end-->
+      <!--main content end-->
