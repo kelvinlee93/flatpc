@@ -43,7 +43,8 @@
                                           <th>Tiêu đề</th>
                                           <th>Loại tin</th>
                                           <th>Ngày đăng</th>
-                                          <th>Tác giả</th>                                                                                    
+                                          <th>Tác giả</th>
+                                          <th>Tình trạng</th>                                                                                    
                                           <th class="center">Thao tác</th>
                                       </tr>
                                       </thead>
@@ -53,7 +54,13 @@
                                             <td><?=$item['TIEUDE']?></td>
                                             <td><?=$item['TENLOAI']?></td>
                                             <td><?=date('d-m-Y', strtotime($item['NGAYDANG']))?></td>
-                                            <td><?=$item['TENDANGNHAP']?></td>                                            
+                                            <td><?=$item['TENDANGNHAP']?></td>
+                                            <td class="center">
+                                              <?php if ($item['TINHTRANG']==1) echo '<span class="label label-success label-mini">Đã đăng</span>';
+                                                    elseif ($item['TINHTRANG']==0) echo '<span class="label label-warning label-mini">Chờ kiểm duyệt</span>';
+                                                      elseif ($item['TINHTRANG']==2) echo '<span class="label label-primary label-mini">Dự thảo</span>';                                      
+                                              ?>
+                                            </td>                                            
                                             <td class="center"> 
                                               <button class="btn btn-primary btn-xs" onclick="window.location.href='<?=base_url()?>admin/binhluan/capnhat?id=<?=$item['ID']?>'"><i class="icon-pencil"></i></button>
                                               <button class="btn btn-danger btn-xs" onclick="window.location.href='<?=base_url()?>admin/binhluan/xoa?id=<?=$item['ID']?>'"><i class="icon-remove"></i></button>
@@ -66,7 +73,8 @@
                                           <th>Tiêu đề</th>
                                           <th>Loại tin</th>
                                           <th>Ngày đăng</th>
-                                          <th>Tác giả</th>                                                                                    
+                                          <th>Tác giả</th>
+                                          <th>Tình trạng</th>                                                                                    
                                           <th class="center">Thao tác</th>
                                       </tr>
                                       </tfoot>
