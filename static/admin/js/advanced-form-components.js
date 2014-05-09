@@ -68,7 +68,7 @@
 
 //datetime picker start
 
-$(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
+$(".form_datetime").datetimepicker({format: 'dd-mm-yyyy hh:ii:ss'});
 
 $(".form_datetime-component").datetimepicker({
     format: "dd MM yyyy - hh:ii"
@@ -166,6 +166,9 @@ $('#spinner1').spinner();
 $('#spinner2').spinner({disabled: true});
 $('#spinner3').spinner({value:0, min: 0, max: 10});
 $('#spinner4').spinner({value:0, step: 5, min: 0, max: 200});
+$('#Luotdanhgia').spinner({min: 0});
+$('#Tongdiem').spinner({min: 0});
+
 //spinner end
 
 

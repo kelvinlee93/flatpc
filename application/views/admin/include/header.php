@@ -17,17 +17,22 @@
     <link href="'.base_url().'static/admin/css/owl.carousel.css"rel="stylesheet" type="text/css">
     '
     ?>
-    <?php if($subpage=='user-manage')
+    <?php if($subpage=='user-manage'||$subpage=='rating-manage'||$subpage=='comment-manage'||$subpage=='news-manage')
         echo '
     <link href="'.base_url().'static/admin/assets/advanced-datatable/media/css/demo_page.css" rel="stylesheet" />
     <link href="'.base_url().'static/admin/assets/advanced-datatable/media/css/demo_table.css" rel="stylesheet" />
     '
     ?>
-    <?php if($subpage=='user-add')
-        echo '
+    <?php if($subpage=='user-add'||$subpage=='user-edit'||$subpage=='rating-edit'||$subpage='comment-edit'||$subpage='news-edit'||$subpage='news-add')
+        echo '    
+    <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/bootstrap-fileupload/bootstrap-fileupload.css" />
+    <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
     <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/bootstrap-datepicker/css/datepicker.css" />
+    <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/bootstrap-timepicker/compiled/timepicker.css" />
     <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/bootstrap-colorpicker/css/colorpicker.css" />
-    <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/bootstrap-daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+    <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/bootstrap-datetimepicker/css/datetimepicker.css" />
+    <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/jquery-multi-select/css/multi-select.css" />
     '
     ?>
     <!-- Custom styles for this template -->
@@ -48,7 +53,7 @@
       <!--header start-->
       <header class="header white-bg">
           <div class="sidebar-toggle-box">
-              <div data-original-title="Tắt menu" data-placement="right" class="icon-reorder tooltips"></div>
+              <div data-original-title="Đóng menu" data-placement="right" class="icon-reorder tooltips"></div>
           </div>
           <!--logo start-->
           <a href="" class="logo" >Flat<span>PC</span></a>
@@ -59,7 +64,7 @@
                   <!-- user login dropdown start-->
                   <li class="dropdown">
                       <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                          <img alt="" src="<?=base_url()?>static/admin/img/avatar_kelvinlee.jpeg" width="29" heigh="29">
+                          <img alt="" src="<?=base_url()?>static/img/<?=$Avatar?>" width="29" heigh="29">
                           <span class="username"><?=$Name?></span>
                           <b class="caret"></b>
                       </a>

@@ -6,14 +6,14 @@ Class dangnhap extends CI_Controller{
 
 	function __construct(){
 		parent:: __construct();
-		$this->data['loi'] = "";
+		$this->data['loi'] = "";		
 	}
 
-	function index($reg = ""){		
+	function index($reg = ""){			
 		if(isset($reg) && $reg != "")
 			$this->data['success'] = "Đăng ký thành công! Mời bạn đăng nhập...";
 		$this->data['title'] = 'Đăng nhập';
-		$this->data['page'] = 'dangnhap';		
+		$this->data['page'] = 'login';		
 		$chk = $this->chucnang->ktdangnhap();		
 		if($chk==1||$chk==2)
 		{
@@ -23,14 +23,18 @@ Class dangnhap extends CI_Controller{
 			else return redirect(base_url('admin'));
 		}
 		if(isset($_POST['username'])&&isset($_POST['password']))
-		{							
-			$remember = FALSE;			
-			if(isset($_POST['remember'])&&($_POST['remember']==1)) $remember = TRUE;			
-			$arr = array('username'=>$this->input->post('username'),'password'=>$this->input->post('password'));
-			$tmp = $this->chucnang->dangnhap($arr, $remember);			
+		{																	
+			if(isset($_POST['remember'])&&$_POST['remember']=='1') 
+			{				
+				$this->session->sess_expire_on_close = FALSE;				
+			}					         
+			
+			$arr = array('username'=>$this->input->post('username'),'password'=>$this->input->post('password'));					
+			$tmp = $this->chucnang->dangnhap($arr);	
+
 			if($tmp==1)
-			{						
-				$role = $this->chucnang->GetUserRole();						
+			{															
+				$role = $this->chucnang->GetUserRole();																				
 				if ($role == 0)
 					return redirect(base_url());
 				else return redirect(base_url('admin'));

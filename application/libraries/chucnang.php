@@ -3,44 +3,13 @@
 class chucnang{
 	var $CI;	
 	//Table: Username,
-	var $admin = 'NGUOIDUNG';
-
-	function checkCookie(){
-		$this->CI=&get_instance();
-		if(isset($_COOKIE['un'])&&($_COOKIE['un']!=""))
-		{
-			if($this->CI->input->cookie('un',TRUE)!=$this->CI->input->cookie('un'))
-			{
-				delete_cookie("un");delete_cookie("bm");delete_cookie("lg");
-				return FALSE;
-			}
-		}
-		
-		if(isset($_COOKIE['bm'])&&($_COOKIE['bm']!=""))
-		{
-			if($this->CI->input->cookie('bm',TRUE)!='SMobileShop')
-			{
-				delete_cookie("un");delete_cookie("bm");delete_cookie("lg");
-				return FALSE;
-			}
-		}
-		
-		if(isset($_COOKIE['lg'])&&($_COOKIE['lg']!=""))
-		{
-			if($this->CI->input->cookie('lg',TRUE)!=TRUE)
-			{
-				delete_cookie("un");delete_cookie("bm");delete_cookie("lg");
-				return FALSE;
-			}
-		}
-		
-		return TRUE;
-	}
+	var $admin = 'NGUOIDUNG';	
 	
 	//checkSession(): un, bm, lg
-	function checkSession(){
+	function checkSession(){		
 		$this->CI=&get_instance();
 		$arr = $this->CI->session->all_userdata();
+		
 		if(isset($arr['un']))
 		{
 			$str = $this->CI->security->xss_clean($arr['un']);
@@ -204,25 +173,7 @@ class chucnang{
 	function ktdangnhap(){
 		$this->CI=&get_instance();
 		$arr = array();
-		if(isset($_COOKIE['un']) && isset($_COOKIE['lg']) && isset($_COOKIE['bm']))
-		{
-			if($this->checkCookie())
-			{
-				$arr['username'] = $this->CI->input->cookie('un',TRUE);
-				$query = $this->CI->db->query('SELECT TENDANGNHAP FROM '.$this->admin.' WHERE TENDANGNHAP = ? AND TRANGTHAI = 1',$arr['username']);
-				if($query->num_rows()>0)
-				{
-					return 2;
-				}
-				else return -2;
-			}
-			else
-			{
-				$this->dangxuat();
-				return -1;
-			}
-		}
-		elseif(($this->CI->session->userdata('un') != NULL) && ($this->CI->session->userdata('lg') != NULL) 
+		if(($this->CI->session->userdata('un') != NULL) && ($this->CI->session->userdata('lg') != NULL) 
 		&& ($this->CI->session->userdata('bm') != NULL))
 		{
 			if($this->checkSession())
@@ -244,8 +195,8 @@ class chucnang{
 		else return 0;
 	}
 
-	public function dangnhap($arr, $remember = FALSE, $baomat = 'FlatPC'){
-		$this->CI=&get_instance();
+	public function dangnhap($arr, $baomat = 'FlatPC'){
+		$this->CI=&get_instance();			
 		if($this->checkInput($arr))
 		{			
 			if($this->checkUsername($arr))
@@ -264,37 +215,16 @@ class chucnang{
 							$quyen = $query->row()->QUYEN;
 							if(($quyen == 0)||($quyen == 1)||($quyen == 2))
 							{
-								$arrUser = array('un' => $arr['username'], 'bm' => $baomat, 'lg' => TRUE);
-								if($remember)
-								{
-									$un = array(
-										'name'   => 'un',
-										'value'  => $arrUser['un'],
-										'expire' => '1296000'
-									);
-									$this->CI->input->set_cookie($un);
-									$bm = array(
-										'name'   => 'bm',
-										'value'  => $arrUser['bm'],
-										'expire' => '1296000'
-									);
-									$this->CI->input->set_cookie($bm);
-									$lg = array(
-										'name'   => 'lg',
-										'value'  => $arrUser['lg'],
-										'expire' => '1296000'
-									);
-									$this->CI->input->set_cookie($lg);									
-									return 1;
-								}
+								$arrUser = array('un' => $arr['username'], 'bm' => $baomat, 'lg' => TRUE);																													
 								$this->CI->session->set_userdata($arrUser);
 								if(!isset($_SESSION)) 
 								{ 
 									session_start(); 
 								} 
-								$_SESSION['bm'] = "FlatPC";
-								$_SESSION['TenDangNhap'] = $arr['username'];
-								$_SESSION['quyen'] = $quyen;
+								$_SESSION['bm'] = $arrUser['bm'];
+								$_SESSION['un'] = $arrUser['un'];
+								$_SESSION['lg'] = $arrUser['lg'];
+								$_SESSION['quyen'] = $quyen;								
 								return 1;
 							}
 							else return -7;
@@ -311,30 +241,9 @@ class chucnang{
 	}
 
 	function getLoginUsername(){
-		$this->CI=&get_instance();		
-		$arr = array();
-		if(isset($_COOKIE['un']) && isset($_COOKIE['lg']) && isset($_COOKIE['bm']))
-		{
-			if($this->checkCookie())
-			{
-				$arr['username'] = $this->CI->input->cookie('un',TRUE);
-				$query = $this->CI->db->query('	SELECT TENDANGNHAP 
-												FROM '.$this->admin.' 
-												WHERE TENDANGNHAP = ? AND TRANGTHAI = 1',
-												$arr['username']);
-				if($query->num_rows() > 0)
-				{
-					return $arr['username'];
-				}
-				else return NULL;
-			}
-			else
-			{
-				$this->dangxuat();
-				return NULL;
-			}
-		}
-		elseif(($this->CI->session->userdata('un') != NULL) && ($this->CI->session->userdata('lg') != NULL) 
+		$this->CI=&get_instance();							
+		$arr = array();	
+		if(($this->CI->session->userdata('un') != NULL) && ($this->CI->session->userdata('lg') != NULL) 
 		&& ($this->CI->session->userdata('bm') != NULL))
 		{
 			if($this->checkSession())
@@ -361,7 +270,7 @@ class chucnang{
 
 	function GetUserRole(){
 		$this->CI=&get_instance();
-		$username = $this->getLoginUsername();				
+		$username = $this->getLoginUsername();					
 		$QUYEN = 0;
 		if(!empty($username))
 		{
@@ -408,10 +317,28 @@ class chucnang{
 		}
 		return "";
 	}
+
+	function GetAvatar(){
+		$this->CI=&get_instance();
+		$temp = $this->getLoginUsername();
+		if(!empty($temp))
+		{
+			$query = $this->CI->db->query('SELECT H.TENANH FROM NGUOIDUNG N, HINHANH H WHERE N.HINHDAIDIEN = H.ID AND N.TENDANGNHAP = \''.$temp.'\'');
+			$UserAvatar = $query->row()->TENANH;
+			if(!empty($UserAvatar))
+			{
+				return $UserAvatar;
+			}
+			else
+			{
+				return "";
+			}
+		}
+		return "";
+	}
 	
 	function dangxuat(){
-		$this->CI=&get_instance();
-		delete_cookie("un");delete_cookie("bm");delete_cookie("lg");
+		$this->CI=&get_instance();		
 		$this->CI->session->sess_destroy();
 	}
 }

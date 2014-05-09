@@ -64,7 +64,7 @@ $autoload['libraries'] = array('database','session','cart','chucnang','form_vali
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','form','security','language','cookie');
+$autoload['helper'] = array('url','form','security','language','cookie','date','file');
 
 
 /*
@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('nguoidung_model');
+$autoload['model'] = array('nguoidung_model','danhgia_model','binhluan_model','tintuc_model');
 
 
 /* End of file autoload.php */

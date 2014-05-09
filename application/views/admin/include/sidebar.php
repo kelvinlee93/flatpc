@@ -16,9 +16,8 @@
                           <span>Người dùng</span>                      
                       </a>
                       <ul class="sub">
-                          <li <?php if($subpage=='user-manage') echo 'class="active"'?>><a href="<?=base_url()?>admin/nguoidung">Quản lý</a></li>
-                          <li <?php if($subpage=='user-add') echo 'class="active"'?>><a href="<?=base_url()?>admin/nguoidung/them">Thêm mới</a></li>
-                          
+                          <li <?php if($subpage=='user-manage'||$subpage=='user-edit') echo 'class="active"'?>><a href="<?=base_url()?>admin/nguoidung">Quản lý</a></li>
+                          <li <?php if($subpage=='user-add') echo 'class="active"'?>><a href="<?=base_url()?>admin/nguoidung/them">Thêm mới</a></li>                          
                       </ul>
                   </li>
 
@@ -38,8 +37,12 @@
                   <li class="sub-menu">
                       <a href="<?=base_url()?>admin/tintuc" <?php if($page=='news') echo 'class="active"'?>>
                           <i class="icon-rss"></i>
-                          <span>Tin tức</span>
-                      </a>                      
+                          <span>Tin tức</span>                      
+                      </a>
+                      <ul class="sub">
+                          <li <?php if($subpage=='news-manage'||$subpage=='news-edit') echo 'class="active"'?>><a href="<?=base_url()?>admin/tintuc">Quản lý</a></li>
+                          <li <?php if($subpage=='news-add') echo 'class="active"'?>><a href="<?=base_url()?>admin/tintuc/them">Thêm mới</a></li>                          
+                      </ul>                      
                   </li>
                   <li class="sub-menu">
                       <a href="<?=base_url()?>admin/binhluan" <?php if($page=='comment') echo 'class="active"'?>>
@@ -48,7 +51,7 @@
                       </a>                      
                   </li>
                   <li>
-                      <a  href="admin/danhgia" <?php if($page=='rating') echo 'class="active"'?>>
+                      <a  href="<?=base_url()?>admin/danhgia" <?php if($page=='rating') echo 'class="active"'?>>
                           <i class="icon-thumbs-up"></i>
                           <span>Đánh giá</span>                          
                       </a>
