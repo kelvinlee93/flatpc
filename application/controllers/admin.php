@@ -173,8 +173,8 @@ Class admin extends CI_Controller{
 
 				        if($this->upload->do_upload('avatar'))
 				        {			            	
-		                	$img_data = array('upload_data' => $this->upload->data());
-		                	$Anhdaidien = $img_data['upload_data']['orig_name'];		                			                			                
+		                	$img_data = array('upload_data' => $this->upload->data());		                	
+		                	$Anhdaidien = $img_data['upload_data']['file_name'];		                			                			                
 				        }				        		                					       
 
 						$tmp = $this->nguoidung_model->insert($Hodem, $Ten, $Tendangnhap, $Matkhau, $Email, $Ngaysinh, $Diachi, $Tinhthanh, $Gioitinh, $CMND, $SDT, $Quyen, $Trangthai, $Anhdaidien);
@@ -301,8 +301,8 @@ Class admin extends CI_Controller{
 
 				        if($this->upload->do_upload('avatar'))
 				        {			            	
-		                	$img_data = array('upload_data' => $this->upload->data());
-		                	$Anhdaidien = $img_data['upload_data']['orig_name'];		                			                			                
+		                	$img_data = array('upload_data' => $this->upload->data());		                	
+		                	$Anhdaidien = $img_data['upload_data']['file_name'];		                			                			                
 				        }				        				        		                					        
 
 						$tmp = $this->nguoidung_model->edit($id, $Hodem, $Ten, $Tendangnhap, $Matkhau, $Email, $Ngaysinh, $Diachi, $Tinhthanh, $Gioitinh, $CMND, $SDT, $Quyen, $Trangthai, $Anhdaidien);
@@ -363,6 +363,269 @@ Class admin extends CI_Controller{
 			return redirect(base_url('dangnhap'));
 	}
 
+	// Quản lý đặt hàng
+
+	function dathang($chucnang = "xem"){
+		$check = $this->chucnang->ktdangnhap();		
+		if($check == 1 || $check == 2 )
+		{
+			$role = $this->data['Role'];
+			if($role == 0)
+				return redirect(base_url());
+			else{												
+				if($chucnang == "xem"){
+					$this->data['title'] = 'Đặt hàng';
+					$this->data['page'] = 'order';
+					$this->data['subpage'] = 'order-manage';
+					if($this->session->userdata('dathang_action')==FALSE){
+						$this->session->set_userdata('dathang_action', '1');
+						$this->data['dathang_action'] = $this->session->userdata('dathang_action');
+					}
+					else $this->data['dathang_action'] = $this->session->userdata('dathang_action');	
+					$this->session->set_userdata('dathang_action', '1');
+
+					$this->data['result'] = $this->thongtindathang_model->get_thongtindathang();
+						
+					$this->load->view('admin/include/header',$this->data);
+					$this->load->view('admin/include/sidebar',$this->data);									
+					$this->load->view('admin/dathang/index',$this->data);				
+					$this->load->view('admin/include/footer',$this->data);					
+				}
+				elseif ($chucnang == "them") {
+					$this->data['page'] = 'order';
+					$this->data['subpage'] = 'order-add';
+
+					$config = array(
+		               array(
+		                     'field'   => 'tenkhachhang', 
+		                     'label'   => 'Tên khách hàng', 
+		                     'rules'   => 'trim|required|xss_clean|min_length[2]|max_length[20]'
+		                  ),
+		               array(
+		                     'field'   => 'sdtkhachhang', 
+		                     'label'   => 'SĐT khách hàng', 
+		                     'rules'   => 'trim|required|xss_clean|min_length[10]|max_length[13]|numeric'
+		                  ),
+		               array(
+		                     'field'   => 'tennguoinhan', 
+		                     'label'   => 'Tên người nhận', 
+		                     'rules'   => 'trim|required|xss_clean|min_length[2]|max_length[20]'
+		                  ),
+		               array(
+		                     'field'   => 'sdtnguoinhan', 
+		                     'label'   => 'SĐT người nhận', 
+		                     'rules'   => 'trim|required|xss_clean|min_length[10]|max_length[13]|numeric'
+		                  ),
+		               array(
+		                     'field'   => 'diachi', 
+		                     'label'   => 'Địa chỉ', 
+		                     'rules'   => 'trim|xss_clean'
+		                  ),
+		               array(
+		                     'field'   => 'chonsanpham', 
+		                     'label'   => 'Sản phẩm', 
+		                     'rules'   => 'required'
+		                  )	               
+		            );
+					
+					$this->form_validation->set_rules($config);
+					$this->form_validation->set_message('required', '%s không được trống');					
+					$this->form_validation->set_message('max_length', '%s quá dài');
+					$this->form_validation->set_message('min_length', '%s quá ngắn');					
+					$this->form_validation->set_message('numeric', 'Vui lòng chỉ nhập số');					
+
+					$this->form_validation->set_error_delimiters('<label class="control-label col-lg-6" style="color: red"><strong>', '</strong></label>');					
+					if (isset($_POST["hidden_field"])){
+						$Danhsach = $this->session->userdata('order_list');
+						if ($Danhsach!=FALSE)
+						{
+							$Tenkhachhang = $this->input->post('tenkhachhang',TRUE);
+							$Sdtkhachhang = $this->input->post('sdtkhachhang',TRUE);
+							$Tennguoinhan = $this->input->post('tennguoinhan',TRUE);
+							$Sdtnguoinhan = $this->input->post('sdtnguoinhan',TRUE);
+							$Diachi = $this->input->post('diachi',TRUE);
+							$Pttt = $this->input->post('pttt',TRUE);
+							$Ptvc = $this->input->post('ptvc',TRUE);
+							$Soluong = $this->input->post('sanpham',TRUE);
+							$Dongia = $this->input->post('dongia',TRUE);												
+
+							$tmp = $this->thongtindathang_model->insert($Tenkhachhang, $Sdtkhachhang, $Tennguoinhan, $Sdtnguoinhan, $Diachi, $Pttt, $Ptvc, $Danhsach, $Soluong, $Dongia);
+						
+							if($tmp)
+							{			
+								$this->session->set_userdata('order_list', FALSE);				
+								$this->session->set_userdata('dathang_action', '2');														
+								return redirect(base_url('admin/dathang'));
+							}							
+							else
+							{ 
+								$this->session->set_userdata('order_list', FALSE);
+								$this->session->set_userdata('dathang_action', '3');
+								return redirect(base_url('admin/dathang'));
+							}														
+						}
+						else
+						{
+							$this->session->set_userdata('dathang_action', '3');
+							return redirect(base_url('admin/dathang'));
+						}																		
+					}	
+					elseif ($this->form_validation->run() == FALSE){
+						$this->data['title'] = 'Thêm đơn đặt hàng';
+					
+						$this->data['tablet'] = $this->thongtindathang_model->get_sanpham_tablet();
+						$this->data['laptop'] = $this->thongtindathang_model->get_sanpham_laptop();
+						$this->data['desktop'] = $this->thongtindathang_model->get_sanpham_desktop();
+						$this->data['phukien'] = $this->thongtindathang_model->get_sanpham_phukien();						
+
+						$this->load->view('admin/include/header',$this->data);
+						$this->load->view('admin/include/sidebar',$this->data);									
+						$this->load->view('admin/dathang/add',$this->data);				
+						$this->load->view('admin/include/footer',$this->data);
+					}						
+					elseif ($this->form_validation->run() == TRUE){
+						$this->data['title'] = 'Thông tin đặt hàng';
+
+						$Tenkhachhang = $this->input->post('tenkhachhang',TRUE);
+						$Sdtkhachhang = $this->input->post('sdtkhachhang',TRUE);
+						$Tennguoinhan = $this->input->post('tennguoinhan',TRUE);
+						$Sdtnguoinhan = $this->input->post('sdtnguoinhan',TRUE);
+						$Diachi = $this->input->post('diachi',TRUE);
+						$Pttt = $this->input->post('pttt',TRUE);
+						$Ptvc = $this->input->post('ptvc',TRUE);						 
+
+						$this->data['order_info'] = array('Tenkhachhang' => $Tenkhachhang, 'Sdtkhachhang' => $Sdtkhachhang, 'Tennguoinhan' => $Tennguoinhan, 'Sdtnguoinhan' => $Sdtnguoinhan, 'Diachi' => $Diachi, 'Pttt' => $Pttt, 'Ptvc' => $Ptvc);
+						$this->data['order_list'] = $this->input->post('chonsanpham',TRUE);						
+						$this->data['sanpham'] = $this->thongtindathang_model->get_sanpham();
+						$this->session->set_userdata('order_list', $this->data['order_list']);
+						
+						$this->load->view('admin/include/header',$this->data);
+						$this->load->view('admin/include/sidebar',$this->data);									
+						$this->load->view('admin/dathang/add2',$this->data);				
+						$this->load->view('admin/include/footer',$this->data);						
+					}									
+				}
+				elseif($chucnang == "capnhat"){
+					$id = $this->input->get("id");																				
+					if(!is_numeric($id)||$id<1)
+					{ 
+						$this->session->set_userdata('dathang_action', '3');
+						return redirect(base_url('admin/dathang'));
+					}				
+
+					$this->data['title'] = 'Thông tin đặt hàng';
+					$this->data['page'] = 'order';
+					$this->data['subpage'] = 'order-edit';
+
+					if (!isset($_POST["product_name"]))
+					{
+						$this->data['thongtin'] = $this->thongtindathang_model->get_chitietdathang($id);
+						$this->data['dathang'] = $this->thongtindathang_model->get_chitietdathang2($id);												
+
+						if($this->data['thongtin']==FALSE||$this->data['dathang']==FALSE)
+						{
+							$this->session->set_userdata('dathang_action', '3');
+							return redirect(base_url('admin/dathang'));
+						}
+						
+						$this->load->view('admin/include/header',$this->data);
+						$this->load->view('admin/include/sidebar',$this->data);									
+						$this->load->view('admin/dathang/edit',$this->data);				
+						$this->load->view('admin/include/footer',$this->data);
+					}
+					else
+					{						
+						$Tenkhachhang = $this->input->post('customer_name',TRUE);
+						$Email = $this->input->post('email',TRUE);
+						$Noidung = $this->input->post('content',TRUE);												
+						$Thoigian = $this->input->post('cmt_time',TRUE);						
+						$Thoigian = date('Y-m-d H:i:s', strtotime($Thoigian)); 																									        		        				        		                					        
+						
+						$tmp = $this->binhluan_model->update_binhluan($id, $Tenkhachhang, $Email, $Noidung, $Thoigian);
+						
+						if($tmp)
+						{							
+							$this->session->set_userdata('binhluan_action', '2');														
+							return redirect(base_url('admin/binhluan'));
+						}							
+						else
+						{ 
+							$this->session->set_userdata('binhluan_action', '3');
+							return redirect(base_url('admin/binhluan'));
+						}
+					}
+				}
+				elseif ($chucnang == "huy") {
+						$id = $this->input->get("id");																				
+						if(!is_numeric($id)||$id<1)
+						{ 
+							$this->session->set_userdata('dathang_action', '3');
+							return redirect(base_url('admin/dathang'));
+						}											
+						$tmp = $this->thongtindathang_model->cancel($id);
+						if($tmp)
+						{
+							$this->session->set_userdata('dathang_action', '2');
+							return redirect(base_url('admin/dathang'));													
+						}							
+						else
+						{ 
+							$this->session->set_userdata('dathang_action', '3');						
+							return redirect(base_url('admin/dathang'));
+						}
+				}
+				elseif ($chucnang == "xacnhan") {
+						$id = $this->input->get("id");																				
+						if(!is_numeric($id)||$id<1)
+						{ 
+							$this->session->set_userdata('dathang_action', '3');
+							return redirect(base_url('admin/dathang'));
+						}
+						$tmp = $this->thongtindathang_model->confirm($id);
+						if($tmp)
+						{
+							$this->session->set_userdata('dathang_action', '2');
+							return redirect(base_url('admin/dathang'));													
+						}							
+						else
+						{ 
+							$this->session->set_userdata('dathang_action', '3');						
+							return redirect(base_url('admin/dathang'));
+						}
+				}
+				elseif ($chucnang == "dathanhtoan") {
+						if ($this->data['Role']==1)
+						{
+							$id = $this->input->get("id");																				
+							if(!is_numeric($id)||$id<1)
+							{ 
+								$this->session->set_userdata('dathang_action', '3');
+								return redirect(base_url('admin/dathang'));
+							}
+							$tmp = $this->thongtindathang_model->paid($id);
+							if($tmp)
+							{
+								$this->session->set_userdata('dathang_action', '2');
+								return redirect(base_url('admin/dathang'));													
+							}							
+							else
+							{ 
+								$this->session->set_userdata('dathang_action', '3');						
+								return redirect(base_url('admin/dathang'));
+							}
+						}
+						else
+						{
+							$this->session->set_userdata('dathang_action', '3');
+							return redirect(base_url('admin/dathang'));
+						} 
+				}																				
+			}
+		}
+		else
+			return redirect(base_url('dangnhap'));
+	}
+
 	// Quản lý tin tức
 
 	function tintuc($chucnang = "xem"){
@@ -372,9 +635,9 @@ Class admin extends CI_Controller{
 			$role = $this->data['Role'];
 			if($role == 0)
 				return redirect(base_url());
-			else{																
-				if($chucnang == "xem")
-				{									
+			else{
+				date_default_timezone_set('Asia/Jakarta');
+				if($chucnang == "xem"){
 					$this->data['title'] = 'Tin tức';
 					$this->data['page'] = 'news';
 					$this->data['subpage'] = 'news-manage';
@@ -396,72 +659,6 @@ Class admin extends CI_Controller{
 					$this->data['title'] = 'Thêm tin tức';
 					$this->data['page'] = 'news';
 					$this->data['subpage'] = 'news-add';					
-					
-					$config = array(	
-		               array(
-		                     'field'   => 'firstname', 
-		                     'label'   => 'Họ đệm', 
-		                     'rules'   => 'trim|required|xss_clean|min_length[2]|max_length[20]'
-		                  ),
-		               array(
-		                     'field'   => 'lastname', 
-		                     'label'   => 'Tên', 
-		                     'rules'   => 'trim|required|xss_clean|min_length[2]|max_length[20]'
-		                  ),
-		               array(
-		                     'field'   => 'username', 
-		                     'label'   => 'Tên đăng nhập', 
-		                     'rules'   => 'trim|required|xss_clean|min_length[6]|alpha_dash|is_unique[NGUOIDUNG.TENDANGNHAP]|max_length[20]'
-		                  ),
-		               array(
-		                     'field'   => 'email', 
-		                     'label'   => 'Email', 
-		                     'rules'   => 'trim|required|valid_email|is_unique[NGUOIDUNG.EMAIL]'
-		                  ),
-		               array(
-		                     'field'   => 'password', 
-		                     'label'   => 'Mật khẩu', 
-		                     'rules'   => 'required|max_length[20]|min_length[6]|callback_ktmatkhau'
-		                  ),
-		               array(
-		                     'field'   => 'confirm_password', 
-		                     'label'   => 'Nhập lại mật khẩu', 
-		                     'rules'   => 'required|matches[password]'
-		                  ),
-		               array(
-		                     'field'   => 'birth', 
-		                     'label'   => 'Ngày sinh', 
-		                     'rules'   => 'trim|required|callback_ktngaysinh'
-		                  ),		               
-		               array(
-		                     'field'   => 'city', 
-		                     'label'   => 'tỉnh thành', 
-		                     'rules'   => 'callback_kttinhthanh'
-		                  ),		               
-		               array(
-		                     'field'   => 'cmnd', 
-		                     'label'   => 'Chứng minh nhân dân', 
-		                     'rules'   => 'numeric|exact_length[9]'
-		                  ),
-		               array(
-		                     'field'   => 'sdt', 
-		                     'label'   => 'Số điện thoại', 
-		                     'rules'   => 'numeric|max_length[13]|min_length[10]'
-		                  )		               
-		            );
-					
-					$this->form_validation->set_rules($config);
-					$this->form_validation->set_message('required', '%s không được trống');
-					$this->form_validation->set_message('is_unique', '%s đã được sử dụng');					
-					$this->form_validation->set_message('matches', 'Nhập lại mật khẩu chưa đúng');
-					$this->form_validation->set_message('max_length', '%s quá dài');
-					$this->form_validation->set_message('min_length', '%s quá ngắn');
-					$this->form_validation->set_message('valid_email', 'Địa chỉ email không hợp lệ');	
-					$this->form_validation->set_message('alpha_dash', 'Tên đăng nhập không hợp lệ');
-					$this->form_validation->set_message('numeric', 'Vui lòng chỉ nhập số');
-					$this->form_validation->set_message('exact_length', 'Vui lòng nhập chính xác 9 chữ số CMND');
-
-					$this->form_validation->set_error_delimiters('<label class="control-label col-lg-6" style="color: red"><strong>', '</strong></label>');
 
 					$this->setting =  array(
 		                  'upload_path'     => dirname($_SERVER["SCRIPT_FILENAME"])."/static/img/",
@@ -473,108 +670,54 @@ Class admin extends CI_Controller{
 	                );        			        
 				    $this->load->library('upload', $this->setting);
 					
-					if ($this->form_validation->run() == FALSE){
-						$this->data['tinhthanh'] = $this->nguoidung_model->get_tinhthanh();
+					if (!isset($_POST["title"])){
 						$this->load->view('admin/include/header',$this->data);
 						$this->load->view('admin/include/sidebar',$this->data);									
-						$this->load->view('admin/nguoidung/insert',$this->data);				
+						$this->load->view('admin/tintuc/insert',$this->data);				
 						$this->load->view('admin/include/footer',$this->data);
 					}			
-					else{	
-						$Hodem = $this->input->post('firstname',TRUE);
-						$Ten = $this->input->post('lastname',TRUE);
-						$Tendangnhap = $this->input->post('username',TRUE);
-						$Matkhau = $this->input->post('password',TRUE);
-						$Email = $this->input->post('email',TRUE);						
-						$Ngaysinh = $this->input->post('birth',TRUE);
-						$Ngaysinh = date('Y-m-d', strtotime($Ngaysinh));
-						$Diachi = $this->input->post('address',TRUE);
-						$Tinhthanh = $this->input->post('city',TRUE);
-						$Gioitinh = $this->input->post('sex',TRUE);						
-						$CMND = $this->input->post('cmnd',TRUE);
-						$SDT = $this->input->post('sdt',TRUE);
-						$Quyen = $this->input->post('role',TRUE);
-						$Trangthai = $this->input->post('status',TRUE);						
-		                $Anhdaidien = 6;		                
+					else{
+						$Tieude = $this->input->post('title',TRUE);
+						$Loaitin = $this->input->post('category',TRUE);
+						$Mota = $this->input->post('desc',TRUE);
+						$Noidung = $this->input->post('content',TRUE);
+						$Ngaydang = $this->input->post('cmt_time',TRUE);
+						$Ngaydang = date('Y-m-d H:i:s', strtotime($Ngaydang));
+						$Tacgia = $this->chucnang->GetUserID();
+		                $Anhtieubieu = 6;
+		                $Tinhtrang = ($Ngaydang>date('Y-m-d H:i:s')) ? 2 : 1;		                
 
-				        if($this->upload->do_upload('avatar'))
+				        if($this->upload->do_upload('feature_img'))
 				        {			            	
-		                	$img_data = array('upload_data' => $this->upload->data());
-		                	$Anhdaidien = $img_data['upload_data']['orig_name'];		                			                			                
-				        }				        		                					       
-
-						$tmp = $this->nguoidung_model->insert($Hodem, $Ten, $Tendangnhap, $Matkhau, $Email, $Ngaysinh, $Diachi, $Tinhthanh, $Gioitinh, $CMND, $SDT, $Quyen, $Trangthai, $Anhdaidien);
+		                	$img_data = array('upload_data' => $this->upload->data());		                	
+		                	$Anhtieubieu = $img_data['upload_data']['file_name'];		                			                			                
+				        }
+				        
+						$tmp = $this->tintuc_model->insert($Tieude, $Loaitin, $Mota, $Noidung, $Ngaydang, $Tacgia, $Anhtieubieu, $Tinhtrang);
 						
 						if($tmp)
 						{							
-							$this->session->set_userdata('nguoidung_action', '2');														
-							return redirect(base_url('admin/nguoidung'));
+							$this->session->set_userdata('tintuc_action', '2');														
+							return redirect(base_url('admin/tintuc'));
 						}							
 						else
 						{ 
-							$this->session->set_userdata('nguoidung_action', '3');
-							return redirect(base_url('admin/nguoidung'));
+							$this->session->set_userdata('tintuc_action', '3');
+							return redirect(base_url('admin/tintuc'));
 						}
 					}					
 				}
-				elseif ($chucnang == "doithongtin") {
+				elseif ($chucnang == "capnhat"){
 					$id = $this->input->get("id");																				
 					if(!is_numeric($id)||$id<1)
 					{ 
-						$this->session->set_userdata('nguoidung_action', '3');
-						return redirect(base_url('admin/nguoidung'));
+						$this->session->set_userdata('tintuc_action', '3');
+						return redirect(base_url('admin/tintuc'));
 					}				
 
-					$this->data['title'] = 'Đổi thông tin người dùng';
-					$this->data['page'] = 'user';
-					$this->data['subpage'] = 'user-edit';					
-					
-					$config = array(	
-		               array(
-		                     'field'   => 'firstname', 
-		                     'label'   => 'Họ đệm', 
-		                     'rules'   => 'trim|required|xss_clean|min_length[2]|max_length[20]'
-		                  ),
-		               array(
-		                     'field'   => 'lastname', 
-		                     'label'   => 'Tên', 
-		                     'rules'   => 'trim|required|xss_clean|min_length[2]|max_length[20]'
-		                  ),		               		              
-		               array(
-		                     'field'   => 'password', 
-		                     'label'   => 'Mật khẩu', 
-		                     'rules'   => 'max_length[20]|min_length[6]|callback_ktmatkhau'
-		                  ),		               
-		               array(
-		                     'field'   => 'birth', 
-		                     'label'   => 'Ngày sinh', 
-		                     'rules'   => 'trim|required|callback_ktngaysinh'
-		                  ),		               
-		               array(
-		                     'field'   => 'city', 
-		                     'label'   => 'tỉnh thành', 
-		                     'rules'   => 'callback_kttinhthanh'
-		                  ),		               
-		               array(
-		                     'field'   => 'cmnd', 
-		                     'label'   => 'Chứng minh nhân dân', 
-		                     'rules'   => 'numeric|exact_length[9]'
-		                  ),
-		               array(
-		                     'field'   => 'sdt', 
-		                     'label'   => 'Số điện thoại', 
-		                     'rules'   => 'numeric|max_length[13]|min_length[10]'		                     
-		                  )		               
-		            );
-					
-					$this->form_validation->set_rules($config);
-					$this->form_validation->set_message('required', '%s không được trống');													
-					$this->form_validation->set_message('max_length', '%s quá dài');
-					$this->form_validation->set_message('min_length', '%s quá ngắn');										
-					$this->form_validation->set_message('numeric', 'Vui lòng chỉ nhập số');
-					$this->form_validation->set_message('exact_length', 'Vui lòng nhập chính xác 9 chữ số CMND');
-
-					$this->form_validation->set_error_delimiters('<label class="control-label col-lg-6" style="color: red"><strong>', '</strong></label>');
+					$this->data['title'] = 'Cập nhật tin tức';
+					$this->data['page'] = 'news';
+					$this->data['subpage'] = 'news-edit';										
 
 					$this->setting =  array(
 		                  'upload_path'     => dirname($_SERVER["SCRIPT_FILENAME"])."/static/img/",
@@ -586,102 +729,62 @@ Class admin extends CI_Controller{
 	                );        			        
 				    $this->load->library('upload', $this->setting);
 
-					if ($this->form_validation->run() == FALSE)
-					{
-						$this->data['result'] = $this->nguoidung_model->get_userinfo($id);						
-						if($this->data['result']==FALSE)
-						{
-							$this->session->set_userdata('nguoidung_action', '3');
-							return redirect(base_url('admin/nguoidung'));
-						}
-						$this->data['tinhthanh'] = $this->nguoidung_model->get_tinhthanh();
+					if (!isset($_POST["title"])){
+						$this->data['result'] = $this->tintuc_model->get_tintucinfo($id);
 						$this->load->view('admin/include/header',$this->data);
 						$this->load->view('admin/include/sidebar',$this->data);									
-						$this->load->view('admin/nguoidung/edit',$this->data);				
+						$this->load->view('admin/tintuc/edit',$this->data);				
 						$this->load->view('admin/include/footer',$this->data);
-					}
-					else
-					{
-						$Hodem = $this->input->post('firstname',TRUE);
-						$Ten = $this->input->post('lastname',TRUE);
-						$Tendangnhap = $this->input->post('username',TRUE);
-						$Matkhau = $this->input->post('password',TRUE);
-						if($Matkhau)
-							$Matkhau = do_hash($Matkhau,'md5');
-						else
-						{
-							$Matkhau_old = $this->input->post('password_old',TRUE);
-							$Matkhau = $Matkhau_old;
-						}						
-						$Email = $this->input->post('email',TRUE);						
-						$Ngaysinh = $this->input->post('birth',TRUE);
-						$Ngaysinh = date('Y-m-d', strtotime($Ngaysinh));
-						$Diachi = $this->input->post('address',TRUE);
-						$Tinhthanh = $this->input->post('city',TRUE);
-						$Gioitinh = $this->input->post('sex',TRUE);						
-						$CMND = $this->input->post('cmnd',TRUE);
-						$SDT = $this->input->post('sdt',TRUE);
-						$Quyen = $this->input->post('role',TRUE);
-						$Trangthai = $this->input->post('status',TRUE);						
-		                $Anhdaidien = $this->input->post('avatar_old',TRUE);
+					}			
+					else{
+						$Tieude = $this->input->post('title',TRUE);
+						$Loaitin = $this->input->post('category',TRUE);
+						$Mota = $this->input->post('desc',TRUE);
+						$Noidung = $this->input->post('content',TRUE);
+						$Ngaydang = $this->input->post('cmt_time',TRUE);
+						$Ngaydang = date('Y-m-d H:i:s', strtotime($Ngaydang));
+						$Tacgia = $this->input->post('author',TRUE);
+		                $Anhtieubieu = $this->input->post('feature_img_old',TRUE);
+		                $Tinhtrang = ($Ngaydang>date('Y-m-d H:i:s')) ? 2 : 1;		                
 
-				        if($this->upload->do_upload('avatar'))
+				        if($this->upload->do_upload('feature_img'))
 				        {			            	
-		                	$img_data = array('upload_data' => $this->upload->data());
-		                	$Anhdaidien = $img_data['upload_data']['orig_name'];		                			                			                
-				        }				        				        		                					        
-
-						$tmp = $this->nguoidung_model->edit($id, $Hodem, $Ten, $Tendangnhap, $Matkhau, $Email, $Ngaysinh, $Diachi, $Tinhthanh, $Gioitinh, $CMND, $SDT, $Quyen, $Trangthai, $Anhdaidien);
+		                	$img_data = array('upload_data' => $this->upload->data());		                	
+		                	$Anhtieubieu = $img_data['upload_data']['file_name'];		                			                			                
+				        }
+				        
+						$tmp = $this->tintuc_model->edit($id, $Tieude, $Loaitin, $Mota, $Noidung, $Ngaydang, $Anhtieubieu, $Tacgia, $Tinhtrang);
 						
 						if($tmp)
 						{							
-							$this->session->set_userdata('nguoidung_action', '2');														
-							return redirect(base_url('admin/nguoidung'));
+							$this->session->set_userdata('tintuc_action', '2');														
+							return redirect(base_url('admin/tintuc'));
 						}							
 						else
 						{ 
-							$this->session->set_userdata('nguoidung_action', '3');
-							return redirect(base_url('admin/nguoidung'));
+							$this->session->set_userdata('tintuc_action', '3');
+							return redirect(base_url('admin/tintuc'));
 						}
-					}						
-				}
-				elseif ($chucnang == "dongtaikhoan") {
+					}
+				}										
+				elseif ($chucnang == "xoa") {
 						$id = $this->input->get("id");																				
 						if(!is_numeric($id)||$id<1)
 						{ 
-							$this->session->set_userdata('nguoidung_action', '3');
-							return redirect(base_url('admin/nguoidung'));
-						}												
-						$tmp = $this->nguoidung_model->dongtaikhoan($id);
+							$this->session->set_userdata('tintuc_action', '3');
+							return redirect(base_url('admin/tintuc'));
+						}											
+						$tmp = $this->tintuc_model->delete($id);
 						if($tmp)
 						{
-							$this->session->set_userdata('nguoidung_action', '2');
-							return redirect(base_url('admin/nguoidung'));													
+							$this->session->set_userdata('tintuc_action', '2');
+							return redirect(base_url('admin/tintuc'));													
 						}							
 						else
 						{ 
-							$this->session->set_userdata('nguoidung_action', '3');						
-							return redirect(base_url('admin/nguoidung'));
+							$this->session->set_userdata('tintuc_action', '3');						
+							return redirect(base_url('admin/tintuc'));
 						}
-				}
-				elseif ($chucnang == "motaikhoan") {
-						$id = $this->input->get("id");																				
-						if(!is_numeric($id)||$id<1)
-						{ 
-							$this->session->set_userdata('nguoidung_action', '3');
-							return redirect(base_url('admin/nguoidung'));
-						}												
-						$tmp = $this->nguoidung_model->motaikhoan($id);
-						if($tmp)
-						{
-							$this->session->set_userdata('nguoidung_action', '2');
-							return redirect(base_url('admin/nguoidung'));													
-						}							
-						else
-						{ 
-							$this->session->set_userdata('nguoidung_action', '3');						
-							return redirect(base_url('admin/nguoidung'));
-						}					
 				}												
 			}
 		}
@@ -735,7 +838,7 @@ Class admin extends CI_Controller{
 
 					if (!isset($_POST["product_name"]))
 					{
-						$this->data['result'] = $this->binhluan_model->get_binhluaninfo($id);						
+						$this->data['result'] = $this->binhluan_model->get_binhluaninfo($id);
 						if($this->data['result']==FALSE)
 						{
 							$this->session->set_userdata('binhluan_action', '3');
@@ -787,7 +890,7 @@ Class admin extends CI_Controller{
 							$this->session->set_userdata('binhluan_action', '3');						
 							return redirect(base_url('admin/binhluan'));
 						}
-				}
+				}				
 			}
 		}
 		else

@@ -55,11 +55,10 @@
                                             <td><?=$item['TENKHACHHANG']?></td>
                                             <td><?=$item['EMAIL']?></td>
                                             <td><?=$item['NOIDUNG']?></td>
-                                            <td><?=date('H:i:s d-m-Y',strtotime($item['THOIGIAN']))?></td>                                                                                        
+                                            <td class="center"><?=date('Y-m-d H:i:s',strtotime($item['THOIGIAN']))?></td>                                                                                        
                                             <td class="center"> 
                                             <button class="btn btn-primary btn-xs" onclick="window.location.href='<?=base_url()?>admin/binhluan/capnhat?id=<?=$item['ID']?>'"><i class="icon-pencil"></i></button>
                                             <button class="btn btn-danger btn-xs" onclick="window.location.href='<?=base_url()?>admin/binhluan/xoa?id=<?=$item['ID']?>'"><i class="icon-remove"></i></button>
-                                            
                                             </td>
                                          </tr>     
                                       <?php } ?> 

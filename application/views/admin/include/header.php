@@ -17,13 +17,13 @@
     <link href="'.base_url().'static/admin/css/owl.carousel.css"rel="stylesheet" type="text/css">
     '
     ?>
-    <?php if($subpage=='user-manage'||$subpage=='rating-manage'||$subpage=='comment-manage'||$subpage=='news-manage')
+    <?php if($subpage=='user-manage'||$subpage=='rating-manage'||$subpage=='comment-manage'||$subpage=='news-manage'||$subpage=='order-manage')
         echo '
     <link href="'.base_url().'static/admin/assets/advanced-datatable/media/css/demo_page.css" rel="stylesheet" />
     <link href="'.base_url().'static/admin/assets/advanced-datatable/media/css/demo_table.css" rel="stylesheet" />
     '
     ?>
-    <?php if($subpage=='user-add'||$subpage=='user-edit'||$subpage=='rating-edit'||$subpage='comment-edit'||$subpage='news-edit'||$subpage='news-add')
+    <?php if($subpage=='user-add'||$subpage=='user-edit'||$subpage=='rating-edit'||$subpage=='comment-edit'||$subpage=='news-edit'||$subpage=='news-add'||$subpage=='order-add')
         echo '    
     <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/bootstrap-fileupload/bootstrap-fileupload.css" />
     <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />

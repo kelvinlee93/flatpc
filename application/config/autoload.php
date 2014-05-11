@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('nguoidung_model','danhgia_model','binhluan_model','tintuc_model');
+$autoload['model'] = array('nguoidung_model','danhgia_model','binhluan_model','tintuc_model','thongtindathang_model');
 
 
 /* End of file autoload.php */

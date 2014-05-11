@@ -29,10 +29,21 @@
                   </li>
 
                   <li class="sub-menu">
-                      <a href="<?=base_url()?>admin/hoadon" <?php if($page=='order') echo 'class="active"'?>>
-                          <i class="icon-file-text-alt"></i>
+                      <a href="<?=base_url()?>admin/hoadon" <?php if($page=='invoice') echo 'class="active"'?>>
+                          <i class="icon-file-text"></i>
                           <span>Hóa đơn</span>
                       </a>                      
+                  </li>
+
+                  <li class="sub-menu">
+                      <a href="javascript:;" <?php if($page=='order') echo 'class="active"'?>>
+                          <i class="icon-list"></i>
+                          <span>Đặt hàng</span>
+                      </a>
+                      <ul class="sub">
+                          <li <?php if($subpage=='order-manage') echo 'class="active"'?>><a href="<?=base_url()?>admin/dathang">Quản lý</a></li>
+                          <li <?php if($subpage=='order-add') echo 'class="active"'?>><a href="<?=base_url()?>admin/dathang/them">Thêm mới</a></li>                          
+                      </ul>                      
                   </li>
                   <li class="sub-menu">
                       <a href="<?=base_url()?>admin/tintuc" <?php if($page=='news') echo 'class="active"'?>>

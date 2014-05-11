@@ -122,7 +122,7 @@
                                           </div>                                                                              
                                       </div>
                                       <div class="form-group ">
-                                          <label for="role" class="control-label col-lg-2"><strong>Ảnh đại diện</strong></label>                                          
+                                          <label for="avatar" class="control-label col-lg-2"><strong>Ảnh đại diện</strong></label>                                          
                                           <div class="col-md-9">
                                               <div class="fileupload fileupload-new" data-provides="fileupload">
                                                   <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">

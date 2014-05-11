@@ -48,7 +48,7 @@
                                       </tr>
                                       </thead>
                                       <tbody>
-                                      <?php $i = 0; foreach ($result as $item) { ?>                                                                   
+                                      <?php foreach ($result as $item) { ?>                                                                   
                                          <tr>                                            
                                             <td><?=$item['TENSANPHAM']?></td>
                                             <td class="center"><?=$item['LUOTDANHGIA']?></td>

@@ -61,7 +61,7 @@
                                             <td><?=$item['TENNGUOIDUNG']?></td>
                                             <td><?=$item['TENDANGNHAP']?></td>
                                             <td><?=$item['EMAIL']?></td>
-                                            <td class="center"><?=date('d-m-Y', strtotime($item['NGAYSINH']))?></td>
+                                            <td class="center"><?=date('Y-m-d', strtotime($item['NGAYSINH']))?></td>
                                             <td class="center"><?php if($item['GIOITINH']==1) echo 'Nam'; else echo 'Nữ'; ?>
                                             <td class="center"><?=$item['CMND']?></td>
                                             <td class="center"><?=$item['SDT']?></td>
