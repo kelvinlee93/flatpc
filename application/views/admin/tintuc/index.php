@@ -39,7 +39,8 @@
                                 <div class="adv-table">
                                     <table  class="display table table-bordered table-striped" id="example">
                                       <thead>
-                                      <tr>                                          
+                                      <tr>
+                                          <th>#</th>
                                           <th>Tiêu đề</th>
                                           <th>Loại tin</th>
                                           <th>Ngày đăng</th>
@@ -49,8 +50,9 @@
                                       </tr>
                                       </thead>
                                       <tbody>
-                                      <?php foreach ($result as $item) { ?>                                                                   
-                                         <tr>                                            
+                                      <?php $i = 1; foreach ($result as $item) { ?>                                                                   
+                                         <tr>
+                                            <td class="center"><?=$i?></td>                                            
                                             <td><?=$item['TIEUDE']?></td>
                                             <td class="center"><?=$item['TENLOAI']?></td>
                                             <td class="center"><?=date('Y-m-d', strtotime($item['NGAYDANG']))?></td>
@@ -66,10 +68,11 @@
                                               <button class="btn btn-danger btn-xs" onclick="window.location.href='<?=base_url()?>admin/tintuc/xoa?id=<?=$item['ID']?>'"><i class="icon-remove"></i></button>
                                             </td>
                                          </tr>     
-                                      <?php } ?> 
+                                      <?php $i++; } ?> 
                                       </tbody>
                                       <tfoot>
-                                      <tr>                                          
+                                      <tr>
+                                          <th>#</th>                                          
                                           <th>Tiêu đề</th>
                                           <th>Loại tin</th>
                                           <th>Ngày đăng</th>

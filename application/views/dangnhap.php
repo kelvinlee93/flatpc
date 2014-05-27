@@ -21,10 +21,20 @@
   <body class="login-body">
 
     <div class="container">
-      <form id="login" method="post" class="form-signin" action="">      
+      <form id="login" method="post" class="form-signin" action="">
+
         <h2 class="form-signin-heading">Đăng nhập</h2>
+        <?php 
+            if ($dangky==1)
+                echo '
+                  </br>
+                  <div class="col-lg-12">
+                  <span style="color: green"><strong><i class="icon-ok-sign"></i> Đăng ký thành công! Mời bạn đăng nhập...</strong></span>
+                  </div>
+                  ';                                        
+        ?>
         <div class="login-wrap">
-            <input id="username" name="username" type="text" class="form-control" placeholder="Tên đăng nhập" autofocus>            
+            <input id="username" name="username" type="text" class="form-control" placeholder="Tên đăng nhập hoặc số điện thoại" value="<?php if (isset($_POST['username'])&&$_POST['username']!='') echo $_POST['username']; ?>">            
             <input id="password" name="password" type="password" class="form-control" placeholder="Mật khẩu">            
             <?php 
               if($loi!='') 

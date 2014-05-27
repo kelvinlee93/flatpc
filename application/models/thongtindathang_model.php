@@ -67,6 +67,16 @@ Class Thongtindathang_model extends CI_Model{
 		return $query->result_array();
 	}
 
+	function check_sdt($Sdtkhachhang){		
+		$query = $this->db->query('SELECT * FROM NGUOIDUNG WHERE SDT = ?', $Sdtkhachhang);
+		if($query->num_rows()>0)
+		{
+			$Tenkhachhang = $query->row()->HODEM.' '.$query->row()->TENNGUOIDUNG;
+			return $Tenkhachhang;
+		}
+		else return FALSE;
+	}
+
 	function get_chitietdathang($id){	
 		$query = $this->db->query('SELECT * FROM THONGTINDATHANG WHERE ID = '.$id);
 		return $query->result_array();
@@ -78,22 +88,22 @@ Class Thongtindathang_model extends CI_Model{
 	}	
 
 	function get_sanpham_tablet(){
-		$query = $this->db->query('SELECT ID, TENSANPHAM, SOLUONG FROM SANPHAM WHERE LOAI = 1');
+		$query = $this->db->query('SELECT ID, TENSANPHAM, SOLUONG, TINHTRANG FROM SANPHAM WHERE LOAI = 1');
 		return $query->result_array();
 	}
 
 	function get_sanpham_laptop(){
-		$query = $this->db->query('SELECT ID, TENSANPHAM, SOLUONG FROM SANPHAM WHERE LOAI = 2');
+		$query = $this->db->query('SELECT ID, TENSANPHAM, SOLUONG, TINHTRANG FROM SANPHAM WHERE LOAI = 2');
 		return $query->result_array();
 	}
 
 	function get_sanpham_desktop(){
-		$query = $this->db->query('SELECT ID, TENSANPHAM, SOLUONG FROM SANPHAM WHERE LOAI = 3');
+		$query = $this->db->query('SELECT ID, TENSANPHAM, SOLUONG, TINHTRANG FROM SANPHAM WHERE LOAI = 3');
 		return $query->result_array();
 	}
 
 	function get_sanpham_phukien(){
-		$query = $this->db->query('SELECT ID, TENSANPHAM, SOLUONG FROM SANPHAM WHERE LOAI = 0');
+		$query = $this->db->query('SELECT ID, TENSANPHAM, SOLUONG, TINHTRANG FROM SANPHAM WHERE LOAI = 0');
 		return $query->result_array();
 	}
 
@@ -112,14 +122,20 @@ Class Thongtindathang_model extends CI_Model{
 		else return TRUE;	
 	}
 
-	function paid($id)
+	function paid($id, $Role)
 	{
-		$this->db->trans_start();
-		$query = $this->db->query('UPDATE THONGTINDATHANG SET TINHTRANG = -1 WHERE ID = ?', $id);
-		$this->db->trans_complete();
-		if ($this->db->trans_status() === FALSE)
-			return FALSE;
-		else return TRUE;	
+		if ($Role==1)
+		{
+			$this->db->trans_start();
+			$query = $this->db->query('UPDATE THONGTINDATHANG SET TINHTRANG = -1, NGAYTHANHTOAN = NOW() WHERE ID = ?', $id);			
+			$query = $this->db->query('INSERT HOADON SELECT * FROM THONGTINDATHANG WHERE ID = ?', $id);
+			$query = $this->db->query('INSERT CHITIETHOADON SELECT * FROM DATHANG WHERE MADATHANG = ?', $id);
+			$this->db->trans_complete();
+			if ($this->db->trans_status() === FALSE)
+				return FALSE;
+			else return TRUE;
+		}
+		else return FALSE;	
 	}	
 
 	function cancel($id)

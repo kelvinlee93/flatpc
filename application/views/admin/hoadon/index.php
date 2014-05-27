@@ -6,11 +6,11 @@
                   <div class="col-lg-12">
                       <section class="panel">
                           <header class="panel-heading">
-                              <h3><i class="icon-reorder"></i> <strong><?=$title?></strong></h3>
+                              <h3><i class="icon-file-text"></i> <strong><?=$title?></strong></h3>
                           </header>
-                          <?php if ($dathang_action!=1)
+                          <?php if ($hoadon_action!=1)
                                     {
-                                        if ($dathang_action==2)
+                                        if ($hoadon_action==2)
                                             echo '
                                               </br>
                                               <div class="col-lg-4">
@@ -21,7 +21,7 @@
                                                           <p><i class="icon-ok-sign"></i> Thành công!</p>
                                                   </div>
                                               </div>';
-                                        elseif ($dathang_action==3)
+                                        elseif ($hoadon_action==3)
                                             echo '
                                               </br>
                                               <div class="col-lg-4">
@@ -40,31 +40,46 @@
                                     <table  class="display table table-bordered table-striped" id="example">
                                       <thead>
                                       <tr>                                          
-                                          <th>Mã đặt hàng</th>
+                                          <th>Mã đơn hàng</th>
+                                          <th>Ngày</th>
                                           <th>Khách hàng</th>
-                                          <th>Ngày đặt</th>
-                                          <th>Tổng tiền</th>                                          
+                                          <th>SĐT</th>
+                                          <th>Người nhận</th>                                          
+                                          <th>SĐT</th>
+                                          <th>Tổng tiền</th>
+                                          <th>Tình trạng</th>
                                           <th class="center">Thao tác</th>
                                       </tr>
                                       </thead>
                                       <tbody>
                                       <?php foreach ($result as $item) { ?>                                                                   
                                          <tr>                                            
-                                            <td><?=$item['ID']?></td>
-                                            <td class="center"><?=$item['HODEM']?> <?=$item['TENNGUOIDUNG']?></td>
-                                            <td class="center"><?=$item['NGAYDATHANG']?></td>
-                                            <td class="center"><?=$item['THANHTIEN']?></td>                                                                                        
-                                            <td class="center"> 
-                                            <button class="btn btn-primary btn-xs" onclick="window.location.href='<?=base_url()?>admin/hoadon/dathang?id=<?=$item['ID']?>'"><i class="icon-pencil"></i></button>                                                                                        
+                                            <td>#DH<?=$item['ID']?></td>
+                                            <td class="center"><?=date('Y-m-d', strtotime($item['NGAYDATHANG']))?></td>
+                                            <td><?=$item['TENKHACHHANG']?></td>
+                                            <td class="center"><?=$item['SDTKHACHHANG']?></td>
+                                            <td><?=$item['TENNGUOINHAN']?></td>
+                                            <td class="center"><?=$item['SDTNGUOINHAN']?></td>
+                                            <td class="center"><?=$item['TONGTIEN']?></td>
+                                            <td class="center">
+                                              <?php if ($item['TINHTRANG']==-1) echo '<span class="label label-success label-mini">Đã thanh toán</span>';                                                    
+                                              ?>
+                                            </td> 
+                                            <td class="center">                                             
+                                            <button class="btn btn-primary btn-xs" onclick="window.location.href='<?=base_url()?>admin/hoadon/chitiet?id=<?=$item['ID']?>'"><i class="icon-info"></i></button>
                                             </td>
                                          </tr>     
                                       <?php } ?> 
                                       </tbody>
                                       <tfoot>
                                       <tr>                                          
-                                          <th>Mã đặt hàng</th>
+                                          <th>Mã đơn hàng</th>
+                                          <th>Ngày</th>
                                           <th>Khách hàng</th>
-                                          <th>Ngày đặt</th>
+                                          <th>SĐT</th>
+                                          <th>Người nhận</th>                                          
+                                          <th>SĐT</th>
+                                          <th>Tình trạng</th>                                                                                    
                                           <th>Tổng tiền</th>                                          
                                           <th class="center">Thao tác</th>
                                       </tr>

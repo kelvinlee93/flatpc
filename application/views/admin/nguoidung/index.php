@@ -33,13 +33,13 @@
                                                   </div>
                                               </div>';
                                     }
-                          
                           ?>
                           <div class="panel-body">
                                 <div class="adv-table">
                                     <table  class="display table table-bordered table-striped" id="example">
                                       <thead>
-                                      <tr>                                          
+                                      <tr>
+                                          <th>#</th>                                          
                                           <th>Họ đệm</th>
                                           <th>Tên</th>
                                           <th>Tên đăng nhập</th>
@@ -55,8 +55,9 @@
                                       </tr>
                                       </thead>
                                       <tbody>
-                                      <?php foreach ($result as $item) { ?>                                                                   
-                                         <tr id="cate_<?=$item['ID'] ?>">                                            
+                                      <?php $i = 1; foreach ($result as $item) { ?>                                                                   
+                                         <tr id="cate_<?=$item['ID'] ?>">
+                                            <td class="center"><?=$i?></td>                                            
                                             <td><?=$item['HODEM']?></td>
                                             <td><?=$item['TENNGUOIDUNG']?></td>
                                             <td><?=$item['TENDANGNHAP']?></td>
@@ -115,10 +116,11 @@
                                               ?>
                                             </td>
                                          </tr>     
-                                      <?php } ?> 
+                                      <?php $i++; } ?> 
                                       </tbody>
                                       <tfoot>
-                                      <tr>                                          
+                                      <tr>
+                                          <th>#</th>                                          
                                           <th>Họ đệm</th>
                                           <th>Tên</th>
                                           <th>Tên đăng nhập</th>

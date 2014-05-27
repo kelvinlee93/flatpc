@@ -53,7 +53,7 @@
     </script>
     '
     ?>
-    <?php if($subpage=='user-manage'||$subpage=='rating-manage'||$subpage=='comment-manage'||$subpage=='news-manage'||$subpage=='order-manage')
+    <?php if($subpage=='user-manage'||$subpage=='rating-manage'||$subpage=='comment-manage'||$subpage=='news-manage'||$subpage=='order-manage'||$subpage=='invoice-manage'||$subpage=='product-manage')
         echo '        
     <script src="'.base_url().'static/admin/assets/advanced-datatable/media/js/jquery.js" type="text/javascript" language="javascript"></script>
     <script src="'.base_url().'static/admin/js/bootstrap.min.js"></script>
@@ -72,7 +72,7 @@
     </script>    
     '
     ?>
-    <?php if($subpage=='user-add'||$subpage=='user-edit'||$subpage=='rating-edit'||$subpage=='comment-edit'||$subpage=='news-add'||$subpage=='news-edit'||$subpage=='order-add')
+    <?php if($subpage=='user-add'||$subpage=='user-edit'||$subpage=='rating-edit'||$subpage=='comment-edit'||$subpage=='news-add'||$subpage=='news-edit'||$subpage=='order-add'||$subpage=='product-add')
         echo '        
     <script src="'.base_url().'static/admin/js/jquery.js"></script>
     <script src="'.base_url().'static/admin/js/bootstrap.min.js"></script>
@@ -94,11 +94,12 @@
     <script src="'.base_url().'static/admin/assets/jquery-multi-select/js/jquery.quicksearch.js" type="text/javascript"></script>    
     <script src="'.base_url().'static/admin/js/common-scripts.js"></script>    
     <script src="'.base_url().'static/admin/js/advanced-form-components.js"></script>
+    <script src="'.base_url().'static/admin/assets/bootstrap-inputmask/bootstrap-inputmask.min.js" type="text/javascript"></script>
     ';
     if($subpage=='news-add'||$subpage=='news-edit')
         echo '<script type="text/javascript" src="'.base_url().'static/admin/assets/ckeditor/ckeditor.js"></script>';
     ?>
-    <?php if($subpage=='order-edit')
+    <?php if($subpage=='order-edit'||$subpage=='invoice-info')
         echo '
     <script src="'.base_url().'static/admin/js/jquery.js"></script>
     <script src="'.base_url().'static/admin/js/bootstrap.min.js"></script>

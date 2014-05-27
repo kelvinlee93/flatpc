@@ -53,11 +53,20 @@ Class dangnhap extends CI_Controller{
 				}
 				if($_POST['username']==NULL&&$_POST['password']==NULL)
 					$loi = 'Chưa nhập tên đăng nhập hoặc mật khẩu';				
-				$this->data['loi'] = $loi;				
+				$this->data['loi'] = $loi;
+				$this->data['dangky'] = 0;				
 				$this->load->view('dangnhap',$this->data);
 			}
 		}
-		else $this->load->view('dangnhap',$this->data);
+		else 
+			{
+				$dangky = $this->input->get("dangky");
+				if ($dangky=="thanhcong")
+					$this->data['dangky'] = 1;
+				else $this->data['dangky'] = 0;
+				
+				$this->load->view('dangnhap',$this->data);
+			}
 	}
 
 }

@@ -22,10 +22,14 @@
                   </li>
 
                   <li class="sub-menu">
-                      <a href="<?=base_url()?>admin/sanpham" <?php if($page=='product') echo 'class="active"'?>>
+                      <a href="javascript:;" <?php if($page=='product') echo 'class="active"'?>>
                           <i class="icon-desktop"></i>
                           <span>Sản phẩm</span>
-                      </a>                      
+                      </a>
+                      <ul class="sub">
+                          <li <?php if($subpage=='product-manage'||$subpage=='product-edit') echo 'class="active"'?>><a href="<?=base_url()?>admin/sanpham">Quản lý</a></li>
+                          <li <?php if($subpage=='product-add') echo 'class="active"'?>><a href="<?=base_url()?>admin/sanpham/them">Thêm mới</a></li>                          
+                      </ul>                      
                   </li>
 
                   <li class="sub-menu">

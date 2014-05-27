@@ -33,7 +33,7 @@
                                           <?php echo form_error('tennguoinhan'); ?>                                          
                                       </div>
                                       <div class="form-group ">
-                                          <label for="sdtnguoinhan" class="control-label col-lg-2"><strong>SĐT khách hàng <span style="color: red">*</span></strong></label>
+                                          <label for="sdtnguoinhan" class="control-label col-lg-2"><strong>SĐT người nhận <span style="color: red">*</span></strong></label>
                                           <div class="col-lg-4">
                                               <input class=" form-control" id="sdtnguoinhan" name="sdtnguoinhan" type="text" value="<?php echo set_value('sdtnguoinhan'); ?>"/>
                                           </div>
@@ -70,7 +70,7 @@
                                           <select name="chonsanpham[]" class="multi-select" multiple="" id="chonsanpham" >
                                             <optgroup label="MÁY TÍNH BẢNG">
                                               <?php foreach ($tablet as $item) {
-                                                  if ($item['SOLUONG']>0)
+                                                  if ($item['TINHTRANG']==1)
                                                     {
                                                       if (isset($_POST["chonsanpham"]))
                                                       {
@@ -88,13 +88,15 @@
                                                       }
                                                       else echo '<option value="'.$item['ID'].'">'.$item['TENSANPHAM'].' ('.$item['SOLUONG'].')</option>';
                                                     }
-                                                  else
+                                                  elseif ($item['TINHTRANG']==0)
                                                       echo '<option value="'.$item['ID'].'" disabled>'.$item['TENSANPHAM'].' (hết hàng)</option>';
+                                                  elseif ($item['TINHTRANG']==-1)
+                                                      echo '<option value="'.$item['ID'].'" disabled>'.$item['TENSANPHAM'].' (ngưng kinh doanh)</option>';  
                                               } ?> 
                                             </optgroup>
                                             <optgroup label="MÁY TÍNH XÁCH TAY">
                                               <?php foreach ($laptop as $item) {
-                                                  if ($item['SOLUONG']>0)
+                                                  if ($item['TINHTRANG']==1)
                                                     {
                                                       if (isset($_POST["chonsanpham"]))
                                                       {
@@ -112,13 +114,15 @@
                                                       }
                                                       else echo '<option value="'.$item['ID'].'">'.$item['TENSANPHAM'].' ('.$item['SOLUONG'].')</option>';
                                                     }
-                                                  else
+                                                  elseif ($item['TINHTRANG']==0)
                                                       echo '<option value="'.$item['ID'].'" disabled>'.$item['TENSANPHAM'].' (hết hàng)</option>';
+                                                  elseif ($item['TINHTRANG']==-1)
+                                                      echo '<option value="'.$item['ID'].'" disabled>'.$item['TENSANPHAM'].' (ngưng kinh doanh)</option>';  
                                               } ?> 
                                             </optgroup>
                                             <optgroup label="MÁY TÍNH ĐỂ BÀN">
                                               <?php foreach ($desktop as $item) {
-                                                  if ($item['SOLUONG']>0)
+                                                  if ($item['TINHTRANG']==1)
                                                     {
                                                       if (isset($_POST["chonsanpham"]))
                                                       {
@@ -136,13 +140,15 @@
                                                       }
                                                       else echo '<option value="'.$item['ID'].'">'.$item['TENSANPHAM'].' ('.$item['SOLUONG'].')</option>';
                                                     }
-                                                  else
+                                                  elseif ($item['TINHTRANG']==0)
                                                       echo '<option value="'.$item['ID'].'" disabled>'.$item['TENSANPHAM'].' (hết hàng)</option>';
+                                                  elseif ($item['TINHTRANG']==-1)
+                                                      echo '<option value="'.$item['ID'].'" disabled>'.$item['TENSANPHAM'].' (ngưng kinh doanh)</option>';  
                                               } ?> 
                                             </optgroup>
                                             <optgroup label="PHỤ KIỆN">                                                
                                               <?php foreach ($phukien as $item) {
-                                                  if ($item['SOLUONG']>0)
+                                                  if ($item['TINHTRANG']==1)
                                                     {
                                                       if (isset($_POST["chonsanpham"]))
                                                       {
@@ -160,8 +166,10 @@
                                                       }
                                                       else echo '<option value="'.$item['ID'].'">'.$item['TENSANPHAM'].' ('.$item['SOLUONG'].')</option>';
                                                     }
-                                                  else
+                                                  elseif ($item['TINHTRANG']==0)
                                                       echo '<option value="'.$item['ID'].'" disabled>'.$item['TENSANPHAM'].' (hết hàng)</option>';
+                                                  elseif ($item['TINHTRANG']==-1)
+                                                      echo '<option value="'.$item['ID'].'" disabled>'.$item['TENSANPHAM'].' (ngưng kinh doanh)</option>';  
                                               } ?> 
                                             </optgroup>                                                 
                                           </select>

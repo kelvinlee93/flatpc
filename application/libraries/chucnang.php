@@ -6,7 +6,7 @@ class chucnang{
 	var $admin = 'NGUOIDUNG';	
 	
 	//checkSession(): un, bm, lg
-	function checkSession(){		
+	function checkSession(){
 		$this->CI=&get_instance();
 		$arr = $this->CI->session->all_userdata();
 		
@@ -147,6 +147,17 @@ class chucnang{
 				{
 					return TRUE;
 				}
+				else 
+				{
+					$query = $this->CI->db->query('	SELECT a.ID
+												FROM '.$this->admin.' a
+												WHERE a.SDT = ?',
+												$arr['username']);
+					if($query->num_rows() > 0)
+					{
+						return TRUE;
+					}
+				}
 			}
 		}
 		return FALSE;
@@ -163,7 +174,15 @@ class chucnang{
 				{
 					return $query->row()->TRANGTHAI;
 				}
-				else return 0;
+				else
+				{
+					$query = $this->CI->db->query('SELECT TRANGTHAI FROM '.$this->admin.' WHERE SDT = ?', $arr['username']);					
+					if($query->num_rows() > 0)
+					{
+						return $query->row()->TRANGTHAI;
+					}
+					else return 0;
+				} 
 			}
 			else return -3;
 		}
@@ -229,7 +248,34 @@ class chucnang{
 							}
 							else return -7;
 						}
-						else return -6;
+						else
+						{
+							$query = $this->CI->db->query(" SELECT TENDANGNHAP, QUYEN 
+														FROM ".$this->admin." 
+														WHERE SDT = ? AND TRANGTHAI = 1 AND MATKHAU = ?",
+														array($arr['username'], md5($arr['password'])));
+							if($query->num_rows()>0)
+							{
+								$quyen = $query->row()->QUYEN;
+								$arr['username'] = $query->row()->TENDANGNHAP;								
+								if(($quyen == 0)||($quyen == 1)||($quyen == 2))
+								{
+									$arrUser = array('un' => $arr['username'], 'bm' => $baomat, 'lg' => TRUE);																													
+									$this->CI->session->set_userdata($arrUser);
+									if(!isset($_SESSION)) 
+									{ 
+										session_start(); 
+									} 
+									$_SESSION['bm'] = $arrUser['bm'];
+									$_SESSION['un'] = $arrUser['un'];
+									$_SESSION['lg'] = $arrUser['lg'];
+									$_SESSION['quyen'] = $quyen;								
+									return 1;
+								}
+								else return -7;
+							}								
+							else return -6;
+						} 
 					}
 					else return -5;
 				}
@@ -257,7 +303,11 @@ class chucnang{
 				{
 					return $arr['username'];
 				}
-				else return NULL;
+				else
+				{
+
+				} 
+					return NULL;
 			}
 			else
 			{

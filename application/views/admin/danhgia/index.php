@@ -39,7 +39,8 @@
                                 <div class="adv-table">
                                     <table  class="display table table-bordered table-striped" id="example">
                                       <thead>
-                                      <tr>                                          
+                                      <tr> 
+                                          <th>#</th>                                         
                                           <th>Tên sản phẩm</th>
                                           <th>Lượt đánh giá</th>
                                           <th>Tổng điểm</th>
@@ -48,20 +49,22 @@
                                       </tr>
                                       </thead>
                                       <tbody>
-                                      <?php foreach ($result as $item) { ?>                                                                   
-                                         <tr>                                            
+                                      <?php $i = 1; foreach ($result as $item) { ?>                                                                   
+                                         <tr>
+                                            <td class="center"><?=$i?></td>                                            
                                             <td><?=$item['TENSANPHAM']?></td>
                                             <td class="center"><?=$item['LUOTDANHGIA']?></td>
                                             <td class="center"><?=$item['TONGDIEM']?></td>
                                             <td class="center"><?=$item['DIEMDANHGIA']?></td>                                                                                        
                                             <td class="center"> 
-                                            <button class="btn btn-primary btn-xs" onclick="window.location.href='<?=base_url()?>admin/danhgia/capnhat?id=<?=$item['MASANPHAM']?>'"><i class="icon-pencil"></i></button>                                                                                        
+                                            <button class="btn btn-primary btn-xs" onclick="window.location.href='<?=base_url()?>admin/danhgia/capnhat?id=<?=$item['MASANPHAM']?>'"><i class="icon-pencil"></i></button>
                                             </td>
                                          </tr>     
-                                      <?php } ?> 
+                                      <?php $i++; } ?> 
                                       </tbody>
                                       <tfoot>
-                                      <tr>                                                                                  
+                                      <tr>  
+                                          <th>#</th>                                                                                
                                           <th>Tên sản phẩm</th>
                                           <th>Lượt đánh giá</th>
                                           <th>Tổng điểm</th>

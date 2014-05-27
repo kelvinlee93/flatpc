@@ -21,14 +21,14 @@
                                       <div class="form-group ">
                                           <label for="lastname" class="control-label col-lg-2"><strong>Tên <span style="color: red">*</span></strong></label>
                                           <div class="col-lg-4">
-                                              <input class=" form-control" id="lastname" name="lastname" type="text"  value="<?php echo set_value('lastname'); ?>"/>
+                                              <input class=" form-control" id="lastname" name="lastname" type="text" value="<?php echo set_value('lastname'); ?>"/>
                                           </div>
                                           <?php echo form_error('lastname'); ?>
                                       </div>
                                       <div class="form-group ">
                                           <label for="username" class="control-label col-lg-2"><strong>Tên đăng nhập <span style="color: red">*</span></strong></label>
                                           <div class="col-lg-4">
-                                              <input class=" form-control" id="username" name="username" type="text"  value="<?php echo set_value('username'); ?>"/>
+                                              <input class=" form-control" id="username" name="username" type="text" value="<?php echo set_value('username'); ?>"/>
                                           </div>
                                           <?php echo form_error('username'); ?>
                                       </div>                                      
@@ -49,7 +49,7 @@
                                       <div class="form-group ">
                                           <label for="email" class="control-label col-lg-2"><strong>Email <span style="color: red">*</span></strong></label>
                                           <div class="col-lg-4">
-                                              <input class="form-control " id="email" name="email" type="text"  value="<?php echo set_value('email'); ?>"/>
+                                              <input class="form-control " id="email" name="email" type="text" value="<?php echo set_value('email'); ?>"/>
                                           </div>
                                           <?php echo form_error('email'); ?>
                                       </div>

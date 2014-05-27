@@ -16,6 +16,7 @@
                                           <div class="col-lg-4">
                                               <input class=" form-control" id="tenkhachhang" name="tenkhachhang" type="text" value="<?=$order_info['Tenkhachhang']?>" readonly/>
                                               <input class=" form-control" id="hidden_field" name="hidden_field" type="hidden" value="1" readonly/>
+                                              <input class=" form-control" id="thanhvien" name="thanhvien" type="hidden" value="<?=$order_info['Thanhvien']?>" readonly/>
                                           </div>                                          
                                       </div>
                                       <div class="form-group ">
@@ -37,7 +38,7 @@
                                           </div>                                          
                                       </div>
                                       <div class="form-group ">
-                                          <label for="diachi" class="control-label col-lg-2"><strong>Địa chỉ <span style="color: red">*</span></strong></label>
+                                          <label for="diachi" class="control-label col-lg-2"><strong>Địa chỉ </strong></label>
                                           <div class="col-lg-4">
                                               <input class=" form-control" id="diachi" name="diachi" type="text"  value="<?=$order_info['Diachi']?>" readonly/>
                                           </div>                                          

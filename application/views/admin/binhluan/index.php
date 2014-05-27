@@ -39,7 +39,8 @@
                                 <div class="adv-table">
                                     <table  class="display table table-bordered table-striped" id="example">
                                       <thead>
-                                      <tr>                                          
+                                      <tr>
+                                          <th>#</th>                                          
                                           <th>Tên sản phẩm</th>
                                           <th>Tên khách hàng</th>
                                           <th>Email</th>
@@ -49,8 +50,9 @@
                                       </tr>
                                       </thead>
                                       <tbody>
-                                      <?php foreach ($result as $item) { ?>                                                                   
-                                         <tr>                                            
+                                      <?php $i = 1; foreach ($result as $item) { ?>                                                                   
+                                         <tr>
+                                            <td class="center"><?=$i?></td>                                            
                                             <td><?=$item['TENSANPHAM']?></td>
                                             <td><?=$item['TENKHACHHANG']?></td>
                                             <td><?=$item['EMAIL']?></td>
@@ -61,10 +63,11 @@
                                             <button class="btn btn-danger btn-xs" onclick="window.location.href='<?=base_url()?>admin/binhluan/xoa?id=<?=$item['ID']?>'"><i class="icon-remove"></i></button>
                                             </td>
                                          </tr>     
-                                      <?php } ?> 
+                                      <?php $i++; } ?> 
                                       </tbody>
                                       <tfoot>
-                                      <tr>                                                                                  
+                                      <tr>
+                                          <th>#</th>                                                                                  
                                           <th>Tên sản phẩm</th>
                                           <th>Tên khách hàng</th>
                                           <th>Email</th>

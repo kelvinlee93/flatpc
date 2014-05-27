@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
   <head>
     <meta charset="utf-8">    
     <link rel="shortcut icon" href="<?=base_url()?>static/img/favicon.ico">
@@ -10,20 +10,20 @@
     <link href="<?=base_url()?>static/admin/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?=base_url()?>static/admin/css/bootstrap-reset.css" rel="stylesheet">
     <!--external css-->
-    <link href="<?=base_url()?>static/admin/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="<?=base_url()?>static/admin/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
     <?php if($page=='dashboard')
         echo '
     <link href="'.base_url().'static/admin/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
     <link href="'.base_url().'static/admin/css/owl.carousel.css"rel="stylesheet" type="text/css">
     '
     ?>
-    <?php if($subpage=='user-manage'||$subpage=='rating-manage'||$subpage=='comment-manage'||$subpage=='news-manage'||$subpage=='order-manage')
+    <?php if($subpage=='user-manage'||$subpage=='rating-manage'||$subpage=='comment-manage'||$subpage=='news-manage'||$subpage=='order-manage'||$subpage=='invoice-manage'||$subpage=='product-manage')
         echo '
     <link href="'.base_url().'static/admin/assets/advanced-datatable/media/css/demo_page.css" rel="stylesheet" />
     <link href="'.base_url().'static/admin/assets/advanced-datatable/media/css/demo_table.css" rel="stylesheet" />
     '
     ?>
-    <?php if($subpage=='user-add'||$subpage=='user-edit'||$subpage=='rating-edit'||$subpage=='comment-edit'||$subpage=='news-edit'||$subpage=='news-add'||$subpage=='order-add')
+    <?php if($subpage=='user-add'||$subpage=='user-edit'||$subpage=='rating-edit'||$subpage=='comment-edit'||$subpage=='news-edit'||$subpage=='news-add'||$subpage=='order-add'||$subpage=='product-add')
         echo '    
     <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/bootstrap-fileupload/bootstrap-fileupload.css" />
     <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
@@ -56,7 +56,7 @@
               <div data-original-title="Đóng menu" data-placement="right" class="icon-reorder tooltips"></div>
           </div>
           <!--logo start-->
-          <a href="" class="logo" >Flat<span>PC</span></a>
+          <a href="<?=base_url('admin')?>" class="logo" >Flat<span>PC</span></a>
           <!--logo end-->                    
 
           <div class="top-nav ">

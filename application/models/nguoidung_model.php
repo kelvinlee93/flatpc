@@ -18,7 +18,7 @@ Class Nguoidung_model extends CI_Model{
 	}
 
 	function insert($Hodem, $Ten, $Tendangnhap, $Matkhau, $Email, $Ngaysinh, $Diachi, $Tinhthanh, $Gioitinh, $CMND, $SDT, $Quyen, $Trangthai, $Anhdaidien)
-	{		
+	{				
 		$Matkhau = do_hash($Matkhau, 'md5');
 		if($Anhdaidien!=6)	
 		{	

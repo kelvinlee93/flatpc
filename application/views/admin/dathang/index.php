@@ -65,10 +65,11 @@
                                               <?php if ($item['TINHTRANG']==0) echo '<span class="label label-danger label-mini">Đã hủy</span>';
                                                     elseif ($item['TINHTRANG']==1) echo '<span class="label label-warning label-mini">Chờ xác nhận</span>';
                                                     elseif ($item['TINHTRANG']==2) echo '<span class="label label-info label-mini">Đang xử lý</span>';
+                                                    elseif ($item['TINHTRANG']==-1) echo '<span class="label label-success label-mini">Đã xử lý</span>';
                                               ?>
                                             </td> 
                                             <td class="center">                                             
-                                            <?php if ($item['TINHTRANG']!=0)
+                                            <?php if ($item['TINHTRANG']!=0||$item['TINHTRANG']!=-1)
                                                 {
                                                     if ($item['TINHTRANG']==1)
                                                     {
