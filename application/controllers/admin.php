@@ -371,7 +371,7 @@ Class admin extends CI_Controller{
 			$role = $this->data['Role'];
 			if($role == 0)
 				return redirect(base_url());
-			else{												
+			else{
 				if($chucnang == "xem"){
 					$this->data['title'] = 'Sản phẩm';
 					$this->data['page'] = 'product';
@@ -434,8 +434,43 @@ Class admin extends CI_Controller{
 		                  'max_width'       => 1024  
 	                );        			        
 				    $this->load->library('upload', $this->setting);
-					
-					if ($this->form_validation->run() == FALSE){
+					if (isset($_POST["hidden_field"])){						
+						$Tensanpham = $this->input->post('productname',TRUE);
+						$Loaisanpham = $this->input->post('productcategory',TRUE);
+						$Nhacungcap = $this->input->post('provider',TRUE);
+						$Mota = $this->input->post('desc',TRUE);
+						$Dongia = $this->input->post('price',TRUE);																		
+		                $Hinhdaidien = $this->input->post('avatar',TRUE);
+
+		                $Hedieuhanh = $this->input->post('os',TRUE);
+		                $Manhinh = $this->input->post('screen',TRUE);
+		                $Vixuly = $this->input->post('cpu',TRUE);
+		                $Chipset = $this->input->post('chipset',TRUE);
+		                $Dohoa = $this->input->post('graphic',TRUE);
+		                $RAM = $this->input->post('ram',TRUE);
+		                $ROM = $this->input->post('rom',TRUE);
+		                $Camera = $this->input->post('camera',TRUE);
+		                $Ketnoi = $this->input->post('connect',TRUE);
+		                $Diaquang = $this->input->post('cdrom',TRUE);
+		                $Pin = $this->input->post('pin',TRUE);
+		                $Trongluong = $this->input->post('weight',TRUE);
+		                $Baohanh = $this->input->post('warranty',TRUE);
+		                $Khuyenmai = $this->input->post('promotion',TRUE);
+
+		                $tmp = $this->sanpham_model->insert($Tensanpham, $Loaisanpham, $Nhacungcap, $Mota, $Dongia, $Hinhdaidien, $Hedieuhanh, $Manhinh, $Vixuly, $Chipset, $Dohoa, $RAM, $ROM, $Camera, $Ketnoi, $Diaquang, $Pin, $Trongluong, $Baohanh, $Khuyenmai);
+						
+						if($tmp)
+						{							
+							$this->session->set_userdata('sanpham_action', '2');														
+							return redirect(base_url('admin/sanpham'));
+						}							
+						else
+						{ 
+							$this->session->set_userdata('sanpham_action', '3');
+							return redirect(base_url('admin/sanpham'));
+						}
+					}
+					elseif ($this->form_validation->run() == FALSE){
 						$this->data['loaisanpham'] = $this->sanpham_model->get_loaisanpham();
 						$this->data['nhacungcap'] = $this->sanpham_model->get_nhacungcap();
 
@@ -444,99 +479,73 @@ Class admin extends CI_Controller{
 						$this->load->view('admin/sanpham/insert',$this->data);				
 						$this->load->view('admin/include/footer',$this->data);
 					}			
-					else{	
-						$Hodem = $this->input->post('firstname',TRUE);
-						$Ten = $this->input->post('lastname',TRUE);
-						$Tendangnhap = $this->input->post('username',TRUE);
-						$Matkhau = $this->input->post('password',TRUE);
-						$Email = $this->input->post('email',TRUE);						
-						$Ngaysinh = $this->input->post('birth',TRUE);
-						$Ngaysinh = date('Y-m-d', strtotime($Ngaysinh));
-						$Diachi = $this->input->post('address',TRUE);
-						$Tinhthanh = $this->input->post('city',TRUE);
-						$Gioitinh = $this->input->post('sex',TRUE);						
-						$CMND = $this->input->post('cmnd',TRUE);
-						$SDT = $this->input->post('sdt',TRUE);
-						$Quyen = $this->input->post('role',TRUE);
-						$Trangthai = $this->input->post('status',TRUE);						
-		                $Anhdaidien = 6;		                
+					elseif ($this->form_validation->run() == TRUE){	
+						$Tensanpham = $this->input->post('productname',TRUE);
+						$Loaisanpham = $this->input->post('productcategory',TRUE);
+						$Nhacungcap = $this->input->post('provider',TRUE);
+						$Mota = $this->input->post('desc',TRUE);
+						$Dongia = $this->input->post('price',TRUE);																		
+		                $Hinhdaidien = 0;		                
 
 				        if($this->upload->do_upload('avatar'))
 				        {			            	
 		                	$img_data = array('upload_data' => $this->upload->data());		                	
-		                	$Anhdaidien = $img_data['upload_data']['file_name'];		                			                			                
+		                	$Hinhdaidien = $img_data['upload_data']['file_name'];		                			                			                
 				        }				        		                					       
 
-						$tmp = $this->nguoidung_model->insert($Hodem, $Ten, $Tendangnhap, $Matkhau, $Email, $Ngaysinh, $Diachi, $Tinhthanh, $Gioitinh, $CMND, $SDT, $Quyen, $Trangthai, $Anhdaidien);
-						
-						if($tmp)
-						{							
-							$this->session->set_userdata('nguoidung_action', '2');														
-							return redirect(base_url('admin/nguoidung'));
-						}							
-						else
-						{ 
-							$this->session->set_userdata('nguoidung_action', '3');
-							return redirect(base_url('admin/nguoidung'));
-						}
-					}					
+				        $this->data['product_info'] = array('Tensanpham' => $Tensanpham, 'Loaisanpham' => $Loaisanpham, 'Nhacungcap' => $Nhacungcap, 'Mota' => $Mota, 'Dongia' => $Dongia, 'Hinhdaidien' => $Hinhdaidien);				        
+
+				        $this->data['loaisanpham'] = $this->sanpham_model->get_loaisanpham();
+						$this->data['nhacungcap'] = $this->sanpham_model->get_nhacungcap();
+						$this->data['title'] = $Tensanpham;
+						$this->data['page'] = 'product';
+						$this->data['subpage'] = 'product-add';
+				        				       
+			        	$this->load->view('admin/include/header',$this->data);
+						$this->load->view('admin/include/sidebar',$this->data);									
+						$this->load->view('admin/sanpham/detail',$this->data);				
+						$this->load->view('admin/include/footer',$this->data);				        				
+					}									
 				}
-				elseif ($chucnang == "doithongtin") {
+				elseif ($chucnang == "capnhat") {
 					$id = $this->input->get("id");																				
 					if(!is_numeric($id)||$id<1)
 					{ 
-						$this->session->set_userdata('nguoidung_action', '3');
-						return redirect(base_url('admin/nguoidung'));
+						$this->session->set_userdata('sanpham_action', '3');
+						return redirect(base_url('admin/sanpham'));
 					}				
 
-					$this->data['title'] = 'Đổi thông tin người dùng';
-					$this->data['page'] = 'user';
-					$this->data['subpage'] = 'user-edit';					
+					$this->data['title'] = 'Cập nhật sản phẩm';
+					$this->data['page'] = 'product';
+					$this->data['subpage'] = 'product-edit';					
 					
 					$config = array(	
 		               array(
-		                     'field'   => 'firstname', 
-		                     'label'   => 'Họ đệm', 
-		                     'rules'   => 'trim|required|xss_clean|min_length[2]|max_length[20]'
+		                     'field'   => 'productname', 
+		                     'label'   => 'Tên sản phẩm', 
+		                     'rules'   => 'trim|required|xss_clean|min_length[2]'
 		                  ),
 		               array(
-		                     'field'   => 'lastname', 
-		                     'label'   => 'Tên', 
-		                     'rules'   => 'trim|required|xss_clean|min_length[2]|max_length[20]'
-		                  ),		               		              
-		               array(
-		                     'field'   => 'password', 
-		                     'label'   => 'Mật khẩu', 
-		                     'rules'   => 'max_length[20]|min_length[6]|callback_ktmatkhau'
-		                  ),		               
-		               array(
-		                     'field'   => 'birth', 
-		                     'label'   => 'Ngày sinh', 
-		                     'rules'   => 'trim|required|callback_ktngaysinh'
-		                  ),		               
-		               array(
-		                     'field'   => 'city', 
-		                     'label'   => 'tỉnh thành', 
-		                     'rules'   => 'callback_kttinhthanh'
-		                  ),		               
-		               array(
-		                     'field'   => 'cmnd', 
-		                     'label'   => 'Chứng minh nhân dân', 
-		                     'rules'   => 'numeric|exact_length[9]'
+		                     'field'   => 'productcategory', 
+		                     'label'   => 'Loại sản phẩm', 
+		                     'rules'   => 'required'
 		                  ),
 		               array(
-		                     'field'   => 'sdt', 
-		                     'label'   => 'Số điện thoại', 
-		                     'rules'   => 'numeric|max_length[13]|min_length[10]'		                     
+		                     'field'   => 'provider', 
+		                     'label'   => 'Nhà cung cấp', 
+		                     'rules'   => 'required'
+		                  ),		               
+		               array(
+		                     'field'   => 'price', 
+		                     'label'   => 'Đơn giá', 
+		                     'rules'   => 'required|numeric|min_length[4]'
 		                  )		               
 		            );
 					
 					$this->form_validation->set_rules($config);
-					$this->form_validation->set_message('required', '%s không được trống');													
-					$this->form_validation->set_message('max_length', '%s quá dài');
-					$this->form_validation->set_message('min_length', '%s quá ngắn');										
-					$this->form_validation->set_message('numeric', 'Vui lòng chỉ nhập số');
-					$this->form_validation->set_message('exact_length', 'Vui lòng nhập chính xác 9 chữ số CMND');
+					$this->form_validation->set_message('required', '%s không được trống');					
+					$this->form_validation->set_message('min_length', '%s quá thấp');					
+					$this->form_validation->set_message('numeric', 'Vui lòng chỉ nhập số');					
 
 					$this->form_validation->set_error_delimiters('<label class="control-label col-lg-6" style="color: red"><strong>', '</strong></label>');
 
@@ -547,67 +556,97 @@ Class admin extends CI_Controller{
 		                  'max_size'        => 2048,
 		                  'max_height'      => 768,
 		                  'max_width'       => 1024  
-	                );        			        
+	                );
+
 				    $this->load->library('upload', $this->setting);
 
 					if ($this->form_validation->run() == FALSE)
 					{
-						$this->data['result'] = $this->nguoidung_model->get_userinfo($id);						
-						if($this->data['result']==FALSE)
+						$this->data['loaisanpham'] = $this->sanpham_model->get_loaisanpham();
+						$this->data['nhacungcap'] = $this->sanpham_model->get_nhacungcap();
+
+						$this->data['result_sanpham'] = $this->sanpham_model->edit($id);
+						$this->data['result_chitietsanpham'] = $this->sanpham_model->detail($id);
+												
+						if($this->data['result_sanpham']==FALSE||$this->data['result_chitietsanpham']==FALSE)
 						{
-							$this->session->set_userdata('nguoidung_action', '3');
-							return redirect(base_url('admin/nguoidung'));
+							$this->session->set_userdata('sanpham_action', '3');
+							return redirect(base_url('admin/sanpham'));
 						}
-						$this->data['tinhthanh'] = $this->nguoidung_model->get_tinhthanh();
+						
 						$this->load->view('admin/include/header',$this->data);
 						$this->load->view('admin/include/sidebar',$this->data);									
-						$this->load->view('admin/nguoidung/edit',$this->data);				
+						$this->load->view('admin/sanpham/edit',$this->data);				
 						$this->load->view('admin/include/footer',$this->data);
 					}
 					else
 					{
-						$Hodem = $this->input->post('firstname',TRUE);
-						$Ten = $this->input->post('lastname',TRUE);
-						$Tendangnhap = $this->input->post('username',TRUE);
-						$Matkhau = $this->input->post('password',TRUE);
-						if($Matkhau)
-							$Matkhau = do_hash($Matkhau,'md5');
-						else
-						{
-							$Matkhau_old = $this->input->post('password_old',TRUE);
-							$Matkhau = $Matkhau_old;
-						}						
-						$Email = $this->input->post('email',TRUE);						
-						$Ngaysinh = $this->input->post('birth',TRUE);
-						$Ngaysinh = date('Y-m-d', strtotime($Ngaysinh));
-						$Diachi = $this->input->post('address',TRUE);
-						$Tinhthanh = $this->input->post('city',TRUE);
-						$Gioitinh = $this->input->post('sex',TRUE);						
-						$CMND = $this->input->post('cmnd',TRUE);
-						$SDT = $this->input->post('sdt',TRUE);
-						$Quyen = $this->input->post('role',TRUE);
-						$Trangthai = $this->input->post('status',TRUE);						
-		                $Anhdaidien = $this->input->post('avatar_old',TRUE);
+						$Tensanpham = $this->input->post('productname',TRUE);
+						$Loaisanpham = $this->input->post('productcategory',TRUE);
+						$Soluong = $this->input->post('soluong',TRUE);
+						$Tinhtrang = $this->input->post('tinhtrang',TRUE);
+						$Luotxem = $this->input->post('luotxem',TRUE);
+						$Luotmua = $this->input->post('luotmua',TRUE);
+						$Nhacungcap = $this->input->post('provider',TRUE);
+						$Mota = $this->input->post('desc',TRUE);
+						$Dongia = $this->input->post('price',TRUE);																		
+		                $Hinhdaidien = $this->input->post('avatar',TRUE);
+
+		                $Hedieuhanh = $this->input->post('os',TRUE);
+		                $Manhinh = $this->input->post('screen',TRUE);
+		                $Vixuly = $this->input->post('cpu',TRUE);
+		                $Chipset = $this->input->post('chipset',TRUE);
+		                $Dohoa = $this->input->post('graphic',TRUE);
+		                $RAM = $this->input->post('ram',TRUE);
+		                $ROM = $this->input->post('rom',TRUE);
+		                $Camera = $this->input->post('camera',TRUE);
+		                $Ketnoi = $this->input->post('connect',TRUE);
+		                $Diaquang = $this->input->post('cdrom',TRUE);
+		                $Pin = $this->input->post('pin',TRUE);
+		                $Trongluong = $this->input->post('weight',TRUE);
+		                $Baohanh = $this->input->post('warranty',TRUE);
+		                $Khuyenmai = $this->input->post('promotion',TRUE);
 
 				        if($this->upload->do_upload('avatar'))
 				        {			            	
 		                	$img_data = array('upload_data' => $this->upload->data());		                	
 		                	$Anhdaidien = $img_data['upload_data']['file_name'];		                			                			                
-				        }				        				        		                					        
+				        }				        
 
-						$tmp = $this->nguoidung_model->edit($id, $Hodem, $Ten, $Tendangnhap, $Matkhau, $Email, $Ngaysinh, $Diachi, $Tinhthanh, $Gioitinh, $CMND, $SDT, $Quyen, $Trangthai, $Anhdaidien);
+						$tmp = $this->sanpham_model->update($id, $Tensanpham, $Loaisanpham, $Soluong, $Tinhtrang, $Luotxem, $Luotmua, $Nhacungcap, $Mota, $Dongia, $Hinhdaidien, $Hedieuhanh, $Manhinh, $Vixuly, $Chipset, $Dohoa, $RAM, $ROM, $Camera, $Ketnoi, $Diaquang, $Pin, $Trongluong, $Baohanh, $Khuyenmai);
 						
 						if($tmp)
 						{							
-							$this->session->set_userdata('nguoidung_action', '2');														
-							return redirect(base_url('admin/nguoidung'));
+							$this->session->set_userdata('sanpham_action', '2');														
+							return redirect(base_url('admin/sanpham'));
 						}							
 						else
 						{ 
-							$this->session->set_userdata('nguoidung_action', '3');
-							return redirect(base_url('admin/nguoidung'));
+							$this->session->set_userdata('sanpham_action', '3');
+							return redirect(base_url('admin/sanpham'));
 						}
 					}						
+				}
+				elseif ($chucnang == "nhaphang"){
+					$this->data['title'] = 'Nhập hàng';
+					$this->data['page'] = 'product';
+					$this->data['subpage'] = 'product-import';
+					if($this->session->userdata('sanpham_action')==FALSE){
+						$this->session->set_userdata('sanpham_action', '1');
+						$this->data['sanpham_action'] = $this->session->userdata('sanpham_action');
+					}
+					else $this->data['sanpham_action'] = $this->session->userdata('sanpham_action');	
+					$this->session->set_userdata('sanpham_action', '1');
+
+					$this->data['tablet'] = $this->thongtindathang_model->get_sanpham_tablet();
+					$this->data['laptop'] = $this->thongtindathang_model->get_sanpham_laptop();
+					$this->data['desktop'] = $this->thongtindathang_model->get_sanpham_desktop();
+					$this->data['phukien'] = $this->thongtindathang_model->get_sanpham_phukien();
+
+					$this->load->view('admin/include/header',$this->data);
+					$this->load->view('admin/include/sidebar',$this->data);									
+					$this->load->view('admin/sanpham/import',$this->data);				
+					$this->load->view('admin/include/footer',$this->data);
 				}
 				elseif ($chucnang == "ngungkinhdoanh") {
 						$id = $this->input->get("id");																				

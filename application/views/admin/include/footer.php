@@ -72,7 +72,7 @@
     </script>    
     '
     ?>
-    <?php if($subpage=='user-add'||$subpage=='user-edit'||$subpage=='rating-edit'||$subpage=='comment-edit'||$subpage=='news-add'||$subpage=='news-edit'||$subpage=='order-add'||$subpage=='product-add')
+    <?php if($subpage=='user-add'||$subpage=='user-edit'||$subpage=='rating-edit'||$subpage=='comment-edit'||$subpage=='news-add'||$subpage=='news-edit'||$subpage=='order-add'||$subpage=='product-add'||$subpage=='product-edit'||$subpage=='product-import')
         echo '        
     <script src="'.base_url().'static/admin/js/jquery.js"></script>
     <script src="'.base_url().'static/admin/js/bootstrap.min.js"></script>

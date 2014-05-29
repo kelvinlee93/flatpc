@@ -28,7 +28,8 @@
                       </a>
                       <ul class="sub">
                           <li <?php if($subpage=='product-manage'||$subpage=='product-edit') echo 'class="active"'?>><a href="<?=base_url()?>admin/sanpham">Quản lý</a></li>
-                          <li <?php if($subpage=='product-add') echo 'class="active"'?>><a href="<?=base_url()?>admin/sanpham/them">Thêm mới</a></li>                          
+                          <li <?php if($subpage=='product-add') echo 'class="active"'?>><a href="<?=base_url()?>admin/sanpham/them">Thêm mới</a></li>
+                          <li <?php if($subpage=='product-import') echo 'class="active"'?>><a href="<?=base_url()?>admin/sanpham/nhaphang">Nhập hàng</a></li>                          
                       </ul>                      
                   </li>
 

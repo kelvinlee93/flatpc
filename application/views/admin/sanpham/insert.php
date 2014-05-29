@@ -86,7 +86,7 @@
                                       </div>
                                       <div class="form-group ">
                                           <div class="col-lg-offset-2 col-lg-10">
-                                              <button class="btn btn-danger" type="submit">Thêm</button>
+                                              <button class="btn btn-danger" type="submit">Tiếp theo</button>
                                               <button class="btn btn-default" type="button" onclick="window.location.href='<?=base_url('admin/sanpham')?>'">Hủy</button>
                                           </div>
                                       </div>

@@ -8,7 +8,7 @@ Class Sanpham_model extends CI_Model{
 	}
 	
 	function get_sanpham(){
-		$query = $this->db->query("SELECT S.*, N.TENNCC, H.TENANH, L.TENLOAI FROM SANPHAM S, NHACUNGCAP N, HINHANH H, LOAISANPHAM L WHERE S.NHACUNGCAP = N.ID AND S.HINHDAIDIEN = H.ID AND S.LOAI = L.ID");
+		$query = $this->db->query("SELECT S.*, N.TENNCC, H.TENANH, L.TENLOAI FROM SANPHAM S, NHACUNGCAP N, HINHANH H, LOAISANPHAM L WHERE S.NHACUNGCAP = N.ID AND S.HINHDAIDIEN = H.ID AND S.LOAI = L.ID ORDER BY S.ID ASC");
 		return $query->result_array();
 	}
 
@@ -47,6 +47,137 @@ Class Sanpham_model extends CI_Model{
 		else return TRUE;
 	}
 
+	function insert($Tensanpham, $Loaisanpham, $Nhacungcap, $Mota, $Dongia, $Hinhdaidien, $Hedieuhanh, $Manhinh, $Vixuly, $Chipset, $Dohoa, $RAM, $ROM, $Camera, $Ketnoi, $Diaquang, $Pin, $Trongluong, $Baohanh, $Khuyenmai){
+		if (!is_numeric($Hinhdaidien))
+		{
+			$query = $this->db->query('INSERT INTO HINHANH (TENANH) VALUES (\''.$Hinhdaidien.'\')');
+			$query = $this->db->query('SELECT ID FROM HINHANH WHERE TENANH = \''.$Hinhdaidien.'\'');		
+			if ($query->num_rows() > 0)				
+			   foreach ($query->result() as $row)		   
+			      $Hinhdaidien = $row->ID;
+		}
+
+		$data = array(
+			"Tensanpham" => $Tensanpham,
+			"Loai" => $Loaisanpham,
+			"Nhacungcap" =>	$Nhacungcap,
+			"Soluong" => 0,
+			"Hinhdaidien" => $Hinhdaidien,
+			"Mota" => $Mota,			
+			"Dongia" => $Dongia,
+			"Tinhtrang" => 0,
+			"Luotxem" => 0,
+			"Luotmua" => 0
+		);
+
+		$this->db->insert($this->table, $data);
+
+		if($this->db->insert_id() > 0)
+		{
+			$query = $this->db->query('SELECT ID FROM CHITIETSANPHAM ORDER BY ID DESC LIMIT 1');		
+			if ($query->num_rows() > 0)				
+			   foreach ($query->result() as $row)		   
+			      $Masanpham = $row->ID;
+			$data = array(
+				"Masanpham" => $Masanpham,
+				"Hedieuhanh" => $Hedieuhanh,
+				"Manhinh" =>	$Manhinh,
+				"CPU" => $Vixuly,
+				"Chipset" => $Chipset,
+				"Dohoa" => $Dohoa,			
+				"RAM" => $RAM,
+				"ROM" => $ROM,
+				"Camera" => $Camera,
+				"Ketnoi" => $Ketnoi,
+				"Diaquang" => $Diaquang,
+				"Pin" => $Pin,
+				"Trongluong" => $Trongluong,
+				"Baohanh" => $Baohanh,
+				"Khuyenmai" => $Khuyenmai										
+			);
+
+			$this->db->trans_start();
+			$this->db->insert('CHITIETSANPHAM', $data);									
+			$this->db->trans_complete();
+
+			if ($this->db->trans_status() === FALSE)
+				return FALSE;
+			else return TRUE;
+		}
+		else return FALSE;
+	}
+
+	function edit($id){		
+		$query = $this->db->query('SELECT S.*, H.TENANH FROM SANPHAM S, HINHANH H WHERE S.HINHDAIDIEN = H.ID AND S.ID = '.$id);
+		return $query->result_array();
+	}
+
+	function detail($id){		
+		$query = $this->db->get_where('CHITIETSANPHAM',array('ID'=>$id));
+		return $query->result_array();
+	}	
+
+	function update($Id, $Tensanpham, $Loaisanpham, $Soluong, $Tinhtrang, $Luotxem, $Luotmua, $Nhacungcap, $Mota, $Dongia, $Hinhdaidien, $Hedieuhanh, $Manhinh, $Vixuly, $Chipset, $Dohoa, $RAM, $ROM, $Camera, $Ketnoi, $Diaquang, $Pin, $Trongluong, $Baohanh, $Khuyenmai){
+		if (!is_numeric($Hinhdaidien))
+		{
+			$query = $this->db->query('INSERT INTO HINHANH (TENANH) VALUES (\''.$Hinhdaidien.'\')');
+			$query = $this->db->query('SELECT ID FROM HINHANH WHERE TENANH = \''.$Hinhdaidien.'\'');		
+			if ($query->num_rows() > 0)				
+			   foreach ($query->result() as $row)		   
+			      $Hinhdaidien = $row->ID;
+		}
+
+		$data = array(
+			"Tensanpham" => $Tensanpham,
+			"Loai" => $Loaisanpham,
+			"Nhacungcap" =>	$Nhacungcap,
+			"Soluong" => $Soluong,
+			"Hinhdaidien" => $Hinhdaidien,
+			"Mota" => $Mota,			
+			"Dongia" => $Dongia,
+			"Tinhtrang" => $Tinhtrang,
+			"Luotxem" => $Luotxem,
+			"Luotmua" => $Luotmua
+		);
+		
+		$this->db->trans_start();
+		$this->db->where("Id", $Id);
+		$query = $this->db->update($this->table, $data);
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === TRUE)
+		{			
+			$data = array(
+				"Masanpham" => $Id,
+				"Hedieuhanh" => $Hedieuhanh,
+				"Manhinh" =>	$Manhinh,
+				"CPU" => $Vixuly,
+				"Chipset" => $Chipset,
+				"Dohoa" => $Dohoa,			
+				"RAM" => $RAM,
+				"ROM" => $ROM,
+				"Camera" => $Camera,
+				"Ketnoi" => $Ketnoi,
+				"Diaquang" => $Diaquang,
+				"Pin" => $Pin,
+				"Trongluong" => $Trongluong,
+				"Baohanh" => $Baohanh,
+				"Khuyenmai" => $Khuyenmai										
+			);
+			
+			$this->db->trans_start();
+			$this->db->where("MASANPHAM", $Id);
+			$query = $this->db->update('CHITIETSANPHAM', $data);										
+			$this->db->trans_complete();
+
+			if ($this->db->trans_status() === FALSE)
+				return FALSE;
+			else return TRUE;
+		}
+		else return FALSE;
+	}
+
+
 /*
 	
 
@@ -59,45 +190,7 @@ Class Sanpham_model extends CI_Model{
 		
 		$query = $this->db->get_where($this->table,array('ID'=>$id));
 		return $query->result_array();
-	}
-
-	function insert($Tensanpham, $Loai, $Nhacungcap, $Soluong, $Hinh, $Mota, $Mota_en, $Dongia){
-		$data = array(
-			"Tensanpham" => $Tensanpham,
-			"Loai" => $Loai,
-			"Nhacungcap"	=>	$Nhacungcap,
-			"Soluong" => $Soluong,
-			"Hinh" => $Hinh,
-			"Mota" => $Mota,
-			"Mota_en"	=> $Mota_en,
-			"Dongia" => $Dongia
-		);
-		$this->db->insert($this->table, $data);
-		if($this->db->insert_id() > 0) return TRUE;
-		return FALSE;
-	}
-
-	function update($Id, $Tensanpham, $Loai, $Nhacungcap, $Soluong, $Hinh, $Mota, $Mota_en, $Dongia){
-		$data = array(
-			"Tensanpham" => $Tensanpham,
-			"Loai" => $Loai,
-			"Nhacungcap"	=>	$Nhacungcap,
-			"Soluong" => $Soluong,
-			"Hinh" => $Hinh,
-			"Mota" => $Mota,
-			"Mota_en" => $Mota_en,
-			"Dongia" => $Dongia
-		);				
-
-		$this->db->trans_start();
-		$this->db->where("Id", $Id);
-		$query = $this->db->update($this->table, $data);
-		$this->db->trans_complete();
-
-		if ($this->db->trans_status() === FALSE)
-			return FALSE;
-		else return TRUE;
-	}
+	}		
 
 	function delete($id){
 		$this->db->delete($this->table,array('id'=>$id));
