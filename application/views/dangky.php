@@ -70,13 +70,13 @@
             <input class="form-control " id="password" name="password" type="password" placeholder="Mật khẩu"/>
             <?php echo form_error('confirm_password'); ?>
             <input class="form-control " id="confirm_password" name="confirm_password" type="password" placeholder="Nhập lại mật khẩu"/>            
-            </br>                    
-            <label class="checkbox">
-                <input id="agree" name="agree" type="checkbox" value="agree this condition" required> Tôi đồng ý với các Điều khoản dịch vụ và Chính sách bảo mật của FlatPC
-            </label>
-            <?php echo form_error('agree'); ?>
+            </br>  
+            <?php echo form_error('agree'); ?>                  
+            <label class="checkbox">                
+                <input id="agree" name="agree" type="checkbox" value="agree this condition"> Tôi đồng ý với các Điều khoản dịch vụ và Chính sách bảo mật của FlatPC
+            </label>            
             <button class="btn btn-lg btn-login btn-block" type="submit">ĐĂNG KÝ</button>          
-
+            <button class="btn btn-lg btn-info btn-block" type="button" onclick="window.location.href='<?=base_url()?>'">VỀ TRANG CHỦ</button>
         </div>
 
       </form>

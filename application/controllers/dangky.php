@@ -71,6 +71,11 @@ Class dangky extends CI_Controller{
 	                 'rules'   => 'numeric|exact_length[9]'
 	              ),
 	           array(
+	           		 'field'   => 'agree',
+	           		 'label'   => 'Điều khoản và chính sách',
+	           		 'rules'   => 'callback_checked'
+	           	  ),
+	           array(
 	                 'field'   => 'sdt', 
 	                 'label'   => 'Số điện thoại', 
 	                 'rules'   => 'required|numeric|max_length[13]|min_length[10]|is_unique[NGUOIDUNG.SDT]'
@@ -158,6 +163,15 @@ Class dangky extends CI_Controller{
     	else 
     	{
 			$this->form_validation->set_message('ktmatkhau', 'Mật khẩu không hợp lệ');
+    		return FALSE;
+    	}			
+	}
+
+	public function checked($check){
+		if($check) return TRUE;						    
+    	else 
+    	{
+			$this->form_validation->set_message('checked', 'Bạn chưa đồng ý với điều khoản và chính sách của FlatPC');
     		return FALSE;
     	}			
 	}
