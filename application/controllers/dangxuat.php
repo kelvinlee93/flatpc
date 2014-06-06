@@ -11,6 +11,6 @@ Class dangxuat extends CI_Controller{
 
 	public function index(){
 		$this->chucnang->dangxuat();
-		return redirect(base_url());
+		redirect($_SERVER['HTTP_REFERER'], 'location', 301);
 	}
 }

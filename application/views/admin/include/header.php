@@ -2,7 +2,7 @@
 <html lang="vi">
   <head>
     <meta charset="utf-8">    
-    <link rel="shortcut icon" href="<?=base_url()?>static/img/favicon.ico">
+    <link rel="shortcut icon" href="<?=base_url()?>static/home/images/favicon.ico">
 
     <title><?=$title?> - FlatPC Admin</title>
 
@@ -17,7 +17,7 @@
     <link href="'.base_url().'static/admin/css/owl.carousel.css"rel="stylesheet" type="text/css">
     '
     ?>
-    <?php if($subpage=='user-manage'||$subpage=='rating-manage'||$subpage=='comment-manage'||$subpage=='news-manage'||$subpage=='order-manage'||$subpage=='invoice-manage'||$subpage=='product-manage')
+    <?php if($subpage=='user-manage'||$subpage=='rating-manage'||$subpage=='comment-manage'||$subpage=='news-manage'||$subpage=='order-manage'||$subpage=='invoice-manage'||$subpage=='product-manage'||$subpage=='product-import-manage')
         echo '
     <link href="'.base_url().'static/admin/assets/advanced-datatable/media/css/demo_page.css" rel="stylesheet" />
     <link href="'.base_url().'static/admin/assets/advanced-datatable/media/css/demo_table.css" rel="stylesheet" />
@@ -33,6 +33,8 @@
     <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/bootstrap-daterangepicker/daterangepicker-bs3.css" />
     <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/bootstrap-datetimepicker/css/datetimepicker.css" />
     <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/jquery-multi-select/css/multi-select.css" />
+    <link href="'.base_url().'static/admin/assets/fancybox/source/jquery.fancybox.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/css/gallery.css" />
     '
     ?>
     <!-- Custom styles for this template -->

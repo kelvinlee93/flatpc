@@ -388,7 +388,7 @@ class chucnang{
 	}
 	
 	function dangxuat(){
-		$this->CI=&get_instance();		
+		$this->CI=&get_instance();			
 		$this->CI->session->sess_destroy();
 	}
 }

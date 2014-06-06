@@ -9,7 +9,7 @@ Class dangnhap extends CI_Controller{
 		$this->data['loi'] = "";		
 	}
 
-	function index($reg = ""){			
+	function index($reg = ""){				
 		if(isset($reg) && $reg != "")
 			$this->data['success'] = "Đăng ký thành công! Mời bạn đăng nhập...";
 		$this->data['title'] = 'Đăng nhập';
@@ -34,10 +34,7 @@ Class dangnhap extends CI_Controller{
 
 			if($tmp==1)
 			{															
-				$role = $this->chucnang->GetUserRole();																				
-				if ($role == 0)
-					return redirect(base_url());
-				else return redirect(base_url('admin'));
+				redirect($_SERVER['HTTP_REFERER'], 'location', 301);
 			}
 			else
 			{

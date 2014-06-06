@@ -58,7 +58,8 @@
                                       <div class="form-group ">
                                           <label class="control-label col-lg-2"><strong>Hình đại diện </strong></label>
                                           <div class="col-lg-4">
-                                              <img src="<?=base_url()?>static/img/<?php if(is_numeric($product_info['Hinhdaidien'])) echo 'chua-co-anh.gif'; else echo $product_info['Hinhdaidien']; ?>" width="320" heigh="250"/>                                              
+                                              <img src="<?=base_url()?>static/img/<?php if(is_numeric($product_info['Hinhdaidien'])) echo 'chua-co-anh.gif'; else echo $product_info['Hinhdaidien']; ?>" width="320" heigh="250"/>
+                                              <a class="fancybox" rel="group" href="<?=base_url()?>static/img/<?php if(is_numeric($product_info['Hinhdaidien'])) echo 'chua-co-anh.gif'; else echo $product_info['Hinhdaidien']; ?>"><span class="btn btn-white btn-file"><i class="icon-zoom-in"></i> Xem ảnh to</span></a>
                                           </div>                                                                                    
                                       </div>
                                       <header class="panel-heading">                                      
@@ -101,7 +102,7 @@
                                           </div>                                                                                    
                                       </div>
                                       <div class="form-group ">
-                                          <label for="rom" class="control-label col-lg-2"><strong>ROM </strong></label>
+                                          <label for="rom" class="control-label col-lg-2"><strong><?php if ($product_info['Loaisanpham']==2||$product_info['Loaisanpham']==3) echo 'Ổ cứng'; else echo 'ROM';?></strong></label>
                                           <div class="col-lg-4">
                                               <input class=" form-control" id="rom" name="rom" type="text" value="<?php echo set_value('rom'); ?>"/>                                              
                                           </div>                                                                                    

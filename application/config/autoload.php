@@ -52,7 +52,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database','session','cart','chucnang','form_validation'); 
+$autoload['libraries'] = array('database','session','cart','chucnang','form_validation','image_lib','pagination','user_agent'); 
 
 
 /*
@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('nguoidung_model','danhgia_model','binhluan_model','tintuc_model','thongtindathang_model','hoadon_model','sanpham_model');
+$autoload['model'] = array('nguoidung_model','danhgia_model','binhluan_model','tintuc_model','thongtindathang_model','hoadon_model','sanpham_model','public_model');
 
 
 /* End of file autoload.php */

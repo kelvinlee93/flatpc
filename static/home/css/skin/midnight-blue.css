@@ -1373,8 +1373,14 @@ footer .copyrights {
   background-color: #eeeeee;
   color: #444444;
 }
-.product-details .short-info span.available {
-  color: lightgreen;
+.product-details .short-info span.a {  
+  color: green;
+}
+.product-details .short-info span.u {
+  color: red;
+}
+.product-details .short-info span.o {
+  color: orange;
 }
 .product-details .special-offers {
   background: #eeeeee;

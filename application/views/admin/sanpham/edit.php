@@ -57,6 +57,7 @@
                                           <label for="price" class="control-label col-lg-2"><strong>Đơn giá <span style="color: red">*</span></strong></label>
                                           <div class="col-lg-4">
                                               <input class="form-control " id="price" name="price" type="text" value="<?=$result_sanpham[0]['DONGIA']?>"/>
+                                              <input class="form-control " id="ngay" name="ngay" type="hidden" value="<?=$result_sanpham[0]['NGAY']?>"/>
                                           </div>                                          
                                       </div>                                      
                                       <div class="form-group ">
@@ -71,8 +72,10 @@
                                                    <span class="btn btn-white btn-file">
                                                    <span class="fileupload-new"><i class="icon-paper-clip"></i> Đổi ảnh khác</span>
                                                    <span class="fileupload-exists"><i class="icon-undo"></i> Đổi ảnh khác</span>
+
                                                    <input type="file" class="default" name="avatar" id="avatar" />
-                                                   </span>                                                      
+                                                   </span> 
+                                                   <a class="fancybox" rel="group" href="<?=base_url()?>static/img/<?=$result_sanpham[0]['TENANH']?>"><span class="btn btn-white btn-file"><i class="icon-zoom-in"></i> Xem ảnh to</span></a>
                                                   </div>
                                               </div>                                          
                                           </div>                                                                             
@@ -117,7 +120,7 @@
                                           </div>                                                                                    
                                       </div>
                                       <div class="form-group ">
-                                          <label for="rom" class="control-label col-lg-2"><strong>ROM </strong></label>
+                                          <label for="rom" class="control-label col-lg-2"><strong><?php if ($result_sanpham[0]['LOAI']==2||$result_sanpham[0]['LOAI']==3) echo 'Ổ cứng'; else echo 'ROM';?> </strong></label>
                                           <div class="col-lg-4">
                                               <input class=" form-control" id="rom" name="rom" type="text" value="<?=$result_chitietsanpham[0]['ROM']?>"/>                                              
                                           </div>                                                                                    

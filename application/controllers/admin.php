@@ -140,9 +140,9 @@ Class admin extends CI_Controller{
 		                  'upload_path'     => dirname($_SERVER["SCRIPT_FILENAME"])."/static/img/",
 		                  'upload_url'      => base_url()."static/img",
 		                  'allowed_types'   => "gif|jpg|png|jpeg",                  
-		                  'max_size'        => 2048,
-		                  'max_height'      => 768,
-		                  'max_width'       => 1024  
+		                  'max_size'        => 10240,
+		                  'max_height'      => 2048,
+		                  'max_width'       => 2048  
 	                );        			        
 				    $this->load->library('upload', $this->setting);
 					
@@ -253,9 +253,9 @@ Class admin extends CI_Controller{
 		                  'upload_path'     => dirname($_SERVER["SCRIPT_FILENAME"])."/static/img/",
 		                  'upload_url'      => base_url()."static/img",
 		                  'allowed_types'   => "gif|jpg|png|jpeg",                  
-		                  'max_size'        => 2048,
-		                  'max_height'      => 768,
-		                  'max_width'       => 1024  
+		                  'max_size'        => 10240,
+		                  'max_height'      => 2048,
+		                  'max_width'       => 2048  
 	                );        			        
 				    $this->load->library('upload', $this->setting);
 
@@ -429,9 +429,9 @@ Class admin extends CI_Controller{
 		                  'upload_path'     => dirname($_SERVER["SCRIPT_FILENAME"])."/static/img/",
 		                  'upload_url'      => base_url()."static/img",
 		                  'allowed_types'   => "gif|jpg|png|jpeg",                  
-		                  'max_size'        => 2048,
-		                  'max_height'      => 768,
-		                  'max_width'       => 1024  
+		                  'max_size'        => 10240,
+		                  'max_height'      => 2048,
+		                  'max_width'       => 2048  
 	                );        			        
 				    $this->load->library('upload', $this->setting);
 					if (isset($_POST["hidden_field"])){						
@@ -553,9 +553,9 @@ Class admin extends CI_Controller{
 		                  'upload_path'     => dirname($_SERVER["SCRIPT_FILENAME"])."/static/img/",
 		                  'upload_url'      => base_url()."static/img",
 		                  'allowed_types'   => "gif|jpg|png|jpeg",                  
-		                  'max_size'        => 2048,
-		                  'max_height'      => 768,
-		                  'max_width'       => 1024  
+		                  'max_size'        => 10240,
+		                  'max_height'      => 2048,
+		                  'max_width'       => 2048  
 	                );
 
 				    $this->load->library('upload', $this->setting);
@@ -589,7 +589,9 @@ Class admin extends CI_Controller{
 						$Luotmua = $this->input->post('luotmua',TRUE);
 						$Nhacungcap = $this->input->post('provider',TRUE);
 						$Mota = $this->input->post('desc',TRUE);
-						$Dongia = $this->input->post('price',TRUE);																		
+						$Dongia = $this->input->post('price',TRUE);
+						$Ngay = $this->input->post('ngay',TRUE);
+						$Ngay = date('Y-m-d H:i:s', strtotime($Ngay));																		
 		                $Hinhdaidien = $this->input->post('avatar',TRUE);
 
 		                $Hedieuhanh = $this->input->post('os',TRUE);
@@ -613,7 +615,7 @@ Class admin extends CI_Controller{
 		                	$Anhdaidien = $img_data['upload_data']['file_name'];		                			                			                
 				        }				        
 
-						$tmp = $this->sanpham_model->update($id, $Tensanpham, $Loaisanpham, $Soluong, $Tinhtrang, $Luotxem, $Luotmua, $Nhacungcap, $Mota, $Dongia, $Hinhdaidien, $Hedieuhanh, $Manhinh, $Vixuly, $Chipset, $Dohoa, $RAM, $ROM, $Camera, $Ketnoi, $Diaquang, $Pin, $Trongluong, $Baohanh, $Khuyenmai);
+						$tmp = $this->sanpham_model->update($id, $Tensanpham, $Loaisanpham, $Soluong, $Tinhtrang, $Luotxem, $Luotmua, $Nhacungcap, $Mota, $Dongia, $Ngay, $Hinhdaidien, $Hedieuhanh, $Manhinh, $Vixuly, $Chipset, $Dohoa, $RAM, $ROM, $Camera, $Ketnoi, $Diaquang, $Pin, $Trongluong, $Baohanh, $Khuyenmai);
 						
 						if($tmp)
 						{							
@@ -627,26 +629,146 @@ Class admin extends CI_Controller{
 						}
 					}						
 				}
-				elseif ($chucnang == "nhaphang"){
-					$this->data['title'] = 'Nhập hàng';
+				elseif ($chucnang == "quanlynhaphang") {
+					$this->data['title'] = 'Quản lý nhập hàng';
 					$this->data['page'] = 'product';
-					$this->data['subpage'] = 'product-import';
-					if($this->session->userdata('sanpham_action')==FALSE){
-						$this->session->set_userdata('sanpham_action', '1');
-						$this->data['sanpham_action'] = $this->session->userdata('sanpham_action');
+					$this->data['subpage'] = 'product-import-manage';
+					if($this->session->userdata('nhaphang_action')==FALSE){
+						$this->session->set_userdata('nhaphang_action', '1');
+						$this->data['nhaphang_action'] = $this->session->userdata('nhaphang_action');
 					}
-					else $this->data['sanpham_action'] = $this->session->userdata('sanpham_action');	
-					$this->session->set_userdata('sanpham_action', '1');
+					else $this->data['nhaphang_action'] = $this->session->userdata('nhaphang_action');	
+					$this->session->set_userdata('nhaphang_action', '1');
 
-					$this->data['tablet'] = $this->thongtindathang_model->get_sanpham_tablet();
-					$this->data['laptop'] = $this->thongtindathang_model->get_sanpham_laptop();
-					$this->data['desktop'] = $this->thongtindathang_model->get_sanpham_desktop();
-					$this->data['phukien'] = $this->thongtindathang_model->get_sanpham_phukien();
+					$this->data['result'] = $this->sanpham_model->get_nhaphang();
 
 					$this->load->view('admin/include/header',$this->data);
 					$this->load->view('admin/include/sidebar',$this->data);									
-					$this->load->view('admin/sanpham/import',$this->data);				
+					$this->load->view('admin/sanpham/nhaphang',$this->data);				
 					$this->load->view('admin/include/footer',$this->data);
+				}
+				elseif ($chucnang == "nhaphang") {
+					$this->data['title'] = 'Nhập hàng';
+					$this->data['page'] = 'product';
+					$this->data['subpage'] = 'product-import';
+					if($this->session->userdata('nhaphang_action')==FALSE){
+						$this->session->set_userdata('nhaphang_action', '1');
+						$this->data['nhaphang_action'] = $this->session->userdata('nhaphang_action');
+					}
+					else $this->data['nhaphang_action'] = $this->session->userdata('nhaphang_action');	
+					$this->session->set_userdata('nhaphang_action', '1');
+
+					
+					if (isset($_POST['nguoinhaphang2']))
+					{
+						$Nguoinhap = $this->chucnang->GetUserID();
+						$Danhsach = $this->session->userdata('import_list');
+						$Soluong = $this->input->post('sanpham',TRUE);
+						$Dongia = $this->input->post('dongia',TRUE);
+						$Test = array_combine($Danhsach, $Dongia);						
+						
+						$tmp = $this->sanpham_model->nhaphang($Nguoinhap, $Danhsach, $Soluong, $Dongia);
+						
+						if($tmp)
+						{			
+							$this->session->set_userdata('import_list', FALSE);				
+							$this->session->set_userdata('nhaphang_action', '2');														
+							return redirect(base_url('admin/sanpham/quanlynhaphang'));
+						}							
+						else
+						{ 
+							$this->session->set_userdata('import_list', FALSE);
+							$this->session->set_userdata('nhaphang_action', '3');
+							return redirect(base_url('admin/sanpham/quanlynhaphang'));
+						}	
+						
+					}
+					elseif (isset($_POST['chonsanpham']))
+					{
+						$this->data['import_list'] = $this->input->post('chonsanpham',TRUE);
+						$this->data['nguoinhaphang'] = $this->input->post('nguoinhaphang',TRUE);
+						$this->data['sanpham'] = $this->thongtindathang_model->get_sanpham();
+						$this->session->set_userdata('import_list', $this->data['import_list']);
+
+						$this->load->view('admin/include/header',$this->data);
+						$this->load->view('admin/include/sidebar',$this->data);									
+						$this->load->view('admin/sanpham/import2',$this->data);				
+						$this->load->view('admin/include/footer',$this->data);
+					}
+					else
+					{
+						$this->data['tablet'] = $this->thongtindathang_model->get_sanpham_tablet();
+						$this->data['laptop'] = $this->thongtindathang_model->get_sanpham_laptop();
+						$this->data['desktop'] = $this->thongtindathang_model->get_sanpham_desktop();
+						$this->data['phukien'] = $this->thongtindathang_model->get_sanpham_phukien();
+
+						$this->load->view('admin/include/header',$this->data);
+						$this->load->view('admin/include/sidebar',$this->data);									
+						$this->load->view('admin/sanpham/import',$this->data);				
+						$this->load->view('admin/include/footer',$this->data);
+					}										
+				}
+				elseif ($chucnang == "thongtinnhaphang") {
+					$id = $this->input->get("id");																				
+					if(!is_numeric($id)||$id<1)
+					{ 
+						$this->session->set_userdata('nhaphang_action', '3');
+						return redirect(base_url('admin/sanpham/quanlynhaphang'));
+					}				
+
+					$this->data['title'] = 'Thông tin nhập hàng';
+					$this->data['page'] = 'product';
+					$this->data['subpage'] = 'product-import-info';
+
+					$this->data['chitiet'] = $this->sanpham_model->get_chitietnhaphang($id);
+					$this->data['nhaphang'] = $this->sanpham_model->get_thongtinnhaphang($id);	
+
+					$this->load->view('admin/include/header',$this->data);
+					$this->load->view('admin/include/sidebar',$this->data);									
+					$this->load->view('admin/sanpham/info-import',$this->data);				
+					$this->load->view('admin/include/footer',$this->data);
+				}
+				elseif ($chucnang == "xacnhannhaphang") {
+						$id = $this->input->get("id");																				
+						if(!is_numeric($id)||$id<1)
+						{ 
+							$this->session->set_userdata('nhaphang_action', '3');
+							return redirect(base_url('admin/sanpham/quanlynhaphang'));
+						}
+
+						$tmp = $this->sanpham_model->xacnhannhaphang($id);
+
+						if($tmp)
+						{
+							$this->session->set_userdata('nhaphang_action', '2');
+							return redirect(base_url('admin/sanpham/quanlynhaphang'));													
+						}							
+						else
+						{ 
+							$this->session->set_userdata('nhaphang_action', '3');						
+							return redirect(base_url('admin/sanpham/quanlynhaphang'));
+						}
+				}
+				elseif ($chucnang == "huynhaphang") {
+						$id = $this->input->get("id");																				
+						if(!is_numeric($id)||$id<1)
+						{ 
+							$this->session->set_userdata('nhaphang_action', '3');
+							return redirect(base_url('admin/sanpham/quanlynhaphang'));
+						}
+
+						$tmp = $this->sanpham_model->huynhaphang($id);
+
+						if($tmp)
+						{
+							$this->session->set_userdata('nhaphang_action', '2');
+							return redirect(base_url('admin/sanpham/quanlynhaphang'));													
+						}							
+						else
+						{ 
+							$this->session->set_userdata('nhaphang_action', '3');						
+							return redirect(base_url('admin/sanpham/quanlynhaphang'));
+						}
 				}
 				elseif ($chucnang == "ngungkinhdoanh") {
 						$id = $this->input->get("id");																				
@@ -785,31 +907,7 @@ Class admin extends CI_Controller{
 					    $pdf->Output($pdfFilePath, 'F'); // save to file because we can
 					}			 		
 					redirect("static\hoadon\\$filename.pdf"); 
-				}
-				elseif($chucnang == "test"){
-					$id = $this->input->get("id");																				
-					if(!is_numeric($id)||$id<1)
-					{ 
-						$this->session->set_userdata('hoadon_action', '3');
-						return redirect(base_url('admin/hoadon'));
-					}				
-
-					$this->data['title'] = 'Thông tin hóa đơn';
-					$this->data['page'] = 'invoice';
-					$this->data['subpage'] = 'invoice-info';
-
-					$this->data['chitiet'] = $this->hoadon_model->get_chitiethoadon($id);
-					$this->data['hoadon'] = $this->hoadon_model->get_hoadon($id);	
-
-					if($this->data['chitiet']==FALSE||$this->data['hoadon']==FALSE)
-					{
-						$this->session->set_userdata('hoadon_action', '3');
-						return redirect(base_url('admin/hoadon'));
-					}
-
-					$this->load->view('admin/hoadon/print', $this->data);					
-				}
-
+				}				
 			}
 		}
 		else
@@ -1142,9 +1240,9 @@ Class admin extends CI_Controller{
 		                  'upload_path'     => dirname($_SERVER["SCRIPT_FILENAME"])."/static/img/",
 		                  'upload_url'      => base_url()."static/img",
 		                  'allowed_types'   => "gif|jpg|png|jpeg",                  
-		                  'max_size'        => 2048,
-		                  'max_height'      => 768,
-		                  'max_width'       => 1024  
+		                  'max_size'        => 10240,
+		                  'max_height'      => 2048,
+		                  'max_width'       => 2048  
 	                );        			        
 				    $this->load->library('upload', $this->setting);
 					
@@ -1201,9 +1299,9 @@ Class admin extends CI_Controller{
 		                  'upload_path'     => dirname($_SERVER["SCRIPT_FILENAME"])."/static/img/",
 		                  'upload_url'      => base_url()."static/img",
 		                  'allowed_types'   => "gif|jpg|png|jpeg",                  
-		                  'max_size'        => 2048,
-		                  'max_height'      => 768,
-		                  'max_width'       => 1024  
+		                  'max_size'        => 10240,
+		                  'max_height'      => 2048,
+		                  'max_width'       => 2048  
 	                );        			        
 				    $this->load->library('upload', $this->setting);
 

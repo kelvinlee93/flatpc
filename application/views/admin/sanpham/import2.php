@@ -6,65 +6,23 @@
                   <div class="col-lg-12">
                       <section class="panel">
                           <header class="panel-heading">
-                              <h3><i class="icon-list"></i> <strong><?=$title?></strong></h3>
+                              <h3><i class="icon-truck"></i> <strong><?=$title?></strong></h3>
                           </header>
                           <div class="panel-body">                          
                                 <div class="form">
                                   <form class="cmxform form-horizontal tasi-form" id="signupForm" method="post" action="" enctype="multipart/form-data" >
                                       <div class="form-group ">
-                                          <label for="tenkhachhang" class="control-label col-lg-2"><strong>Tên khách hàng <span style="color: red">*</span></strong></label>
+                                          <label for="nguoinhaphang2" class="control-label col-lg-2"><strong>Người nhập hàng </strong></label>
                                           <div class="col-lg-4">
-                                              <input class=" form-control" id="tenkhachhang" name="tenkhachhang" type="text" value="<?=$order_info['Tenkhachhang']?>" readonly/>
-                                              <input class=" form-control" id="hidden_field" name="hidden_field" type="hidden" value="1" readonly/>
-                                              <input class=" form-control" id="thanhvien" name="thanhvien" type="hidden" value="<?=$order_info['Thanhvien']?>" readonly/>
-                                          </div>                                          
-                                      </div>
+                                              <input class=" form-control" id="nguoinhaphang2" name="nguoinhaphang2" type="text" value="<?=$nguoinhaphang?>" readonly/>
+                                          </div>                                                                                                                      
+                                      </div>                                      
                                       <div class="form-group ">
-                                          <label for="sdtkhachhang" class="control-label col-lg-2"><strong>SĐT khách hàng <span style="color: red">*</span></strong></label>
-                                          <div class="col-lg-4">
-                                              <input class=" form-control" id="sdtkhachhang" name="sdtkhachhang" type="text" value="<?=$order_info['Sdtkhachhang']?>" readonly/>
-                                          </div>                                                                                                                              
+                                          <label class="control-label col-lg-2"><strong>SẢN PHẨM</strong></label> 
+                                          <label class="control-label col-lg-4"><strong>SỐ LƯỢNG</strong></label>
+                                          <label class="control-label col-lg-4"><strong>ĐƠN GIÁ</strong></label>                                                                                                                                                                    
                                       </div>
-                                      <div class="form-group ">
-                                          <label for="tennguoinhan" class="control-label col-lg-2"><strong>Tên người nhận <span style="color: red">*</span></strong></label>
-                                          <div class="col-lg-4">
-                                              <input class=" form-control" id="tennguoinhan" name="tennguoinhan" type="text"  value="<?=$order_info['Tennguoinhan']?>" readonly/>
-                                          </div>                                          
-                                      </div>
-                                      <div class="form-group ">
-                                          <label for="sdtnguoinhan" class="control-label col-lg-2"><strong>SĐT khách hàng <span style="color: red">*</span></strong></label>
-                                          <div class="col-lg-4">
-                                              <input class=" form-control" id="sdtnguoinhan" name="sdtnguoinhan" type="text" value="<?=$order_info['Sdtnguoinhan']?>" readonly/>
-                                          </div>                                          
-                                      </div>
-                                      <div class="form-group ">
-                                          <label for="diachi" class="control-label col-lg-2"><strong>Địa chỉ </strong></label>
-                                          <div class="col-lg-4">
-                                              <input class=" form-control" id="diachi" name="diachi" type="text"  value="<?=$order_info['Diachi']?>" readonly/>
-                                          </div>                                          
-                                      </div>
-                                      <div class="form-group ">
-                                          <label for="pttt" class="control-label col-lg-2"><strong>Phương thức thanh toán</strong></label>
-                                          <div class="col-lg-4">
-                                              <select class="form-control m-bot15" id="pttt" name="pttt">
-                                                  <option value='0' <?php if ($order_info['Pttt']==0) echo 'selected' ?>>Trực tiếp</option>
-                                                  <option value='1' <?php if ($order_info['Pttt']==1) echo 'selected' ?>>Chuyển khoản</option>                                                  
-                                              </select>
-                                          </div>
-                                      </div>
-                                      <div class="form-group ">
-                                          <label for="ptvc" class="control-label col-lg-2"><strong>Phương thức vận chuyển </strong></label>
-                                          <div class="col-lg-4">
-                                              <select class="form-control m-bot15" id="ptvc" name="ptvc">
-                                                  <option value='0' <?php if ($order_info['Ptvc']==0) echo 'selected' ?>>Nội thành</option>
-                                                  <option value='1' <?php if ($order_info['Ptvc']==1) echo 'selected' ?>>Ngoại thành (50000 đ)</option>                                                  
-                                              </select>
-                                          </div>
-                                      </div>
-                                      <div class="form-group ">
-                                          <label class="control-label col-lg-6"><strong>DANH SÁCH SẢN PHẨM</strong></label>                                                                                                                                                                    
-                                      </div>
-                                      <?php foreach ($order_list as $item) 
+                                      <?php foreach ($import_list as $item) 
                                             {
                                                 foreach ($sanpham as $sp){
                                                     if ($sp['ID']==$item)
@@ -73,10 +31,11 @@
                                                         <div class="form-group ">
                                                             <label for="sanpham'.$sp['ID'].'" class="control-label col-lg-2"><strong>'.$sp['TENSANPHAM'].' </strong></label>
                                                             <div class="col-lg-4">
-                                                                <input class=" form-control" id="sanpham['.$sp['ID'].']" name="sanpham['.$sp['ID'].']" type="number" value="1" min="1" max="'.$sp['SOLUONG'].'"/>
-                                                                <input class=" form-control" id="dongia['.$sp['ID'].']" name="dongia['.$sp['ID'].']" type="hidden" value="'.$sp['DONGIA'].'" />
-                                                            </div>
-                                                            <label class="control-label col-lg-2">(Đơn giá: '.$sp['DONGIA'].' đ)</label>                                                                                                                              
+                                                                <input class=" form-control" id="sanpham['.$sp['ID'].']" name="sanpham['.$sp['ID'].']" type="number" value="1" min="1"/>                                                                
+                                                            </div>                                                            
+                                                            <div class="col-lg-4">                                                                
+                                                                <input class=" form-control" id="dongia['.$sp['ID'].']" name="dongia['.$sp['ID'].']" type="number" value="0" min="0" />
+                                                            </div>                                                                                                                                                                                        
                                                         </div>';
                                                     }
 
@@ -87,7 +46,7 @@
                                       <div class="form-group ">
                                           <div class="col-lg-offset-2 col-lg-10">
                                               <button class="btn btn-danger" type="submit">Xác nhận</button>
-                                              <button class="btn btn-default" type="button" onclick="window.location.href='<?=base_url('admin/dathang')?>'">Hủy</button>
+                                              <button class="btn btn-default" type="button" onclick="window.location.href='<?=base_url('admin/sanpham/quanlynhaphang')?>'">Hủy</button>
                                           </div>
                                       </div>
                                   </form>

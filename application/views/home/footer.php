@@ -1,3 +1,59 @@
+<!-- Rectangle Banners -->
+  <div class="row clearfix f-space30"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
+        <div class="rec-banner blue">
+          <div class="banner"> <i class="fa fa-thumbs-up"></i>
+            <h3>Đảm bảo</h3>
+            <p>chất lượng tuyệt đối</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
+        <div class="rec-banner blue">
+          <div class="banner"> <i class="fa fa-tags"></i>
+            <h3>Giá cả</h3>
+            <p>phù hợp với khách hàng</p>
+          </div>
+        </div>
+      </div>      
+      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
+        <div class="rec-banner blue">
+          <div class="banner"> <i class="fa fa-shopping-cart"></i>
+            <h3>Thanh toán</h3>
+            <p>nhanh chóng và tiện lợi</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
+        <div class="rec-banner blue">
+          <div class="banner"> <i class="fa fa-gift"></i>
+            <h3>Khuyến mãi</h3>
+            <p>thường xuyên với nhiều phần quà giá trị lớn</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
+        <div class="rec-banner blue">
+          <div class="banner"> <i class="fa fa-truck"></i>
+            <h3>Giao hàng</h3>
+            <p>miễn phí nội thành</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
+        <div class="rec-banner blue">
+          <div class="banner"> <i class="fa fa-headphones"></i>
+            <h3>Hỗ trợ 24/7</h3>
+            <p>Giải đáp mọi thắc mắc</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end: Rectangle Banners --> 
+  
 <div class="row clearfix f-space30"></div>
   <!-- footer -->
   <footer class="footer">
@@ -95,7 +151,7 @@
                  $('#monthly-deals').carousel({
                       interval: 3000
                   });
-                  $('#productc2').carousel({
+                  $('#hotproduct').carousel({
                       interval: 4000
                   });
                   $('#tweets').carousel({

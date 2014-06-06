@@ -15,7 +15,7 @@
     <script src="'.base_url().'static/admin/js/jquery.js"></script>
     <script src="'.base_url().'static/admin/js/jquery-1.8.3.min.js"></script>
     <script src="'.base_url().'static/admin/js/bootstrap.min.js"></script>
-    <script src="'.base_url().'static/admin/js/jquery.dcjqaccordion.2.7.js" class="include" type="text/javascript"></script>
+    <script src="'.base_url().'static/admin/js/jquery.dcjqaccordion.2.7.js" class="include" type="text/javascript"></script>    
     <script src="'.base_url().'static/admin/js/jquery.scrollTo.min.js"></script>
     <script src="'.base_url().'static/admin/js/jquery.nicescroll.js" type="text/javascript"></script>
     <script src="'.base_url().'static/admin/js/jquery.sparkline.js" type="text/javascript"></script>
@@ -27,7 +27,7 @@
     <script src="'.base_url().'static/admin/js/common-scripts.js"></script>    
     <script src="'.base_url().'static/admin/js/sparkline-chart.js"></script>
     <script src="'.base_url().'static/admin/js/easy-pie-chart.js"></script>
-    <script src="'.base_url().'static/admin/js/count.js"></script>
+    <script src="'.base_url().'static/admin/js/count.js"></script>    
 
     <script>
 
@@ -53,7 +53,7 @@
     </script>
     '
     ?>
-    <?php if($subpage=='user-manage'||$subpage=='rating-manage'||$subpage=='comment-manage'||$subpage=='news-manage'||$subpage=='order-manage'||$subpage=='invoice-manage'||$subpage=='product-manage')
+    <?php if($subpage=='user-manage'||$subpage=='rating-manage'||$subpage=='comment-manage'||$subpage=='news-manage'||$subpage=='order-manage'||$subpage=='invoice-manage'||$subpage=='product-manage'||$subpage=='product-import-manage')
         echo '        
     <script src="'.base_url().'static/admin/assets/advanced-datatable/media/js/jquery.js" type="text/javascript" language="javascript"></script>
     <script src="'.base_url().'static/admin/js/bootstrap.min.js"></script>
@@ -77,6 +77,7 @@
     <script src="'.base_url().'static/admin/js/jquery.js"></script>
     <script src="'.base_url().'static/admin/js/bootstrap.min.js"></script>
     <script src="'.base_url().'static/admin/js/jquery.dcjqaccordion.2.7.js" class="include" type="text/javascript"></script>
+    <script src="'.base_url().'static/admin/assets/fancybox/source/jquery.fancybox.js"></script>
     <script src="'.base_url().'static/admin/js/jquery.scrollTo.min.js"></script>
     <script src="'.base_url().'static/admin/js/jquery.nicescroll.js" type="text/javascript"></script>
     <script src="'.base_url().'static/admin/js/respond.min.js" ></script>
@@ -95,11 +96,18 @@
     <script src="'.base_url().'static/admin/js/common-scripts.js"></script>    
     <script src="'.base_url().'static/admin/js/advanced-form-components.js"></script>
     <script src="'.base_url().'static/admin/assets/bootstrap-inputmask/bootstrap-inputmask.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      $(function() {
+        //    fancybox
+          jQuery(".fancybox").fancybox();
+      });
+
+  </script>
     ';
     if($subpage=='news-add'||$subpage=='news-edit')
         echo '<script type="text/javascript" src="'.base_url().'static/admin/assets/ckeditor/ckeditor.js"></script>';
     ?>
-    <?php if($subpage=='order-edit'||$subpage=='invoice-info')
+    <?php if($subpage=='order-edit'||$subpage=='invoice-info'||$subpage=='product-import-info')
         echo '
     <script src="'.base_url().'static/admin/js/jquery.js"></script>
     <script src="'.base_url().'static/admin/js/bootstrap.min.js"></script>

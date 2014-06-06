@@ -22,6 +22,11 @@ Class Sanpham_model extends CI_Model{
 		return $query->result_array();
 	}
 
+	function get_nhaphang(){
+		$query = $this->db->query("SELECT N.*, U.TENDANGNHAP FROM NHAPHANG N, NGUOIDUNG U WHERE N.NGUOINHAP = U.ID ORDER BY NGAYNHAP DESC");
+		return $query->result_array();
+	}
+
 	function ngungkinhdoanh($id){	      		   				
 		if ($this->data['Role']!=1)
 			return FALSE;
@@ -32,6 +37,42 @@ Class Sanpham_model extends CI_Model{
 		if ($this->db->trans_status() === FALSE)
 			return FALSE;
 		else return TRUE;
+	}
+
+	function xacnhannhaphang($id){	      		   				
+		if ($this->data['Role']!=1)
+			return FALSE;
+		$this->db->trans_start();
+		$query = $this->db->query('UPDATE NHAPHANG SET TINHTRANG = 1 WHERE ID = '.$id);
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE)
+			return FALSE;
+		else
+		{			
+			$query = $this->db->query('SELECT MASANPHAM, SOLUONG FROM CHITIETNHAPHANG WHERE MANHAPHANG = '.$id);
+			$MASANPHAM = $query->result_array();	
+			$this->db->trans_start();		
+			foreach ($MASANPHAM as $item) {				
+				$query = $this->db->query('UPDATE SANPHAM SET SOLUONG = SOLUONG + ?, TINHTRANG = 1  WHERE ID = ?', array($item['SOLUONG'],$item['MASANPHAM']));
+			}			
+			$this->db->trans_complete();
+			if ($this->db->trans_status() === FALSE)
+				return FALSE;
+			else return TRUE;
+		}
+	}
+
+	function huynhaphang($id){	      		   				
+		if ($this->data['Role']!=1)
+			return FALSE;
+		$this->db->trans_start();
+		$query = $this->db->query('UPDATE NHAPHANG SET TINHTRANG = -1 WHERE ID = '.$id);
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE)
+			return FALSE;
+		else return TRUE;		
 	}
 
 	function batdaukinhdoanh($id){	      		   				
@@ -56,7 +97,7 @@ Class Sanpham_model extends CI_Model{
 			   foreach ($query->result() as $row)		   
 			      $Hinhdaidien = $row->ID;
 		}
-
+		date_default_timezone_set('Asia/Jakarta');
 		$data = array(
 			"Tensanpham" => $Tensanpham,
 			"Loai" => $Loaisanpham,
@@ -65,6 +106,7 @@ Class Sanpham_model extends CI_Model{
 			"Hinhdaidien" => $Hinhdaidien,
 			"Mota" => $Mota,			
 			"Dongia" => $Dongia,
+			"Ngay" => date('Y-m-d H:i:s'),
 			"Tinhtrang" => 0,
 			"Luotxem" => 0,
 			"Luotmua" => 0
@@ -74,7 +116,7 @@ Class Sanpham_model extends CI_Model{
 
 		if($this->db->insert_id() > 0)
 		{
-			$query = $this->db->query('SELECT ID FROM CHITIETSANPHAM ORDER BY ID DESC LIMIT 1');		
+			$query = $this->db->query('SELECT ID FROM SANPHAM ORDER BY ID DESC LIMIT 1');		
 			if ($query->num_rows() > 0)				
 			   foreach ($query->result() as $row)		   
 			      $Masanpham = $row->ID;
@@ -113,11 +155,11 @@ Class Sanpham_model extends CI_Model{
 	}
 
 	function detail($id){		
-		$query = $this->db->get_where('CHITIETSANPHAM',array('ID'=>$id));
+		$query = $this->db->get_where('CHITIETSANPHAM',array('MASANPHAM'=>$id));
 		return $query->result_array();
 	}	
 
-	function update($Id, $Tensanpham, $Loaisanpham, $Soluong, $Tinhtrang, $Luotxem, $Luotmua, $Nhacungcap, $Mota, $Dongia, $Hinhdaidien, $Hedieuhanh, $Manhinh, $Vixuly, $Chipset, $Dohoa, $RAM, $ROM, $Camera, $Ketnoi, $Diaquang, $Pin, $Trongluong, $Baohanh, $Khuyenmai){
+	function update($Id, $Tensanpham, $Loaisanpham, $Soluong, $Tinhtrang, $Luotxem, $Luotmua, $Nhacungcap, $Mota, $Dongia, $Ngay, $Hinhdaidien, $Hedieuhanh, $Manhinh, $Vixuly, $Chipset, $Dohoa, $RAM, $ROM, $Camera, $Ketnoi, $Diaquang, $Pin, $Trongluong, $Baohanh, $Khuyenmai){
 		if (!is_numeric($Hinhdaidien))
 		{
 			$query = $this->db->query('INSERT INTO HINHANH (TENANH) VALUES (\''.$Hinhdaidien.'\')');
@@ -135,6 +177,7 @@ Class Sanpham_model extends CI_Model{
 			"Hinhdaidien" => $Hinhdaidien,
 			"Mota" => $Mota,			
 			"Dongia" => $Dongia,
+			"Ngay" => $Ngay,
 			"Tinhtrang" => $Tinhtrang,
 			"Luotxem" => $Luotxem,
 			"Luotmua" => $Luotmua
@@ -175,6 +218,62 @@ Class Sanpham_model extends CI_Model{
 			else return TRUE;
 		}
 		else return FALSE;
+	}
+
+	function nhaphang($Nguoinhap, $Danhsach, $Soluong, $Dongia){
+		$Tongtien = 0;
+		
+		$t1 = array_combine($Danhsach,$Soluong);
+		$t2 = array_combine($Danhsach,$Dongia);			
+
+		foreach ($Danhsach as $item) {
+			$Tongtien = $Tongtien + $t1[$item]*$t2[$item];
+		}		
+
+		date_default_timezone_set('Asia/Jakarta');
+		$data = array(			
+			"Nguoinhap" => $Nguoinhap,
+			"Ngaynhap"	=> date('Y-m-d H:i:s'),
+			"Tongtien" => $Tongtien,
+			"Tinhtrang" => 0,			
+		);		
+
+		$this->db->trans_start();
+		$this->db->insert('NHAPHANG', $data);
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE)
+			return FALSE;
+		else 
+		{	
+
+			$query = $this->db->query('SELECT ID FROM NHAPHANG ORDER BY  ID DESC LIMIT 1');		
+			if ($query->num_rows() > 0)				
+			   foreach ($query->result() as $row)		   
+			      $MNH = $row->ID;
+
+			$i = 0; $s = 0;	$t = array_combine($Danhsach, $Dongia);		
+			foreach ($Soluong as $item) {
+				$this->db->trans_start();
+				$query = $this->db->query('INSERT INTO CHITIETNHAPHANG VALUES (?, ?, ?,?)', array($MNH, $Danhsach[$i], $item, $t[$Danhsach[$i]]));
+				$this->db->trans_complete();
+				$i++;
+				if ($this->db->trans_status() === TRUE)
+					$s = $i;				
+			}
+
+			return ($s==$i);										
+		}
+	}
+
+	function get_chitietnhaphang($id){		
+		$query = $this->db->query('SELECT C.*, S.TENSANPHAM, L.TENLOAI FROM CHITIETNHAPHANG C, SANPHAM S, LOAISANPHAM L WHERE C.MASANPHAM = S.ID AND L.ID = S.LOAI AND MANHAPHANG = '.$id);
+		return $query->result_array();
+	}
+
+	function get_thongtinnhaphang($id){		
+		$query = $this->db->query('SELECT N.*, U.HODEM, U.TENNGUOIDUNG FROM NHAPHANG N, NGUOIDUNG U WHERE U.ID = N.NGUOINHAP AND N.ID = '.$id);
+		return $query->result_array();
 	}
 
 

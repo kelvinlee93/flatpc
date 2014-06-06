@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Mosaddek">
-    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-    <link rel="shortcut icon" href="img/favicon.png">
+    <meta charset="utf-8">    
+    <link href="<?=base_url()?>static/home/images/favicon.ico" rel="icon" type="image/x-icon" />
 
     <title>Đăng ký thành viên - FlatPC</title>
 

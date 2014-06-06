@@ -8,7 +8,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
-		<meta content="FlatPC Shop PC Online" name="description">
+		<meta content="FlatPC - Shop PC Online" name="description">
 		<meta content="Kelvin Lee" name="author">
 		
 		<title>FlatPC - Siêu thị máy tính trực tuyến</title>
@@ -20,6 +20,7 @@
 		<link href="<?=base_url()?>static/home/css/animate.css" rel="stylesheet" type="text/css"/>		
 		<link href="<?=base_url()?>static/home/css/custom.css" rel="stylesheet" type="text/css" />				
 		<link href="<?=base_url()?>static/home/css/skin/midnight-blue.css" id="colorstyle" rel="stylesheet">
+		<link href="<?=base_url()?>static/home/images/favicon.ico" rel="icon" type="image/x-icon" />
 
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]> <script src="js/html5shiv.js"></script> <script src="js/respond.min.js"></script> <![endif]-->		
@@ -46,23 +47,33 @@
       <div class="row">
         <div class="col-md-12">
           <div class="topheadrow">
+            <div class="pull-left"></div>
             <ul class="nav nav-pills pull-right">              
-              <li> <a href="#"> <i class="fa fa-shopping-cart fa-fw"></i> <span class="hidden-xs"> Giỏ hàng</span></a> </li>
-              <li> <a href="<?=base_url('dangky')?>"> <i class="fa fa-pencil fa-fw"></i> <span class="hidden-xs"> Đăng ký</span></a> </li>              
-              <li class="dropdown"> <a class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i> <span class="hidden-xs"> Đăng nhập</span></a>
-                <div class="loginbox dropdown-menu"> <span class="form-header">Đăng nhập</span>
-                  <form>
-                    <div class="form-group"> <i class="fa fa-user fa-fw"></i>
-                      <input class="form-control" id="tendangnhap" placeholder="Tên đăng nhập" type="text">
+              <li> <a href="<?=base_url('giohang')?>"> <i class="fa fa-shopping-cart fa-fw"></i> <span class="hidden-xs"> Giỏ hàng</span></a> </li>
+              <?php if($Login==1)
+              { ?>
+                  <li> <a href="<?=base_url('taikhoan')?>"> <i class="fa fa-user fa-fw"></i> <span class="hidden-xs"> <?=$Username?></span></a> </li>              
+                  <li> <a href="<?=base_url('dangxuat')?>"> <i class="fa fa-key fa-fw"></i> <span class="hidden-xs"> Đăng xuất</span></a> </li>              
+              <?php } 
+              else 
+              { ?>
+                  <li> <a href="<?=base_url('dangky')?>"> <i class="fa fa-pencil fa-fw"></i> <span class="hidden-xs"> Đăng ký</span></a> </li>              
+                  <li class="dropdown"> <a class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i> <span class="hidden-xs"> Đăng nhập</span></a>
+                    <div class="loginbox dropdown-menu"> <span class="form-header">Đăng nhập</span>
+                      <form method="post" action="<?=base_url('dangnhap')?>">
+                        <div class="form-group"> <i class="fa fa-user fa-fw"></i>
+                          <input class="form-control" id="username" name="username" placeholder="Tên đăng nhập" type="text">
+                        </div>
+                        <div class="form-group"> <i class="fa fa-lock fa-fw"></i>
+                          <input class="form-control" id="password" name="password" placeholder="Mật khẩu" type="password">
+                          <input class="form-control" id="home" name="home" type="hidden" value="1">
+                        </div>
+                        <button class="btn small color1 pull-left" type="button" onclick="window.location.href='<?=base_url('dangky')?>'">Đăng ký</button>
+                        <button class="btn small color1 pull-right" type="submit">Đăng nhập</button>
+                      </form>
                     </div>
-                    <div class="form-group"> <i class="fa fa-lock fa-fw"></i>
-                      <input class="form-control" id="matkhau" placeholder="Mật khẩu" type="password">
-                    </div>
-                    <button class="btn small color1 pull-left" type="button" onclick="window.location.href='<?=base_url('dangky')?>'">Đăng ký</button>
-                    <button class="btn small color1 pull-right" type="submit">Đăng nhập</button>
-                  </form>
-                </div>
-              </li>
+                  </li>
+              <?php } ?>
             </ul>
           </div>
         </div>
@@ -242,14 +253,15 @@
             <li> <a href="<?=base_url('gioithieu')?>"> <i class="fa fa-info-circle fa-fw"></i> <span class="hidden-sm">Giới thiệu</span></a> </li>
             <li> <a href="<?=base_url('tintuc')?>"> <i class="fa fa-rss fa-fw"></i> <span class="hidden-sm">Tin tức</span></a> </li>
             <li> <a href="<?=base_url('lienhe')?>"> <i class="fa fa-pencil-square-o fa-fw"></i> <span class="hidden-sm ">Liên hệ</span></a> </li>
-            <li class="dropdown"> <a href="cart.html"> <i class="fa fa-shopping-cart fa-fw"></i> <span class="hidden-sm"> 5 sản phẩm | $4530.00</span></a> 
+            <li class="dropdown"> <a href="<?=base_url('giohang')?>"> <i class="fa fa-shopping-cart fa-fw"></i> <span class="hidden-sm"> <?=count($this->cart->contents());?> | <?=number_format($this->cart->total(), 0, ',', '.');?> đ</span></a> 
               <!-- Quick Cart -->
               <div class="dropdown-menu quick-cart">
-                <div class="qc-row qc-row-heading"> <span class="qc-col-qty">QTY.</span> <span class="qc-col-name">5 items in bag</span> <span class="qc-col-price">$4530.00</span> </div>
-                <div class="qc-row qc-row-item"> <span class="qc-col-qty">2</span> <span class="qc-col-name"><a href="#a">Women Fashion hot Wear item</a></span> <span class="qc-col-price">$500</span> <span class="qc-col-remove"> <i class="fa fa-times fa-fw"></i> </span> </div>
-                <div class="qc-row qc-row-item"> <span class="qc-col-qty">1</span> <span class="qc-col-name"><a href="#a">Women Fashion hot Wear item</a></span> <span class="qc-col-price">$800</span> <span class="qc-col-remove"> <i class="fa fa-times fa-fw"></i> </span> </div>
-                <div class="qc-row qc-row-item"> <span class="qc-col-qty">3</span> <span class="qc-col-name"><a href="#a">Women Fashion hot Wear item</a></span> <span class="qc-col-price">$252.25</span> <span class="qc-col-remove"> <i class="fa fa-times fa-fw"></i> </span> </div>
-                <div class="qc-row-bottom"><a class="btn qc-btn-viewcart" href="#a">xem giỏ hàng</a><a class="btn qc-btn-checkout" href="#a">thanh toán</a></div>
+                <div class="qc-row qc-row-heading"> <span class="qc-col-qty">Số lượng</span> <span class="qc-col-name">Tên sản phẩm</span> <span class="qc-col-price">Đơn giá</span> </div>
+                <?php foreach ($this->cart->contents() as $product) 
+                { ?>
+                    <div class="qc-row qc-row-item"> <span class="qc-col-qty"><?=$product['qty']?></span> <span class="qc-col-name"><a href="<?=base_url()?>sanpham/chitiet?id=<?=$product['id']?>"><?=$product['name']?></a></span> <span class="qc-col-price"><?=number_format($product['price'], 0, ',', '.');?></span></div>
+                <?php } ?>                
+                <div class="qc-row-bottom"><a class="btn qc-btn-viewcart" href="<?=base_url('giohang')?>">xem giỏ hàng</a><a class="btn qc-btn-checkout" href="<?=base_url('dathang')?>">đặt hàng</a></div>
               </div>
               <!-- end: Quick Cart --> 
             </li>

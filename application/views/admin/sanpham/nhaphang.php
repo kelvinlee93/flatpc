@@ -6,11 +6,11 @@
                   <div class="col-lg-12">
                       <section class="panel">
                           <header class="panel-heading">
-                              <h3><i class="icon-desktop"></i> <strong><?=$title?></strong> <button type="button" class="btn btn-default btn-xs" onclick="window.location.href='<?=base_url('admin/sanpham/them')?>'"><i class="icon-plus"></i> Thêm mới</button> <button type="button" class="btn btn-default btn-xs" onclick="window.location.href='<?=base_url('admin/sanpham/nhaphang')?>'"><i class="icon-truck"></i> Nhập hàng</button></h3>
+                              <h3><i class="icon-truck"></i> <strong><?=$title?></strong> <button type="button" class="btn btn-default btn-xs" onclick="window.location.href='<?=base_url('admin/sanpham/nhaphang')?>'"><i class="icon-truck"></i> Nhập hàng</button></h3>
                           </header>
-                          <?php if ($sanpham_action!=1)
+                          <?php if ($nhaphang_action!=1)
                                     {
-                                        if ($sanpham_action==2)
+                                        if ($nhaphang_action==2)
                                             echo '
                                               </br>
                                               <div class="col-lg-4">
@@ -21,7 +21,7 @@
                                                           <p><i class="icon-ok-sign"></i> Thành công!</p>
                                                   </div>
                                               </div>';
-                                        elseif ($sanpham_action==3)
+                                        elseif ($nhaphang_action==3)
                                             echo '
                                               </br>
                                               <div class="col-lg-4">
@@ -40,44 +40,36 @@
                                       <thead>
                                       <tr>
                                           <th>#</th>                                                                                    
-                                          <th>Tên sản phẩm</th>
-                                          <th>Loại</th>
-                                          <th>Nhà cung cấp</th>
-                                          <th>Số lượng</th>
-                                          <th>Đơn giá</th>
-                                          <th>Tình trạng</th>
-                                          <th>Lượt xem</th>
-                                          <th>Lượt mua</th>                                          
+                                          <th>Ngày nhập</th>
+                                          <th>Người nhập</th>
+                                          <th>Tổng tiền</th>                                          
+                                          <th>Tình trạng</th>                                                                                
                                           <th class="center">Thao tác</th>
                                       </tr>
                                       </thead>
                                       <tbody>
                                       <?php $i = 1; foreach ($result as $item) { ?>                                                                   
                                          <tr>
-                                            <td class="center"><?=$i?></td>                                            
-                                            <td><?=$item['TENSANPHAM']?></td>
-                                            <td class="center"><?=$item['TENLOAI']?></td>
-                                            <td class="center"><?=$item['TENNCC']?></td>
-                                            <td class="center"><?=$item['SOLUONG']?></td>
-                                            <td class="center"><?=number_format($item['DONGIA'], 0, ',', '.');?> đ</td>
+                                            <td class="center"><?=$i?></td>                                                                                        
+                                            <td class="center"><?=$item['NGAYNHAP']?></td>
+                                            <td class="center"><?=$item['TENDANGNHAP']?></td>
+                                            <td class="center"><?=number_format($item['TONGTIEN'], 0, ',', '.');?> đ</td>                                            
                                             <td class="center">
                                             <?php if ($item['TINHTRANG']==0)
-                                                      echo '<span class="label label-warning label-mini">Hết hàng';
+                                                      echo '<span class="label label-warning label-mini">Đang xử lý';
                                                   elseif ($item['TINHTRANG']==1) 
-                                                      echo '<span class="label label-success label-mini">Đang kinh doanh';
+                                                      echo '<span class="label label-success label-mini">Đã xử lý';
                                                   elseif ($item['TINHTRANG']==-1) 
-                                                      echo '<span class="label label-danger label-mini">Ngưng kinh doanh';  
+                                                      echo '<span class="label label-danger label-mini">Đã hủy';                                                      
                                             ?>
-                                            </td>
-                                            <td class="center"><?=$item['LUOTXEM']?></td>
-                                            <td class="center"><?=$item['LUOTMUA']?></td>
+                                            </td>                                            
                                             <td class="center">
-                                            <button class="btn btn-primary btn-xs" onclick="window.location.href='<?=base_url()?>admin/sanpham/capnhat?id=<?=$item['ID']?>'"><i class="icon-pencil"></i></button>                                            
-                                            <?php if ($item['TINHTRANG']==1||$item['TINHTRANG']==0)
-                                                      echo '<button class="btn btn-danger btn-xs" onclick="window.location.href=\''.base_url('admin/sanpham/ngungkinhdoanh?id='.$item['ID'].'').'\'"><i class="icon-off"></i></button></a>';
-                                                  elseif ($item['TINHTRANG']==-1)
-                                                      echo '<button class="btn btn-success btn-xs" onclick="window.location.href=\''.base_url('admin/sanpham/batdaukinhdoanh?id='.$item['ID'].'').'\'"><i class="icon-ok"></i></button></a>';
+                                            <?php if ($Role==1) { ?>
+                                                <button class="btn btn-primary btn-xs" onclick="window.location.href='<?=base_url()?>admin/sanpham/thongtinnhaphang?id=<?=$item['ID']?>'"><i class="icon-pencil"></i></button>                                                                                        
+                                            <?php if ($item['TINHTRANG']==0)
+                                                      echo '<button class="btn btn-danger btn-xs" onclick="window.location.href=\''.base_url('admin/sanpham/huynhaphang?id='.$item['ID'].'').'\'"><i class="icon-remove"></i></button></a>';                                                  
                                             ?>
+                                            <?php } ?>
                                             </td>
                                          </tr>     
                                       <?php $i++; } ?> 
@@ -85,14 +77,10 @@
                                       <tfoot>
                                       <tr>
                                           <th>#</th>                                                                                    
-                                          <th>Tên sản phẩm</th>
-                                          <th>Loại</th>
-                                          <th>Nhà cung cấp</th>
-                                          <th>Số lượng</th>
-                                          <th>Đơn giá</th>
-                                          <th>Tình trạng</th>
-                                          <th>Lượt xem</th>
-                                          <th>Lượt mua</th>                                          
+                                          <th>Ngày nhập</th>
+                                          <th>Người nhập</th>
+                                          <th>Tổng tiền</th>                                          
+                                          <th>Tình trạng</th>                                                                                
                                           <th class="center">Thao tác</th>
                                       </tr>
                                       </tfoot>

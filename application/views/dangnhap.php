@@ -44,7 +44,8 @@
                                   </button>'.$loi.'</div>';                                         
             ?>
             <label class="checkbox"><input type="checkbox" id="remember" name="remember" value="1" /> Ghi nhớ đăng nhập</label></br>
-            <button class="btn btn-lg btn-login btn-block" type="submit">Đăng nhập</button>            
+            <button class="btn btn-lg btn-login btn-block" type="submit">Đăng nhập</button>  
+            <button class="btn btn-lg btn-info btn-block" type="button" onclick="window.location.href='<?=base_url()?>'">VỀ TRANG CHỦ</button>          
         </div>
         <center>2014 &copy; FlatPC by Kelvin Lee.</center></br>
       </form>
