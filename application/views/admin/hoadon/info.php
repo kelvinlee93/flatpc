@@ -24,13 +24,13 @@
                                       <?=$chitiet[0]['TENNGUOINHAN']?> <br>
                                       <?php if ($chitiet[0]['DIACHI']) echo $chitiet[0]['DIACHI'].'<br>'?>                                      
                                       <?='SĐT: '.$chitiet[0]['SDTNGUOINHAN']?><br>
-                                      <?php echo 'Vận chuyển: '; if ($chitiet[0]['PTVANCHUYEN']==1) echo 'NGOẠI THÀNH'; else echo 'NỘI THÀNH'; ?><br>
+                                      <?php echo 'Vận chuyển: '; if ($chitiet[0]['PTVANCHUYEN']==1) echo 'NHANH'; else echo 'THÔNG THƯỜNG'; ?><br>
                                   </p>
                               </div>
                               <div class="col-lg-4 col-sm-4">
                                   <h4>ĐƠN HÀNG</h4>
                                   <ul class="unstyled">
-                                      <li>Mã đơn hàng: <strong>#HD<?=$chitiet[0]['ID']?></strong></li>
+                                      <li>Mã đơn hàng: <strong>#<?=$chitiet[0]['ID']?></strong></li>
                                       <li>Ngày đặt hàng: <?=date('d-m-Y',strtotime($chitiet[0]['NGAYDATHANG']))?></li>
                                       <?php if ($chitiet[0]['NGAYTHANHTOAN'])
                                                 echo '<li>Ngày thanh toán: '.date('d-m-Y',strtotime($chitiet[0]['NGAYTHANHTOAN'])).'</li>';
@@ -66,8 +66,8 @@
                                       <td>'.$item['TENSANPHAM'].'</td>
                                       <td>'.$item['BAOHANH'].'</td>
                                       <td>'.$item['SOLUONG'].'</td>
-                                      <td>'.$item['DONGIA'].'</td>                                      
-                                      <td>'.$item['THANHTIEN'].'</td>
+                                      <td>'.number_format($item['DONGIA'], 0, ',', '.').' đ</td>                                      
+                                      <td>'.number_format($item['THANHTIEN'], 0, ',', '.').' đ</td>
                                   </tr> 
                                   ';
                                   $i++;   
@@ -78,11 +78,11 @@
                           <div class="row">
                               <div class="col-lg-4 invoice-block pull-right">                                  
                                   <ul class="unstyled amounts">
-                                      <li align="left"><strong>Tổng tiền:</strong> <?=$chitiet[0]['THANHTIEN']?></li>
-                                      <li align="left"><strong>Giảm giá:</strong> <?php if ($chitiet[0]['GIAMGIA']) echo $chitiet[0]['GIAMGIA']; else echo '0';?></li>
-                                      <li align="left"><strong>Phí vận chuyển :</strong> <?php if ($chitiet[0]['PTVANCHUYEN']==1) echo '50000'; else echo '0';?></li>
-                                      <li align="left"><strong>Thuế :</strong> 10%</li>
-                                      <li align="left"><strong>Tổng cộng :</strong> <?=$chitiet[0]['TONGTIEN']?></li>
+                                      <li align="left"><strong>Tổng tiền:</strong> <?=number_format($chitiet[0]['THANHTIEN'], 0, ',', '.')?> đ</li>
+                                      <li align="left"><strong>Giảm giá:</strong> <?php if ($chitiet[0]['GIAMGIA']) echo $chitiet[0]['GIAMGIA']; else echo '0';?> đ</li>
+                                      <li align="left"><strong>Phí vận chuyển :</strong> <?php if ($chitiet[0]['PTVANCHUYEN']==1) echo '50.000'; else echo '0';?> đ</li>
+                                      <li align="left"><strong>VAT (10%) :</strong> <?=number_format($chitiet[0]['THANHTIEN']*0.1, 0, ',', '.')?> đ</li>
+                                      <li align="left"><strong>Tổng cộng :</strong> <?=number_format($chitiet[0]['TONGTIEN'], 0, ',', '.')?> đ</li>
                                   </ul>
                               </div>
                           </div>

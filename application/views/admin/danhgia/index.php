@@ -57,7 +57,7 @@
                                             <td class="center"><?=$item['TONGDIEM']?></td>
                                             <td class="center"><?=$item['DIEMDANHGIA']?></td>                                                                                        
                                             <td class="center"> 
-                                            <button class="btn btn-primary btn-xs" onclick="window.location.href='<?=base_url()?>admin/danhgia/capnhat?id=<?=$item['MASANPHAM']?>'"><i class="icon-pencil"></i></button>
+                                            <button class="btn btn-primary btn-xs" onclick="window.location.href='<?=base_url()?>admin/danhgia/chitiet?id=<?=$item['ID']?>'"><i class="icon-pencil"></i></button>
                                             </td>
                                          </tr>     
                                       <?php $i++; } ?> 

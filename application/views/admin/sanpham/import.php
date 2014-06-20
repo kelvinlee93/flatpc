@@ -14,7 +14,7 @@
                                       <div class="form-group ">
                                           <label for="nguoinhaphang" class="control-label col-lg-2"><strong>Người nhập hàng </strong></label>
                                           <div class="col-lg-4">
-                                              <input class=" form-control" id="nguoinhaphang" name="nguoinhaphang" type="text" value="<?=$Username?>" readonly/>
+                                              <input class="form-control" id="nguoinhaphang" name="nguoinhaphang" type="text" value="<?=$Username?>" readonly/>
                                           </div>                                                                                                                      
                                       </div>
                                       <div class="form-group last">
@@ -54,6 +54,17 @@
                                               } ?> 
                                             </optgroup>                                                 
                                           </select>
+                                          </div>                                          
+                                      </div>                                      
+                                      <div class="form-group ">
+                                          <label for="sanphammoi" class="control-label col-lg-2"><strong>Sản phẩm mới </strong></label>
+                                          <div class="col-lg-4">
+                                              <select class="form-control" name="sanphammoi" id="sanphammoi" >
+                                                    <option value="0" selected>Không</option>
+                                              <?php for ($i=1;$i<=10;$i++) { ?>
+                                                    <option value="<?=$i?>"><?=$i?> sản phẩm</option>
+                                              <?php } ?>                                                                                                                               
+                                              </select>                                            
                                           </div>                                          
                                       </div>                                      
                                       <div class="form-group ">

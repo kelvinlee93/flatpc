@@ -1,3 +1,35 @@
+<!-- Widgets -->
+  <div class="row clearfix f-space30"></div>
+  <div class="container">
+        <div class="row"> 
+          <!-- Brands -->
+          <div class="col-md-12 main-column box-block brands-block">
+            <div class="box-heading"><span><strong>CÁC THƯƠNG HIỆU HÀNG ĐẦU</strong></span></div>
+            <div class="box-content">
+              <div class="box-products box-brands slide" id="brands">
+                <div class="carousel-controls"> <a class="carousel-control left" data-slide="prev" href="#brands"> <i class="fa fa-angle-left fa-fw"></i> </a> <a class="carousel-control right" data-slide="next" href="#brands"> <i class="fa fa-angle-right fa-fw"></i> </a> </div>
+                <div class="carousel-inner">
+                  <div class="brands-row item active">
+                    <div class="brand-logo"><a href="<?=base_url('sanpham/acer')?>"><img src="<?=base_url()?>static/home/images/brands/acer.png" alt=""></a></div>
+                    <div class="brand-logo"><a href="<?=base_url('sanpham/asus')?>"><img src="<?=base_url()?>static/home/images/brands/asus.png" alt=""></a></div>
+                    <div class="brand-logo"><a href="<?=base_url('sanpham/dell')?>"><img src="<?=base_url()?>static/home/images/brands/dell.png" alt=""></a></div>
+                    <div class="brand-logo"><a href="<?=base_url('sanpham/hp')?>"><img src="<?=base_url()?>static/home/images/brands/hp.png" alt=""></a></div>
+                  </div>
+                  <div class="brands-row item">
+                    <div class="brand-logo"><a href="<?=base_url('sanpham/sony')?>"><img src="<?=base_url()?>static/home/images/brands/sony.png" alt=""></a></div>
+                    <div class="brand-logo"><a href="<?=base_url('sanpham/toshiba')?>"><img src="<?=base_url()?>static/home/images/brands/toshiba.png" alt=""></a></div>
+                    <div class="brand-logo"><a href="<?=base_url('sanpham/apple')?>"><img src="<?=base_url()?>static/home/images/brands/apple.png" alt=""></a></div>
+                    <div class="brand-logo"><a href="<?=base_url('sanpham/lenovo')?>"><img src="<?=base_url()?>static/home/images/brands/lenovo.gif" alt=""></a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end: Brands -->           
+  </div>
+  <!-- end: Widgets -->
+
 <!-- Rectangle Banners -->
   <div class="row clearfix f-space30"></div>
   <div class="container">
@@ -60,30 +92,31 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-3 col-xs-12 shopinfo">
-          <h4 class="title">FLATPC</h4>
-          <p> FlatPC chuyên kinh doanh các mặt máy tính được ưa chuộng nhất hiện nay. Đến với FlatPC, quý khách sẽ được phục vụ bởi đội ngũ nhân viên chuyên nghiệp và thân thiện</p>
-          <p> Phosfluorescently extend highly efficient schemas with intermandated. </p>
-        </div>
-        <div class="col-sm-3 col-xs-12 footermenu">
-          <h4 class="title">Information</h4>
+          <h4 class="title">Đang kinh doanh</h4>
           <ul>
-            <li class="item"> <a href="#a">Delivery Info</a></li>
-            <li class="item"> <a href="#a">FAQs</a></li>
-            <li class="item"> <a href="#a">Payment Instructions</a></li>
-            <li class="item"> <a href="#a">Request Product</a></li>
-            <li class="item"> <a href="#a">Vendor Registration</a></li>
-            <li class="item"> <a href="#a">Affiliates</a></li>
-            <li class="item"> <a href="#a">Gift Vouchers</a></li>
+            <li class="item"> <a href="<?=base_url('sanpham/maytinhbang')?>">Máy tính bảng</a></li>
+            <li class="item"> <a href="<?=base_url('sanpham/maytinhxachtay')?>">Máy tính xách tay</a></li>
+            <li class="item"> <a href="<?=base_url('sanpham/maytinhdeban')?>">Máy tính để bàn</a></li>
+            <li class="item"> <a href="<?=base_url('sanpham/phukien')?>">Phụ kiện</a></li>            
           </ul>
         </div>
         <div class="col-sm-3 col-xs-12 footermenu">
-          <h4 class="title">My account</h4>
+          <h4 class="title">FLATPC.COM</h4>
           <ul>
-            <li class="item"> <a href="#a">My Account</a></li>
-            <li class="item"> <a href="#a">Order History</a></li>
-            <li class="item"> <a href="#a">Wish List</a></li>
-            <li class="item"> <a href="#a">Newsletter</a></li>
-          </ul>
+            <li class="item"> <a href="<?=base_url('gioithieu')?>">Giới thiệu</a></li>
+            <li class="item"> <a href="<?=base_url('lienhe')?>">Liên hệ</a></li>            
+        </div>
+        <div class="col-sm-3 col-xs-12 footermenu">
+          <h4 class="title">Mạng xã hội</h4>
+          <div class="social-icons">
+            <ul>
+              <li class="icon facebook"><a target="_blank" href="https://www.facebook.com/KelvinLee93"><i class="fa fa-facebook fa-fw"></i></a></li>
+              <li class="icon google-plus"><a target="_blank" href="https://plus.google.com/+KelvinLee93"><i class="fa fa-google-plus fa-fw"></i></a></li>
+              </br></br></br></br>
+              <li class="icon twitter"><a target="_blank" href="https://twitter.com/o0okelvinleeo0o"><i class="fa fa-twitter fa-fw"></i></a></li>
+              <li class="icon linkedin"><a target="_blank" href="http://www.linkedin.com/in/kelvinlee93"><i class="fa fa-linkedin fa-fw"></i></a></li>                            
+            </ul>
+          </div>
         </div>
         <div class="col-sm-3 col-xs-12 getintouch">
           <h4 class="title">Liên hệ</h4>
@@ -103,15 +136,7 @@
               <div class="c-info"> <span>SĐT hỗ trợ:<br>
                 <a href="#a">0169 466 2923</a></span></div>
             </li>            
-          </ul>
-          <div class="social-icons">
-            <ul>
-              <li class="icon facebook"><a target="_blank" href="https://www.facebook.com/KelvinLee93"><i class="fa fa-facebook fa-fw"></i></a></li>
-              <li class="icon google-plus"><a target="_blank" href="https://plus.google.com/+KelvinLee93"><i class="fa fa-google-plus fa-fw"></i></a></li>
-              <li class="icon twitter"><a target="_blank" href="https://twitter.com/o0okelvinleeo0o"><i class="fa fa-twitter fa-fw"></i></a></li>
-              <li class="icon linkedin"><a target="_blank" href="http://www.linkedin.com/in/kelvinlee93"><i class="fa fa-linkedin fa-fw"></i></a></li>                            
-            </ul>
-          </div>
+          </ul>          
         </div>
       </div>
     </div>
@@ -123,10 +148,17 @@
       </div>
     </div>
   </footer>
-  <!-- end: footer -->   
-  
+  <!-- end: footer -->     
+  <script src="http://flatpc.com/static/home/advanced-datatable/media/js/jquery.dataTables.js" type="text/javascript" language="javascript"></script>
+  <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            $('#example').dataTable( {
+                "aaSorting": [[ 4, "desc" ]]
+            } );
+        } );
+    </script>  
   <script>
-
+    
   (function($) {
     "use strict";
    $('#menuMega').menu3d();
@@ -161,6 +193,17 @@
 
 
             
+          </script>          
+          
+          <script type="text/javascript">
+          var __lc = {};
+          __lc.license = 4511981;
+
+          (function() {
+            var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+            lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
+          })();
           </script>
 </body>
 </html>

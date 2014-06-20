@@ -3,6 +3,7 @@
 Class dangky extends CI_Controller{
 
 	public $data;
+	private $captcha_path = 'static/captcha/';
 
 	function __construct(){
 		parent:: __construct();									
@@ -38,7 +39,7 @@ Class dangky extends CI_Controller{
 	           array(
 	                 'field'   => 'username', 
 	                 'label'   => 'Tên đăng nhập', 
-	                 'rules'   => 'trim|required|xss_clean|min_length[6]|alpha_dash|is_unique[NGUOIDUNG.TENDANGNHAP]|max_length[20]'
+	                 'rules'   => 'trim|required|xss_clean|min_length[6]|alpha_dash|is_unique[NGUOIDUNG.TENDANGNHAP]|is_unique[NGUOIDUNG.SDT]|max_length[20]'
 	              ),
 	           array(
 	                 'field'   => 'email', 
@@ -79,7 +80,12 @@ Class dangky extends CI_Controller{
 	                 'field'   => 'sdt', 
 	                 'label'   => 'Số điện thoại', 
 	                 'rules'   => 'required|numeric|max_length[13]|min_length[10]|is_unique[NGUOIDUNG.SDT]'
-	              )		               
+	              ),
+				array(
+				     'field'   => 'captcha', 
+				     'label'   => 'Mã xác nhận', 
+				     'rules'   => 'required|callback_ktcaptcha'
+				  )		               
 	        );
 			
 			$this->form_validation->set_rules($config);
@@ -96,6 +102,14 @@ Class dangky extends CI_Controller{
 			$this->form_validation->set_error_delimiters('<label class="control-label col-lg-12" style="color: red"><strong>', '</strong></label>');		
 			
 			if ($this->form_validation->run() == FALSE){
+				$captcha = create_captcha(array(
+		            'word'        => strtoupper(substr(md5(time()), 0, 6)),
+		            'img_path'    => $this->captcha_path,
+		            'img_url'    => $this->captcha_path
+		        ));
+				$this->data['captcha'] = $captcha;	       
+        		$this->session->set_userdata('captcha', $captcha['word']);
+
 				$this->data['tinhthanh'] = $this->nguoidung_model->get_tinhthanh();	
 				$this->data['loi'] = '';
 				$this->load->view('dangky',$this->data);							
@@ -131,18 +145,24 @@ Class dangky extends CI_Controller{
 	}
 
 	public function ktngaysinh($input){		
-		list($ngay,$thang,$nam)=explode("-",$input);												
-    	if (checkdate($thang,$ngay,$nam))
+		$ngay = explode("-",$input);
+
+		if (count($ngay)!=3)
+		{			
+			$this->form_validation->set_message('ktngaysinh', 'Ngày sinh không hợp lệ');
+    		return FALSE;
+		}		
+    	elseif (checkdate($ngay[1],$ngay[0],$ngay[2]))
     	{			    		
-    		if ((date("Y")-$nam)>6) return TRUE;
+    		if ((date("Y")-$ngay[2])>6) return TRUE;
     		else 
     		{
-    			$this->form_validation->set_message('ktngaysinh', 'Bạn chưa đủ tuổi để đăng ký thành viên');
+    			$this->form_validation->set_message('ktngaysinh', 'Chưa đủ tuổi');
     			return FALSE;
     		}
     	} 			    	
     	else 
-    	{
+    	{    		
 			$this->form_validation->set_message('ktngaysinh', 'Ngày sinh không hợp lệ');
     		return FALSE;
     	}		
@@ -174,6 +194,18 @@ Class dangky extends CI_Controller{
 			$this->form_validation->set_message('checked', 'Bạn chưa đồng ý với điều khoản và chính sách của FlatPC');
     		return FALSE;
     	}			
+	}
+
+	public function ktcaptcha($cap)
+	{
+		$recaptcha = $this->session->userdata('captcha');
+		if ($cap==$recaptcha)
+			return TRUE;
+		else
+		{
+			$this->form_validation->set_message('ktcaptcha', 'Mã xác nhận chưa đúng');
+			return FALSE;
+		}
 	}
 
 }

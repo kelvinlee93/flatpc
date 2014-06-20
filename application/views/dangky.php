@@ -8,7 +8,8 @@
 
     <!-- Bootstrap core CSS -->
     <link href="<?=base_url()?>static/admin/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?=base_url()?>static/admin/css/bootstrap-reset.css" rel="stylesheet">
+    <link href="<?=base_url()?>static/admin/css/bootstrap-reset.css" rel="stylesheet">    
+
     <!--external css-->    
     <link href="<?=base_url()?>static/admin/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
     <!-- Custom styles for this template -->
@@ -66,6 +67,9 @@
             <input class="form-control " id="password" name="password" type="password" placeholder="Mật khẩu"/>
             <?php echo form_error('confirm_password'); ?>
             <input class="form-control " id="confirm_password" name="confirm_password" type="password" placeholder="Nhập lại mật khẩu"/>            
+            <?php echo form_error('captcha'); ?>
+            <input class="form-control " id="captcha" name="captcha" type="text" placeholder="Mã xác nhận"/>                                    
+            <center><?php echo $captcha['image']; ?></center>
             </br>  
             <?php echo form_error('agree'); ?>                  
             <label class="checkbox">                
@@ -77,6 +81,8 @@
 
       </form>
 
-    </div>        
+    </div>  
+      
   </body>
+
 </html>

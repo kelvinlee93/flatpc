@@ -7,6 +7,68 @@ Class Thongtindathang_model extends CI_Model{
 		parent:: __construct();
 	}
 
+	function create_order($Tenkhachhang,$Sdt,$Ten_gh,$Diachi_gh,$Sdt_gh,$Pttt,$Ptvc,$Thanhtien,$Danhsach){
+		if ($Ptvc==1)
+			$Tongtien = ($Thanhtien*0.1) + $Thanhtien + 50000;
+		else $Tongtien = ($Thanhtien*0.1) + $Thanhtien;
+		date_default_timezone_set('Asia/Jakarta');				
+		$data = array(
+			"Ngaydathang" =>  date('Y-m-d H:i:s'),
+			"Ngaythanhtoan" =>  NULL,
+			"Tenkhachhang" => $Tenkhachhang,
+			"Sdtkhachhang"	=> $Sdt,
+			"Tennguoinhan" => $Ten_gh,
+			"Sdtnguoinhan" => $Sdt_gh,
+			"Diachi" => $Diachi_gh,
+			"Ptthanhtoan" => $Pttt,
+			"Ptvanchuyen" => $Ptvc,			
+			"Thanhtien" => $Thanhtien,
+ 			"Tinhtrang" => 2,
+ 			"Giamgia" => NULL,
+ 			"Nguoilapdon" => $this->chucnang->GetUserID(),
+ 			"Tongtien" => $Tongtien
+		);
+
+		$this->db->trans_start();
+		$this->db->insert($this->table, $data);
+		$this->db->trans_complete();
+		if ($this->db->trans_status() === FALSE)
+			return FALSE;
+		else 
+		{	
+
+			$query = $this->db->query('SELECT ID FROM THONGTINDATHANG ORDER BY  ID DESC LIMIT 1');		
+			if ($query->num_rows() > 0)				
+			   foreach ($query->result() as $row)		   
+			      $MDH = $row->ID;
+			$i = 0;			
+
+			foreach ($Danhsach as $item) {
+				$this->db->trans_start();
+				$query = $this->db->query('INSERT INTO DATHANG VALUES (?, ?, ?)', array($MDH, $item['id'], $item['qty']));
+				$this->db->trans_complete();				
+				if ($this->db->trans_status() === TRUE)
+					$i++;			
+			}
+
+			$query = $this->db->query('SELECT * FROM DATHANG WHERE MADATHANG = '.$MDH);
+			$a = $query->result_array();			
+			foreach ($a as $item) {				
+				$query = $this->db->query('UPDATE SANPHAM SET SOLUONG = SOLUONG - ? WHERE ID = ?', array($item['SOLUONG'],$item['MASANPHAM']));
+			}
+
+			if ($i==(count($Danhsach)))
+			{
+				foreach ($Danhsach as $item)
+				{
+					$query = $this->db->query('UPDATE SANPHAM SET LUOTMUA = LUOTMUA + 1 WHERE ID = '.$item['id']);		
+				}
+				return $MDH;
+			}
+			else return FALSE;
+		}
+	}
+
 	function insert($Tenkhachhang, $Sdtkhachhang, $Tennguoinhan, $Sdtnguoinhan, $Diachi, $Pttt, $Ptvc, $Danhsach, $Soluong, $Dongia)
 	{	
 		$Thanhtien = 0;
@@ -126,10 +188,11 @@ Class Thongtindathang_model extends CI_Model{
 	{
 		if ($Role==1)
 		{
-			$this->db->trans_start();
-			$query = $this->db->query('UPDATE THONGTINDATHANG SET TINHTRANG = -1, NGAYTHANHTOAN = NOW() WHERE ID = ?', $id);			
+			$this->db->trans_start();					
+			$query = $this->db->query('UPDATE THONGTINDATHANG SET TINHTRANG = -1, NGAYTHANHTOAN = NOW() WHERE ID = ?', $id);					
 			$query = $this->db->query('INSERT HOADON SELECT * FROM THONGTINDATHANG WHERE ID = ?', $id);
 			$query = $this->db->query('INSERT CHITIETHOADON SELECT * FROM DATHANG WHERE MADATHANG = ?', $id);
+			
 			$this->db->trans_complete();
 			if ($this->db->trans_status() === FALSE)
 				return FALSE;
@@ -142,6 +205,13 @@ Class Thongtindathang_model extends CI_Model{
 	{
 		$this->db->trans_start();
 		$query = $this->db->query('UPDATE THONGTINDATHANG SET TINHTRANG = 0 WHERE ID = ?', $id);
+
+		$query = $this->db->query('SELECT * FROM DATHANG WHERE MADATHANG = '.$id);
+		$a = $query->result_array();			
+		foreach ($a as $item) {				
+			$query = $this->db->query('UPDATE SANPHAM SET SOLUONG = SOLUONG + ? WHERE ID = ?', array($item['SOLUONG'],$item['MASANPHAM']));
+		}
+
 		$this->db->trans_complete();
 		if ($this->db->trans_status() === FALSE)
 			return FALSE;

@@ -9,19 +9,26 @@ Class dangnhap extends CI_Controller{
 		$this->data['loi'] = "";		
 	}
 
-	function index($reg = ""){				
-		if(isset($reg) && $reg != "")
-			$this->data['success'] = "Đăng ký thành công! Mời bạn đăng nhập...";
+	function index(){						
 		$this->data['title'] = 'Đăng nhập';
-		$this->data['page'] = 'login';		
+		$this->data['page'] = 'login';
+		$redirect_url = base_url(urldecode($this->input->get("redirect")));					
 		$chk = $this->chucnang->ktdangnhap();		
 		if($chk==1||$chk==2)
 		{
+			$capnhat = $this->input->get("capnhat");
+			if ($capnhat)
+			{
+				$this->session->set_userdata('taikhoan_updateinfo', '2');
+				return redirect(base_url('taikhoan'));
+			}
 			$role = $this->chucnang->GetUserRole();
 			if ($role == 0)
 				return redirect(base_url());
 			else return redirect(base_url('admin'));
 		}
+
+
 		if(isset($_POST['username'])&&isset($_POST['password']))
 		{																	
 			if(isset($_POST['remember'])&&$_POST['remember']=='1') 
@@ -33,8 +40,12 @@ Class dangnhap extends CI_Controller{
 			$tmp = $this->chucnang->dangnhap($arr);	
 
 			if($tmp==1)
-			{															
-				redirect($_SERVER['HTTP_REFERER'], 'location', 301);
+			{
+				if ($redirect_url)
+					redirect($redirect_url, 'location', 301);
+				else															
+					redirect($_SERVER['HTTP_REFERER'], 'location', 301);
+				$redirect_url = FALSE;
 			}
 			else
 			{
@@ -61,7 +72,9 @@ Class dangnhap extends CI_Controller{
 				if ($dangky=="thanhcong")
 					$this->data['dangky'] = 1;
 				else $this->data['dangky'] = 0;
-				
+				$dangky = $this->input->get("capnhat");
+				if ($dangky)
+					$this->data['dangky'] = 2;				
 				$this->load->view('dangnhap',$this->data);
 			}
 	}

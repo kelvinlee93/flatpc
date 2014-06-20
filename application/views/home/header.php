@@ -18,8 +18,8 @@
 		<link href="<?=base_url()?>static/home/css/iview.css" rel="stylesheet">	
 		<link href="<?=base_url()?>static/home/css/menu3d.css" rel="stylesheet"/>	
 		<link href="<?=base_url()?>static/home/css/animate.css" rel="stylesheet" type="text/css"/>		
-		<link href="<?=base_url()?>static/home/css/custom.css" rel="stylesheet" type="text/css" />				
-		<link href="<?=base_url()?>static/home/css/skin/midnight-blue.css" id="colorstyle" rel="stylesheet">
+		<link href="<?=base_url()?>static/home/css/custom.css" rel="stylesheet" type="text/css" />		    
+		<link href="<?=base_url()?>static/home/css/skin/cadetblue-violetred.css" id="colorstyle" rel="stylesheet">
 		<link href="<?=base_url()?>static/home/images/favicon.ico" rel="icon" type="image/x-icon" />
 
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -33,6 +33,10 @@
 		<script src="<?=base_url()?>static/home/js/jquery.easing.js" type="text/javascript"></script>
 		<script src="<?=base_url()?>static/home/js/iview.js" type="text/javascript"></script>
 		<script src="<?=base_url()?>static/home/js/retina-1.1.0.min.js" type="text/javascript"></script>
+    
+    <link href="<?=base_url()?>static/home/advanced-datatable/media/css/demo_page.css" rel="stylesheet" />
+    <link href="<?=base_url()?>static/home/advanced-datatable/media/css/demo_table.css" rel="stylesheet" />
+
 
 		<!--[if IE 8]>
 		    <script type="text/javascript" src="js/selectivizr.js"></script>
@@ -47,9 +51,18 @@
       <div class="row">
         <div class="col-md-12">
           <div class="topheadrow">
-            <div class="pull-left"></div>
+            <div class="pull-left"><br>            
+                <?php if ($taikhoan_updateinfo!=1)
+                          {
+                              if ($taikhoan_updateinfo==2)
+                                  echo '<span style="color: green"><strong>Thành công!</strong></span>';
+                              elseif ($taikhoan_updateinfo==3)
+                                  echo '<span style="red: green"><strong>Lỗi xảy ra!</strong></span>';
+                          }
+                ?>
+            </div>
             <ul class="nav nav-pills pull-right">              
-              <li> <a href="<?=base_url('giohang')?>"> <i class="fa fa-shopping-cart fa-fw"></i> <span class="hidden-xs"> Giỏ hàng</span></a> </li>
+              <li> <a href="<?php if ($this->cart->total()==0) echo 'javascript:alert(\'Chưa có sản phẩm!\')'; else echo base_url('giohang')?>"> <i class="fa fa-shopping-cart fa-fw"></i> <span class="hidden-xs"> Giỏ hàng</span></a> </li>              
               <?php if($Login==1)
               { ?>
                   <li> <a href="<?=base_url('taikhoan')?>"> <i class="fa fa-user fa-fw"></i> <span class="hidden-xs"> <?=$Username?></span></a> </li>              
@@ -60,13 +73,12 @@
                   <li> <a href="<?=base_url('dangky')?>"> <i class="fa fa-pencil fa-fw"></i> <span class="hidden-xs"> Đăng ký</span></a> </li>              
                   <li class="dropdown"> <a class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i> <span class="hidden-xs"> Đăng nhập</span></a>
                     <div class="loginbox dropdown-menu"> <span class="form-header">Đăng nhập</span>
-                      <form method="post" action="<?=base_url('dangnhap')?>">
+                      <form method="post" action="<?=base_url()?>dangnhap?redirect=<?=urlencode($_SERVER["REQUEST_URI"])?>">
                         <div class="form-group"> <i class="fa fa-user fa-fw"></i>
                           <input class="form-control" id="username" name="username" placeholder="Tên đăng nhập" type="text">
                         </div>
                         <div class="form-group"> <i class="fa fa-lock fa-fw"></i>
-                          <input class="form-control" id="password" name="password" placeholder="Mật khẩu" type="password">
-                          <input class="form-control" id="home" name="home" type="hidden" value="1">
+                          <input class="form-control" id="password" name="password" placeholder="Mật khẩu" type="password">                          
                         </div>
                         <button class="btn small color1 pull-left" type="button" onclick="window.location.href='<?=base_url('dangky')?>'">Đăng ký</button>
                         <button class="btn small color1 pull-right" type="submit">Đăng nhập</button>
@@ -96,25 +108,22 @@
       <!-- search -->
       <div class="col-lg-3 col-md-4 col-sm-5 col-xs-12 pull-right">
         <div class="searchbar">
-          <form action="#">
+          <form action="<?=base_url()?>timkiem" id="search_form">
             <ul class="pull-left">
               <li class="input-prepend dropdown" data-select="true"> <a class="add-on dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" href="#a"> <span class="dropdown-display">Tất cả</span> <i class="fa fa-sort fa-fw"></i> </a> 
                 <!-- this hidden field is used to contain the selected option from the dropdown -->
-                <input class="dropdown-field" type="hidden" value="All Categories"/>
+                <input form="search_form" id="loaisanpham" name="loaisanpham" class="dropdown-field" type="hidden" value="all"/>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="#a" data-value="Men Wear">Men Wear</a></li>
-                  <li><a href="#a" data-value="Women Wear">Women Wear</a></li>
-                  <li><a href="#a" data-value="Music">Music</a></li>
-                  <li><a href="#a" data-value="Mobile Phones">Mobile Phones</a></li>
-                  <li><a href="#a" data-value="Computers">Computers</a></li>
-                  <li><a href="#a" data-value="Gaming">Gaming</a></li>
-                  <li><a href="#a" data-value="Gift Ideas">Gift Ideas</a></li>
-                  <li><a href="#a" data-value="All Categories">All Categories</a></li>
+                  <li><a href="#a" data-value="1">Máy tính bảng</a></li>
+                  <li><a href="#a" data-value="2">Máy tính xách tay</a></li>
+                  <li><a href="#a" data-value="3">Máy tính để bàn</a></li>
+                  <li><a href="#a" data-value="0">Phụ kiện</a></li>                  
+                  <li><a href="#a" data-value="all">Tất cả</a></li>
                 </ul>
               </li>
             </ul>
             <div class="searchbox pull-left">
-              <input class="searchinput" id="search" placeholder="Tìm..." type="search">
+              <input class="searchinput" id="keyword" name="keyword" form="search_form" placeholder="Tìm..." type="search">
               <button class="fa fa-search fa-fw" type="submit"></button>
             </div>
           </form>
@@ -135,108 +144,104 @@
         <div class="menu3dmega vertical menuMegasub" id="menuMega">
           <ul>            
             <!-- Menu Item for Tablets and Computers Only-->
-            <li class="hidden-xs"> <a href="#a"> <i class="fa fa-tablet"></i> <span>Máy tính bảng</span> <i class="fa fa-angle-right"></i> </a>
-              <div class="dropdown-menu flyout-menu"> 
-                <!-- Sub Menu -->
-                <ul>
-                  <li><a href="index.html">Home</a></li>
-                  <li><a href="about.html">About us</a></li>
-                  <li><a href="blog.html">Blog</a></li>                  
-                </ul>
-                <!-- end: Sub Menu --> 
-              </div>
-            </li>
-            <!-- end: Menu Item --> 
-            <!-- Menu Item -->
-            <li> <a href="#a"> <i class="fa fa-laptop"></i> <span>Máy tính xách tay</span> <i class="fa fa-angle-right"></i> </a>
+            <li class="hidden-xs"> <a href="<?=base_url('sanpham/maytinhbang')?>"> <i class="fa fa-tablet"></i> <span>Máy tính bảng</span> <i class="fa fa-angle-right"></i> </a>
               <div class="dropdown-menu"> 
                 <!-- Sub Menu -->
                 <div class="content">
                   <div class="row">
-                    <div class="col-md-4"> <a class="menu-title" href="#a">Fashion</a>
+                    <div class="col-md-4">
                       <ul>
-                        <li><a href="#a">Clothing</a></li>
-                        <li><a href="#a">Shoes</a></li>
-                        <li><a href="#a">Handbags</a></li>
-                        <li><a href="#a">Accessories</a></li>
-                        <li><a href="#a">Luggage</a></li>
-                        <li><a href="#a">Jewelry</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhbang/acer')?>">ACER</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhbang/asus')?>">ASUS</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhbang/dell')?>">DELL</a></li>                                            
                       </ul>
                     </div>
-                    <div class="col-md-4"> <a class="menu-title" href="#a">Shirts</a>
+                    <div class="col-md-4">
                       <ul>
-                        <li><a href="#a">Reguler Shirts</a></li>
-                        <li><a href="#a">Slim Shirts</a></li>
-                        <li><a href="#a">Fashion Shirts</a></li>
-                        <li><a href="#a">Black Shirts</a></li>
-                        <li><a href="#a">White Shirts</a></li>
-                        <li><a href="#a">Gray Shirts</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhbang/hp')?>">HP</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhbang/sony')?>">SONY</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhbang/toshiba')?>">TOSHIBA</a></li>
                       </ul>
                     </div>
-                    <div class="col-md-4"> <a class="menu-title" href="#a">Jeans</a>
+                    <div class="col-md-4">
                       <ul>
-                        <li><a href="#a">Reguler Jeans</a></li>
-                        <li><a href="#a">Slim-fit Jeans</a></li>
-                        <li><a href="#a">Loose Jeans</a></li>
-                        <li><a href="#a">Top Jeans</a></li>
-                        <li><a href="#a">New Jeans</a></li>
-                        <li><a href="#a">Color Jeans</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhbang/apple')?>">APPLE</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhbang/lenovo')?>">LENOVO</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhbang/samsung')?>">SAMSUNG</a></li>
                       </ul>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <p> <a href="#a"><img alt="" src="images/menu-ad.jpg"></a> </p>
-                    </div>
-                  </div>
+                  </div>                  
                 </div>
                 <!-- end: Sub Menu --> 
               </div>
             </li>
             <!-- end: Menu Item --> 
             <!-- Menu Item -->
-            <li> <a href="#a"> <i class="fa fa-desktop"></i> <span>Máy tính để bàn</span> <i class="fa fa-angle-right"></i> </a>
+            <li> <a href="<?=base_url('sanpham/maytinhxachtay')?>"> <i class="fa fa-laptop"></i> <span>Máy tính xách tay</span> <i class="fa fa-angle-right"></i> </a>
               <div class="dropdown-menu"> 
                 <!-- Sub Menu -->
                 <div class="content">
                   <div class="row">
-                    <div class="col-md-5"> <a class="menu-title" href="#a">Fashion</a>
+                    <div class="col-md-4">
                       <ul>
-                        <li><a href="#a">Clothing</a></li>
-                        <li><a href="#a">Shoes</a></li>
-                        <li><a href="#a">Handbags</a></li>
-                        <li><a href="#a">Accessories</a></li>
-                        <li><a href="#a">Luggage</a></li>
-                        <li><a href="#a">Jewelry</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhxachtay/acer')?>">ACER</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhxachtay/asus')?>">ASUS</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhxachtay/dell')?>">DELL</a></li>                                            
                       </ul>
                     </div>
-                    <div class="col-md-7">
-                      <div class="product-block">
-                        <div class="image">
-                          <div class="product-label product-sale"><span>SALE</span></div>
-                          <a class="img" href="product.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
-                        <div class="product-meta">
-                          <div class="name"><a href="product.html">Ladies Stylish Handbag</a></div>
-                          <div class="big-price"> <span class="price-new"><span class="sym">$</span>96</span> <span class="price-old"><span class="sym">$</span>119.50</span> </div>
-                          <div class="big-btns"> <a class="btn btn-default btn-view pull-left" href="#">View</a> <a class="btn btn-default btn-addtocart pull-right" href="#">Add to
-                            Cart</a> </div>
-                          <div class="small-price"> <span class="price-new"><span class="sym">$</span>96</span> <span class="price-old"><span class="sym">$</span>119.50</span> </div>
-                          <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-half-o"></i> <i class="fa fa-star-o"></i> </div>
-                          <div class="small-btns">
-                            <button class="btn btn-default btn-compare pull-left" data-toggle="tooltip" title="Add to Compare"> <i class="fa fa-retweet fa-fw"></i> </button>
-                            <button class="btn btn-default btn-wishlist pull-left" data-toggle="tooltip" title="Add to Wishlist"> <i class="fa fa-heart fa-fw"></i> </button>
-                            <button class="btn btn-default btn-addtocart pull-left" data-toggle="tooltip" title="Add to Cart"> <i class="fa fa-shopping-cart fa-fw"></i> </button>
-                          </div>
-                        </div>
-                        <div class="meta-back"></div>
-                      </div>
+                    <div class="col-md-4">
+                      <ul>
+                        <li><a href="<?=base_url('sanpham/maytinhxachtay/hp')?>">HP</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhxachtay/sony')?>">SONY</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhxachtay/toshiba')?>">TOSHIBA</a></li>
+                      </ul>
                     </div>
-                  </div>
+                    <div class="col-md-4">
+                      <ul>
+                        <li><a href="<?=base_url('sanpham/maytinhxachtay/apple')?>">APPLE</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhxachtay/lenovo')?>">LENOVO</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhxachtay/samsung')?>">SAMSUNG</a></li>
+                      </ul>
+                    </div>
+                  </div>                  
                 </div>
                 <!-- end: Sub Menu --> 
               </div>
             </li>
-            <li> <a href="#a"> <i class="fa fa-video-camera"></i> <span>Phụ kiện</span></a> </li>
+            <!-- end: Menu Item --> 
+            <!-- Menu Item -->
+            <li> <a href="<?=base_url('sanpham/maytinhdeban')?>"> <i class="fa fa-desktop"></i> <span>Máy tính để bàn</span> <i class="fa fa-angle-right"></i> </a>
+              <div class="dropdown-menu"> 
+                <!-- Sub Menu -->
+                <div class="content">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <ul>
+                        <li><a href="<?=base_url('sanpham/maytinhdeban/acer')?>">ACER</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhdeban/asus')?>">ASUS</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhdeban/dell')?>">DELL</a></li>                                            
+                      </ul>
+                    </div>
+                    <div class="col-md-4">
+                      <ul>
+                        <li><a href="<?=base_url('sanpham/maytinhdeban/hp')?>">HP</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhdeban/sony')?>">SONY</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhdeban/toshiba')?>">TOSHIBA</a></li>
+                      </ul>
+                    </div>
+                    <div class="col-md-4">
+                      <ul>
+                        <li><a href="<?=base_url('sanpham/maytinhdeban/apple')?>">APPLE</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhdeban/lenovo')?>">LENOVO</a></li>
+                        <li><a href="<?=base_url('sanpham/maytinhdeban/samsung')?>">SAMSUNG</a></li>
+                      </ul>
+                    </div>
+                  </div>                  
+                </div>
+                <!-- end: Sub Menu --> 
+              </div>
+            </li>
+            <li> <a href="<?=base_url('sanpham/phukien')?>"> <i class="fa fa-headphones"></i> <span>Phụ kiện</span></a> </li>
             <!-- end: Menu Item --> 
             <!-- Menu Item 
             <li> <a href="#a"> <i class="fa fa-video-camera"></i> <span>Digital Camera</span></a> </li>
@@ -253,8 +258,12 @@
             <li> <a href="<?=base_url('gioithieu')?>"> <i class="fa fa-info-circle fa-fw"></i> <span class="hidden-sm">Giới thiệu</span></a> </li>
             <li> <a href="<?=base_url('tintuc')?>"> <i class="fa fa-rss fa-fw"></i> <span class="hidden-sm">Tin tức</span></a> </li>
             <li> <a href="<?=base_url('lienhe')?>"> <i class="fa fa-pencil-square-o fa-fw"></i> <span class="hidden-sm ">Liên hệ</span></a> </li>
-            <li class="dropdown"> <a href="<?=base_url('giohang')?>"> <i class="fa fa-shopping-cart fa-fw"></i> <span class="hidden-sm"> <?=count($this->cart->contents());?> | <?=number_format($this->cart->total(), 0, ',', '.');?> đ</span></a> 
+            <li class="dropdown"> <a href="<?php if ($this->cart->total()==0) echo '#'; else echo base_url('giohang'); ?>"> <i class="fa fa-shopping-cart fa-fw"></i> <span class="hidden-sm"> <?=count($this->cart->contents());?> | <?=number_format($this->cart->total(), 0, ',', '.');?> đ</span></a> 
               <!-- Quick Cart -->
+              <?php if ($this->cart->total()==0) { ?>
+              <div class="dropdown-menu quick-cart empty">
+              <div class="qc-row qc-row-item" style="min-height:60px; padding:30px 10px; text-align: center">Chưa có sản phẩm!</div></div>
+              <?php } else { ?>
               <div class="dropdown-menu quick-cart">
                 <div class="qc-row qc-row-heading"> <span class="qc-col-qty">Số lượng</span> <span class="qc-col-name">Tên sản phẩm</span> <span class="qc-col-price">Đơn giá</span> </div>
                 <?php foreach ($this->cart->contents() as $product) 
@@ -263,6 +272,7 @@
                 <?php } ?>                
                 <div class="qc-row-bottom"><a class="btn qc-btn-viewcart" href="<?=base_url('giohang')?>">xem giỏ hàng</a><a class="btn qc-btn-checkout" href="<?=base_url('dathang')?>">đặt hàng</a></div>
               </div>
+              <?php } ?>
               <!-- end: Quick Cart --> 
             </li>
           </ul>

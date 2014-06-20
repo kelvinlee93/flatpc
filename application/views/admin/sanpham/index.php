@@ -72,7 +72,9 @@
                                             <td class="center"><?=$item['LUOTXEM']?></td>
                                             <td class="center"><?=$item['LUOTMUA']?></td>
                                             <td class="center">
-                                            <button class="btn btn-primary btn-xs" onclick="window.location.href='<?=base_url()?>admin/sanpham/capnhat?id=<?=$item['ID']?>'"><i class="icon-pencil"></i></button>                                            
+                                            <?php if ($item['TINHTRANG']!=-2) { ?>
+                                                <button class="btn btn-primary btn-xs" onclick="window.location.href='<?=base_url()?>admin/sanpham/capnhat?id=<?=$item['ID']?>'"><i class="icon-pencil"></i></button>                                            
+                                            <?php } ?>
                                             <?php if ($item['TINHTRANG']==1||$item['TINHTRANG']==0)
                                                       echo '<button class="btn btn-danger btn-xs" onclick="window.location.href=\''.base_url('admin/sanpham/ngungkinhdoanh?id='.$item['ID'].'').'\'"><i class="icon-off"></i></button></a>';
                                                   elseif ($item['TINHTRANG']==-1)

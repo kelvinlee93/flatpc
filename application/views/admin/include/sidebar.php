@@ -58,6 +58,7 @@
                       <ul class="sub">
                           <li <?php if($subpage=='news-manage'||$subpage=='news-edit') echo 'class="active"'?>><a href="<?=base_url()?>admin/tintuc">Quản lý</a></li>
                           <li <?php if($subpage=='news-add') echo 'class="active"'?>><a href="<?=base_url()?>admin/tintuc/them">Thêm mới</a></li>                          
+                          <li <?php if($subpage=='news-comment') echo 'class="active"'?>><a href="<?=base_url()?>admin/tintuc/binhluan">Bình luận</a></li>                          
                       </ul>                      
                   </li>
                   <li class="sub-menu">

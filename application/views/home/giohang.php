@@ -9,9 +9,9 @@
   </div>
 </div>
 <div class="row clearfix f-space10"></div>
-<?php foreach ($this->cart->contents() as $item) 
-{ if ($item['qty']!=0) { ?>
-<form action="<?=base_url('giohang/update')?>" method="post">
+<?php $d=0; foreach ($this->cart->contents() as $item) 
+{ if ($item['qty']!=0) { $d++; ?>
+<form action="<?=base_url('giohang/update')?>" method="post" id="cart_<?=$d?>" name="cart_<?=$d?>">
   <!-- product -->
   <div class="container">
     <div class="row">
@@ -37,35 +37,37 @@
         <div class="col-md-2 hidden-sm hidden-xs p-wr">
           <div class="product-attrb-wr">
             <div class="product-attrb">              
-              <div class="att"> <span>Nhà cung cấp:</span> <?=$item['ncc']?></div>
+              <div class="att"> <span>Hãng:</span> <?=$item['ncc']?></div>
               <div class="att"> <span>Loại:</span> <?=$item['type']?></div>
             </div>
           </div>
         </div>
         <div class="col-md-2 hidden-sm hidden-xs p-wr">
           <div class="product-attrb-wr">
-            <div class="product-attrb">
+            <div class="product-attrb">              
               <div class="qtyinput">
-                <div class="quantity-inp">
-                  <input type="text" class="quantity-input" id="p_quantity" name="p_quantity" value="<?=$item['qty']?>">
-                  <div class="quantity-txt minusbtn"><a href="#a" class="qty qtyminus" ><i class="fa fa-minus fa-fw"></i></a></div>
-                  <div class="quantity-txt plusbtn"><a href="#a" class="qty qtyplus" ><i class="fa fa-plus fa-fw"></i></a></div>
+                <div class="quantity-inp">                  
+                  <select class="input4" id="p_quantity" name="p_quantity" onchange="document.getElementById('btnSearch_<?=$d?>').click()">
+                    <?php for ($i=1;$i<=10;$i++) { ?>
+                    <option value="<?=$i?>"<?php if ($i==$item['qty']) echo ' selected'; if ($i>$item['soluong']) echo ' disabled';?>><center><?=$i?><?php if ($i>$item['soluong']) echo ' (Hết hàng)';?><center></option>
+                    <?php } ?>                                   
+                  </select>                  
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="col-md-2 hidden-sm hidden-xs p-wr">
-          <div class="product-attrb-wr">
+          <div class="product-attrb-wr">            
             <div class="product-attrb">
-              <div class="price"> <span class="t-price"><?=number_format($item['price']*$item['qty'], 0, ',', '.');?></div>
+              <div class="price"> <span class="t-price"><?=number_format($item['price']*$item['qty'], 0, ',', '.');?> đ</div>
             </div>
           </div>
         </div>
         <div class="col-md-1 col-sm-2 col-xs-3 p-wr">
           <div class="product-attrb-wr">
             <div class="product-attrb">
-              <button class="color2" style="border: none; padding: 0; background: none;" data-toggle="tooltip" data-original-title="Cập nhật" name="update" type="submit" value="1"><i class="fa fa-refresh fa-fw color2"></i></button>
+              <button class="color2" style="border: none; padding: 0; background: none;" data-toggle="tooltip" data-original-title="Cập nhật" id="btnSearch_<?=$d?>" name="update" type="submit" hidden="true" value="1"><i class="fa fa-refresh fa-fw color2"></i></button>
               <button class="color2" style="border: none; padding: 0; background: none;" data-toggle="tooltip" data-original-title="Xóa" name="delete" type="submit" value="1"><i class="fa fa-trash-o fa-fw color2"></i></button>              
             </div>
           </div>
@@ -80,67 +82,42 @@
 <div class="row clearfix f-space30"></div>
 <div class="container">
   <div class="row"> 
-    <!-- 	Estimate Shipping & Taxes -->
-    <div class="col-md-4  col-sm-4 col-xs-12 cart-box-wr">
-      <div class="box-heading"><span>Estimate Shipping & Taxes</span></div>
-      <div class="clearfix f-space10"></div>
-      <div class="box-content cart-box">
-        <p>Enter your destination to get a shipping estimate.</p>
-        <form>
-          <input type="text" value="" placeholder="Country" class="input4" />
-          <input type="text" value="" placeholder="Region/State" class="input4" />
-          <button class="btn large color2 pull-right">Submit</button>
-        </form>
-      </div>
+    <!--  Estimate Shipping & Taxes -->
+    <div class="col-md-4  col-sm-4 col-xs-12 cart-box-wr">      
       <div class="clearfix f-space30"></div>
     </div>
     
     <!-- end: Estimate Shipping & Taxes --> 
     
-    <!-- 	Discount Codes -->
+    <!--  Discount Codes -->
     
-    <div class="col-md-4  col-sm-4 col-xs-12 cart-box-wr">
-      <div class="box-heading"><span>Discount Codes</span></div>
-      <div class="clearfix f-space10"></div>
-      <div class="box-content cart-box">
-        <p>Enter your coupon code if you have one.</p>
-        <form>
-          <input type="text" value="" placeholder="Country" class="input4" />
-          <input type="text" value="" placeholder="Region/State" class="input4" />
-          <button class="btn large color2 pull-right">Submit</button>
-        </form>
-      </div>
+    <div class="col-md-4  col-sm-4 col-xs-12 cart-box-wr">      
       <div class="clearfix f-space30"></div>
     </div>
     
     <!-- end: Discount Codes --> 
     
-    <!-- 	Total amount -->
+    <!--  Total amount -->
     
     <div class="col-md-4 col-sm-4 col-xs-12 cart-box-wr">
       <div class="box-content">
         <div class="cart-box-tm">
-          <div class="tm1">Sub-Total</div>
-          <div class="tm2">$2167.25</div>
+          <div class="tm1">Tổng cộng</div>
+          <div class="tm2"><?=number_format($this->cart->total(), 0, ',', '.');?> đ</div>
+        </div>        
+        <div class="clearfix f-space10"></div>
+        <div class="cart-box-tm">
+          <div class="tm1">VAT (10%) </div>
+          <div class="tm2"><?=number_format($this->cart->total()*0.1, 0, ',', '.');?> đ</div>
         </div>
         <div class="clearfix f-space10"></div>
         <div class="cart-box-tm">
-          <div class="tm1">Eco Tax (-2.00) </div>
-          <div class="tm2">$23.60</div>
+          <div class="tm3 bgcolor2">Thành tiền </div>
+          <div class="tm4 bgcolor2"><?=number_format($this->cart->total()*0.1+$this->cart->total(), 0, ',', '.');?> đ</div>
         </div>
         <div class="clearfix f-space10"></div>
-        <div class="cart-box-tm">
-          <div class="tm1">VAT (18.2%) </div>
-          <div class="tm2">$54.00</div>
-        </div>
-        <div class="clearfix f-space10"></div>
-        <div class="cart-box-tm">
-          <div class="tm3 bgcolor2">Total </div>
-          <div class="tm4 bgcolor2">$7854.34</div>
-        </div>
-        <div class="clearfix f-space10"></div>
-        <button class="btn large color1 pull-left" type="submit">Cập nhật</button>
-        <button class="btn large color1 pull-right">Đặt hàng</button>
+        <button class="btn large color1 pull-left" onclick="window.location.href='<?=base_url('giohang/huy')?>'" type="button">Làm trống</button>
+        <button class="btn large color1 pull-right" onclick="window.location.href='<?=base_url('dathang')?>'" type="button">Đặt hàng <i class="fa fa-arrow-right fa-fw"></i></button>
         <div class="clearfix f-space30"></div>
       </div>
     </div>

@@ -1,5 +1,5 @@
   <!-- Products -->  
-  <div class="row clearfix f-space30"></div>
+  <div class="row clearfix f-space10"></div>
   <div class="container">
     <div class="row">
       <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 main-column box-block">
@@ -29,7 +29,8 @@
                               <input type="hidden" id="name" name="name" value="<?=$item['TENSANPHAM']?>"/>                    
                               <input type="hidden" id="img" name="img" value="<?=$item['TENANH']?>"/>
                               <input type="hidden" id="type" name="type" value="<?=$item['TENLOAI']?>"/>
-                              <input type="hidden" id="ncc" name="ncc" value="<?=$item['TENNCC']?>"/>                              
+                              <input type="hidden" id="ncc" name="ncc" value="<?=$item['TENNCC']?>"/>
+                              <input type="hidden" id="soluong" name="soluong" value="<?=$item['SOLUONG']?>"/>                              
                               <a class="btn btn-default btn-addtocart pull-right" href="javascript:{}" onclick="document.getElementById('productform<?=$item['ID']?>').submit();">Thêm vào giỏ</a>
                             </form>                            
                         </div>
@@ -78,7 +79,8 @@
                               <input type="hidden" id="name" name="name" value="<?=$item['TENSANPHAM']?>"/>                    
                               <input type="hidden" id="img" name="img" value="<?=$item['TENANH']?>"/>
                               <input type="hidden" id="type" name="type" value="<?=$item['TENLOAI']?>"/>
-                              <input type="hidden" id="ncc" name="ncc" value="<?=$item['TENNCC']?>"/>                              
+                              <input type="hidden" id="ncc" name="ncc" value="<?=$item['TENNCC']?>"/>    
+                              <input type="hidden" id="soluong" name="soluong" value="<?=$item['SOLUONG']?>"/>                          
                               <a class="btn btn-default btn-addtocart pull-right" href="javascript:{}" onclick="document.getElementById('productform<?=$item['ID']?>').submit();">Thêm vào giỏ</a>
                             </form>                            
                         </div>
@@ -111,7 +113,7 @@
         </div>
       </div>
       <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 box-block sidebar">
-        <div class="box-heading"><span>Sản phẩm nổi bật</span></div>
+        <div class="box-heading"><span>Sản phẩm HOT</span></div>
         <div class="box-content">
           <div class="box-products slide carousel-fade" id="hotproduct">
             <ol class="carousel-indicators">
@@ -137,7 +139,8 @@
                               <input type="hidden" id="name" name="name" value="<?=$show_hotproduct_active[0]['TENSANPHAM']?>"/>                    
                               <input type="hidden" id="img" name="img" value="<?=$show_hotproduct_active[0]['TENANH']?>"/>
                               <input type="hidden" id="type" name="type" value="<?=$show_hotproduct_active[0]['TENLOAI']?>"/>
-                              <input type="hidden" id="ncc" name="ncc" value="<?=$show_hotproduct_active[0]['TENNCC']?>"/>                              
+                              <input type="hidden" id="ncc" name="ncc" value="<?=$show_hotproduct_active[0]['TENNCC']?>"/> 
+                              <input type="hidden" id="soluong" name="soluong" value="<?=$show_hotproduct_active[0]['SOLUONG']?>"/>                             
                               <a class="btn btn-default btn-addtocart pull-right" href="javascript:{}" onclick="document.getElementById('productform<?=$show_hotproduct_active[0]['ID']?>').submit();">Thêm vào giỏ</a>
                             </form>                            
                         </div>
@@ -180,6 +183,7 @@
                               <input type="hidden" id="img" name="img" value="<?=$item['TENANH']?>"/>
                               <input type="hidden" id="type" name="type" value="<?=$item['TENLOAI']?>"/>
                               <input type="hidden" id="ncc" name="ncc" value="<?=$item['TENNCC']?>"/>                              
+                              <input type="hidden" id="soluong" name="soluong" value="<?=$item['SOLUONG']?>"/>                              
                               <a class="btn btn-default btn-addtocart pull-right" href="javascript:{}" onclick="document.getElementById('productform<?=$item['ID']?>').submit();">Thêm vào giỏ</a>
                             </form>                            
                         </div>
@@ -216,7 +220,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-column box-block">
-        <div class="box-heading"><span>MÁY TÍNH BẢNG</span></div>
+        <a href="<?=base_url('sanpham/maytinhbang')?>"><div class="box-heading"><span>MÁY TÍNH BẢNG</span></div></a>
         <div class="box-content">
           <div class="box-products slide" id="tablet">
             <div class="carousel-controls"> <a class="carousel-control left" data-slide="prev" href="#tablet"> <i class="fa fa-angle-left fa-fw"></i> </a> <a class="carousel-control right" data-slide="next" href="#tablet"> <i class="fa fa-angle-right fa-fw"></i> </a> </div>
@@ -242,7 +246,8 @@
                               <input type="hidden" id="name" name="name" value="<?=$item['TENSANPHAM']?>"/>                    
                               <input type="hidden" id="img" name="img" value="<?=$item['TENANH']?>"/>
                               <input type="hidden" id="type" name="type" value="<?=$item['TENLOAI']?>"/>
-                              <input type="hidden" id="ncc" name="ncc" value="<?=$item['TENNCC']?>"/>                              
+                              <input type="hidden" id="ncc" name="ncc" value="<?=$item['TENNCC']?>"/> 
+                              <input type="hidden" id="soluong" name="soluong" value="<?=$item['SOLUONG']?>"/>                              
                               <a class="btn btn-default btn-addtocart pull-right" href="javascript:{}" onclick="document.getElementById('productform<?=$item['ID']?>').submit();">Thêm vào giỏ</a>
                             </form>                            
                         </div>
@@ -290,7 +295,8 @@
                               <input type="hidden" id="name" name="name" value="<?=$item['TENSANPHAM']?>"/>                    
                               <input type="hidden" id="img" name="img" value="<?=$item['TENANH']?>"/>
                               <input type="hidden" id="type" name="type" value="<?=$item['TENLOAI']?>"/>
-                              <input type="hidden" id="ncc" name="ncc" value="<?=$item['TENNCC']?>"/>                              
+                              <input type="hidden" id="ncc" name="ncc" value="<?=$item['TENNCC']?>"/> 
+                              <input type="hidden" id="soluong" name="soluong" value="<?=$item['SOLUONG']?>"/>                             
                               <a class="btn btn-default btn-addtocart pull-right" href="javascript:{}" onclick="document.getElementById('productform<?=$item['ID']?>').submit();">Thêm vào giỏ</a>
                             </form>                            
                         </div>
@@ -329,7 +335,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-column box-block">
-        <div class="box-heading"><span>MÁY XÁCH TAY</span></div>
+        <a href="<?=base_url('sanpham/xachtay')?>"><div class="box-heading"><span>MÁY XÁCH TAY</span></div></a>
         <div class="box-content">
           <div class="box-products slide" id="laptop">
             <div class="carousel-controls"> <a class="carousel-control left" data-slide="prev" href="#laptop"> <i class="fa fa-angle-left fa-fw"></i> </a> <a class="carousel-control right" data-slide="next" href="#laptop"> <i class="fa fa-angle-right fa-fw"></i> </a> </div>
@@ -355,7 +361,8 @@
                               <input type="hidden" id="name" name="name" value="<?=$item['TENSANPHAM']?>"/>                    
                               <input type="hidden" id="img" name="img" value="<?=$item['TENANH']?>"/>
                               <input type="hidden" id="type" name="type" value="<?=$item['TENLOAI']?>"/>
-                              <input type="hidden" id="ncc" name="ncc" value="<?=$item['TENNCC']?>"/>                              
+                              <input type="hidden" id="ncc" name="ncc" value="<?=$item['TENNCC']?>"/>
+                              <input type="hidden" id="soluong" name="soluong" value="<?=$item['SOLUONG']?>"/>                              
                               <a class="btn btn-default btn-addtocart pull-right" href="javascript:{}" onclick="document.getElementById('productform<?=$item['ID']?>').submit();">Thêm vào giỏ</a>
                             </form>                            
                         </div>
@@ -403,7 +410,8 @@
                               <input type="hidden" id="name" name="name" value="<?=$item['TENSANPHAM']?>"/>                    
                               <input type="hidden" id="img" name="img" value="<?=$item['TENANH']?>"/>
                               <input type="hidden" id="type" name="type" value="<?=$item['TENLOAI']?>"/>
-                              <input type="hidden" id="ncc" name="ncc" value="<?=$item['TENNCC']?>"/>                              
+                              <input type="hidden" id="ncc" name="ncc" value="<?=$item['TENNCC']?>"/>
+                              <input type="hidden" id="soluong" name="soluong" value="<?=$item['SOLUONG']?>"/>                              
                               <a class="btn btn-default btn-addtocart pull-right" href="javascript:{}" onclick="document.getElementById('productform<?=$item['ID']?>').submit();">Thêm vào giỏ</a>
                             </form>                            
                         </div>
@@ -441,7 +449,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-column box-block">
-        <div class="box-heading"><span>MÁY TÍNH ĐỂ BÀN</span></div>
+        <a href="<?=base_url('sanpham/maytinhdeban')?>"><div class="box-heading"><span>MÁY TÍNH ĐỂ BÀN</span></div></a>
         <div class="box-content">
           <div class="box-products slide" id="desktop">
             <div class="carousel-controls"> <a class="carousel-control left" data-slide="prev" href="#desktop"> <i class="fa fa-angle-left fa-fw"></i> </a> <a class="carousel-control right" data-slide="next" href="#desktop"> <i class="fa fa-angle-right fa-fw"></i> </a> </div>
@@ -467,7 +475,8 @@
                               <input type="hidden" id="name" name="name" value="<?=$item['TENSANPHAM']?>"/>                    
                               <input type="hidden" id="img" name="img" value="<?=$item['TENANH']?>"/>
                               <input type="hidden" id="type" name="type" value="<?=$item['TENLOAI']?>"/>
-                              <input type="hidden" id="ncc" name="ncc" value="<?=$item['TENNCC']?>"/>                              
+                              <input type="hidden" id="ncc" name="ncc" value="<?=$item['TENNCC']?>"/> 
+                              <input type="hidden" id="soluong" name="soluong" value="<?=$item['SOLUONG']?>"/>                             
                               <a class="btn btn-default btn-addtocart pull-right" href="javascript:{}" onclick="document.getElementById('productform<?=$item['ID']?>').submit();">Thêm vào giỏ</a>
                             </form>                            
                         </div>
@@ -515,7 +524,8 @@
                               <input type="hidden" id="name" name="name" value="<?=$item['TENSANPHAM']?>"/>                    
                               <input type="hidden" id="img" name="img" value="<?=$item['TENANH']?>"/>
                               <input type="hidden" id="type" name="type" value="<?=$item['TENLOAI']?>"/>
-                              <input type="hidden" id="ncc" name="ncc" value="<?=$item['TENNCC']?>"/>                              
+                              <input type="hidden" id="ncc" name="ncc" value="<?=$item['TENNCC']?>"/> 
+                              <input type="hidden" id="soluong" name="soluong" value="<?=$item['SOLUONG']?>"/>                             
                               <a class="btn btn-default btn-addtocart pull-right" href="javascript:{}" onclick="document.getElementById('productform<?=$item['ID']?>').submit();">Thêm vào giỏ</a>
                             </form>                            
                         </div>
@@ -549,36 +559,4 @@
       </div>
     </div>
   </div>  
-  <!-- end: Products -->   
-
-  <!-- Widgets -->
-  <div class="row clearfix f-space30"></div>
-  <div class="container">
-        <div class="row"> 
-          <!-- Brands -->
-          <div class="col-md-12 main-column box-block brands-block">
-            <div class="box-heading"><span><strong>THƯƠNG HIỆU HÀNG ĐẦU</strong></span></div>
-            <div class="box-content">
-              <div class="box-products box-brands slide" id="brands">
-                <div class="carousel-controls"> <a class="carousel-control left" data-slide="prev" href="#brands"> <i class="fa fa-angle-left fa-fw"></i> </a> <a class="carousel-control right" data-slide="next" href="#brands"> <i class="fa fa-angle-right fa-fw"></i> </a> </div>
-                <div class="carousel-inner">
-                  <div class="brands-row item active">
-                    <div class="brand-logo"><a href="#a"><img src="<?=base_url()?>static/home/images/brands/acer.png" alt=""></a></div>
-                    <div class="brand-logo"><a href="#a"><img src="<?=base_url()?>static/home/images/brands/asus.png" alt=""></a></div>
-                    <div class="brand-logo"><a href="#a"><img src="<?=base_url()?>static/home/images/brands/dell.png" alt=""></a></div>
-                    <div class="brand-logo"><a href="#a"><img src="<?=base_url()?>static/home/images/brands/hp.png" alt=""></a></div>
-                  </div>
-                  <div class="brands-row item">
-                    <div class="brand-logo"><a href="#a"><img src="<?=base_url()?>static/home/images/brands/sony.png" alt=""></a></div>
-                    <div class="brand-logo"><a href="#a"><img src="<?=base_url()?>static/home/images/brands/toshiba.png" alt=""></a></div>
-                    <div class="brand-logo"><a href="#a"><img src="<?=base_url()?>static/home/images/brands/apple.png" alt=""></a></div>
-                    <div class="brand-logo"><a href="#a"><img src="<?=base_url()?>static/home/images/brands/lenovo.gif" alt=""></a></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- end: Brands -->           
-  </div>
-  <!-- end: Widgets -->
+  <!-- end: Products -->     

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>    
+<html lang="vi">
+<head> 
+    <meta charset="utf-8">    
     <link rel="shortcut icon" href="<?=base_url()?>static/img/favicon.ico">
 
     <title>Đăng nhập - FlatPC Admin</title>
@@ -30,8 +31,15 @@
                   </br>
                   <div class="col-lg-12">
                   <span style="color: green"><strong><i class="icon-ok-sign"></i> Đăng ký thành công! Mời bạn đăng nhập...</strong></span>
-                  </div>
-                  ';                                        
+                  </div>';
+            elseif ($dangky==2)                
+                echo '
+                  </br>
+                  <div class="col-lg-12">
+                  <span style="color: green"><strong><i class="icon-ok-sign"></i> Cập nhật thông tin tài khoản thành công! Mời bạn đăng nhập lại...</strong></span>
+                  </div>'
+                  ;
+
         ?>
         <div class="login-wrap">
             <input id="username" name="username" type="text" class="form-control" placeholder="Tên đăng nhập hoặc số điện thoại" value="<?php if (isset($_POST['username'])&&$_POST['username']!='') echo $_POST['username']; ?>">            

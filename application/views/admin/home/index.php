@@ -8,9 +8,9 @@
                           <div class="symbol terques">
                               <i class="icon-user"></i>
                           </div>
-                          <div class="value">
-                              <h1 class="count">
-                                  154
+                          <div class="value">                            
+                              <h1 id="test" class="count">
+                                 <?=$rp1[0]['KHACHHANG']?>
                               </h1>
                               <p>Khách hàng</p>
                           </div>
@@ -23,7 +23,7 @@
                           </div>
                           <div class="value">
                               <h1 class=" count2">
-                                  599
+                                  <?=$rp1[0]['SANPHAM']?>
                               </h1>
                               <p>Sản phẩm</p>
                           </div>
@@ -36,7 +36,7 @@
                           </div>
                           <div class="value">
                               <h1 class=" count3">
-                                  1666
+                                  <?=$rp1[0]['HOADON']?>
                               </h1>
                               <p>Hóa đơn</p>
                           </div>
@@ -49,9 +49,9 @@
                           </div>
                           <div class="value">
                               <h1 class=" count4">
-                                  3057
+                                  <?=$rp1[0]['DOANHTHU']?>
                               </h1>
-                              <p>Tổng lợi nhuận</p>
+                              <p>Doanh thu (triệu)</p>
                           </div>
                       </section>
                   </div>
@@ -75,7 +75,7 @@
                           </ul>
                           <div class="bar">
                               <div class="title">JAN</div>
-                              <div class="value tooltips" data-original-title="80%" data-toggle="tooltip" data-placement="top">80%</div>
+                              <div class="value tooltips" data-original-title="35%" data-toggle="tooltip" data-placement="top">35%</div>
                           </div>
                           <div class="bar ">
                               <div class="title">FEB</div>

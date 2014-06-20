@@ -135,7 +135,7 @@
                                           <th class="center">Thao tác</th>
                                       </tr>
                                       </tfoot>
-                          </table>
+                                    </table>
                                 </div>
                           </div>
                       </section>

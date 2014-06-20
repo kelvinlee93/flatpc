@@ -64,7 +64,7 @@ $autoload['libraries'] = array('database','session','cart','chucnang','form_vali
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','form','security','language','cookie','date','file');
+$autoload['helper'] = array('url','form','security','language','cookie','date','file','captcha');
 
 
 /*

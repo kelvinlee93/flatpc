@@ -54,13 +54,13 @@
                                       <tbody>
                                       <?php foreach ($result as $item) { ?>                                                                   
                                          <tr>                                            
-                                            <td>#DH<?=$item['ID']?></td>
+                                            <td class="center"><?=$item['ID']?></td>
                                             <td class="center"><?=date('Y-m-d', strtotime($item['NGAYDATHANG']))?></td>
                                             <td><?=$item['TENKHACHHANG']?></td>
                                             <td class="center"><?=$item['SDTKHACHHANG']?></td>
                                             <td><?=$item['TENNGUOINHAN']?></td>
                                             <td class="center"><?=$item['SDTNGUOINHAN']?></td>
-                                            <td class="center"><?=$item['TONGTIEN']?></td>
+                                            <td class="center"><?=number_format($item['TONGTIEN'], 0, ',', '.');?> đ</td>
                                             <td class="center">
                                               <?php if ($item['TINHTRANG']==-1) echo '<span class="label label-success label-mini">Đã thanh toán</span>';                                                    
                                               ?>

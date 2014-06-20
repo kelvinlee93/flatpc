@@ -125,7 +125,47 @@ Class Nguoidung_model extends CI_Model{
 		if ($this->db->trans_status() === FALSE)
 			return FALSE;
 		else return $query->result_array();
+	}
+
+	function update($Hodem,$Ten,$Tendangnhap,$Email,$Ngaysinh,$Diachi,$Gioitinh,$CMND,$SDT)
+	{		
+		$data = array(
+			"Hodem" => $Hodem,
+			"Tennguoidung" => $Ten,
+			"Tendangnhap" => $Tendangnhap,			
+			"Email" => $Email,
+			"Ngaysinh" => $Ngaysinh,
+			"Diachi" => $Diachi,			
+			"Gioitinh" => $Gioitinh,			
+			"CMND" => $CMND,
+			"SDT" => $SDT
+		);		
+		$this->db->trans_start();
+		$this->db->where("Id", $this->data['UserID']);
+		$query = $this->db->update($this->table, $data);							
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE)
+			return FALSE;
+		else return TRUE;		
+	}
+
+	function kt_matkhaucu($matkhau){
+		$query = $this->db->query("SELECT * FROM NGUOIDUNG WHERE MATKHAU = '".$matkhau."' AND TENDANGNHAP ='".$this->data['Username']."'");
+		if($this->db->affected_rows() > 0 ) return TRUE;
+		return FALSE;
 	}	
+
+	function doimatkhau($Id, $Matkhaumoi){
+		$Matkhaumoi = do_hash($Matkhaumoi, 'md5');
+		$this->db->trans_start();		
+		$query = $this->db->query("UPDATE NGUOIDUNG SET MATKHAU = '".$Matkhaumoi."' WHERE ID = ".$Id);							
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE)
+			return FALSE;
+		else return TRUE;			
+	}
 
 /*
 	function thongke_nguoidung(){
@@ -146,39 +186,7 @@ Class Nguoidung_model extends CI_Model{
 	function edit2($id){					
 		$query = $this->db->get_where($this->table,array('ID'=>$id));
 		return $query->result();
-	}	
-
-	function kt_matkhaucu($matkhau){
-		$query = $this->db->query("SELECT * FROM nguoidung WHERE MATKHAU = '".$matkhau."' AND TENDANGNHAP ='".$this->data['Username']."'");
-		if($this->db->affected_rows() > 0 ) return TRUE;
-		return FALSE;
-	}
-
-	function update($Id, $Tennguoidung, $Tendangnhap, $Matkhau, $Email, $Namsinh, $Gioitinh, $Diachi, $CMND, $SDT, $Quyen, $Trangthai, $HinhDaiDien)
-	{		
-		$data = array(
-			"Tennguoidung" => $Tennguoidung,
-			"Tendangnhap" => $Tendangnhap,
-			"Matkhau"	=>	$Matkhau,
-			"Email" => $Email,
-			"Ngaysinh" => $Namsinh,
-			"Gioitinh" => $Gioitinh,
-			"Diachi" => $Diachi,
-			"CMND" => $CMND,
-			"SDT" => $SDT,
-			"Quyen"	=>	$Quyen,
-			"Trangthai" => $Trangthai,
-			"HinhAnh" => $HinhDaiDien
-		);		
-		$this->db->trans_start();
-		$this->db->where("Id", $Id);
-		$query = $this->db->update($this->table, $data);							
-		$this->db->trans_complete();
-
-		if ($this->db->trans_status() === FALSE)
-			return FALSE;
-		else return TRUE;		
-	}
+	}		
 
 	function update_user($Id, $Tennguoidung, $Email, $Ngaysinh, $Gioitinh, $Diachi, $CMND, $SDT)
 	{		
@@ -212,17 +220,6 @@ Class Nguoidung_model extends CI_Model{
 		if ($this->db->trans_status() === FALSE)
 			return FALSE;
 		else return TRUE;
-	}
-
-	function doimatkhau($Id, $Matkhaumoi){
-		$Matkhaumoi = do_hash($Matkhaumoi, 'md5');
-		$this->db->trans_start();		
-		$query = $this->db->query("UPDATE nguoidung SET MATKHAU = '".$Matkhaumoi."' WHERE ID = ".$Id);							
-		$this->db->trans_complete();
-
-		if ($this->db->trans_status() === FALSE)
-			return FALSE;
-		else return TRUE;			
 	}
 
 	function delete($id){

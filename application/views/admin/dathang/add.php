@@ -58,8 +58,8 @@
                                           <label for="ptvc" class="control-label col-lg-2"><strong>Phương thức vận chuyển </strong></label>
                                           <div class="col-lg-4">
                                               <select class="form-control m-bot15" id="ptvc" name="ptvc">
-                                                  <option value='0' <?php if (isset($_POST['ptvc'])&&$_POST['ptvc']==0) echo 'selected' ?>>Nội thành</option>
-                                                  <option value='1' <?php if (isset($_POST['ptvc'])&&$_POST['ptvc']==1) echo 'selected' ?>>Ngoại thành (50000 đ)</option>                                                  
+                                                  <option value='0' <?php if (isset($_POST['ptvc'])&&$_POST['ptvc']==0) echo 'selected' ?>>THÔNG THƯỜNG</option>
+                                                  <option value='1' <?php if (isset($_POST['ptvc'])&&$_POST['ptvc']==1) echo 'selected' ?>>NHANH (50000 đ)</option>                                                  
                                               </select>
                                           </div>
                                       </div>

@@ -14,8 +14,7 @@
                           <table class="table table-striped table-hover">
                               <thead>
                               <tr>
-                                  <th>#</th>
-                                  <th>Loại sản phẩm</th>
+                                  <th>#</th>                                  
                                   <th>Tên sản phẩm</th>                                  
                                   <th>Số lượng</th>
                                   <th>Đơn giá</th>
@@ -27,8 +26,7 @@
                               {
                                   echo '
                                   <tr>
-                                      <td>'.$i.'</td>
-                                      <td>'.$item['TENLOAI'].'</td>
+                                      <td>'.$i.'</td>                                      
                                       <td>'.$item['TENSANPHAM'].'</td>                                      
                                       <td>'.$item['SOLUONG'].'</td>
                                       <td>'.number_format($item['DONGIA'], 0, ',', '.').' đ</td>

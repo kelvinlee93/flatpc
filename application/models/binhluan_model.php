@@ -39,26 +39,46 @@ Class Binhluan_model extends CI_Model{
 		else return TRUE;	
 	}
 
+	function insert($MASANPHAM, $NOIDUNG)
+	{
+		date_default_timezone_set('Asia/Jakarta');		
+		$data = array(
+			"Masanpham" => $MASANPHAM,
+			"Tenkhachhang" => $this->chucnang->GetName(),			
+			"Email" => $this->chucnang->GetEmail(),
+			"Noidung" => $NOIDUNG,
+			"Thoigian" => date('Y-m-d H:i:s')		
+		);
+		$this->db->insert('BINHLUAN', $data);
+		
+		if ($this->db->trans_status() === FALSE)
+			return FALSE;
+		else return TRUE;
+	}
+
+	function insert_tintuc($MATINTUC, $NOIDUNG)
+	{
+		date_default_timezone_set('Asia/Jakarta');		
+		$data = array(
+			"Matintuc" => $MATINTUC,
+			"Makhachhang" => $this->chucnang->GetUserID(),						
+			"Noidung" => $NOIDUNG,
+			"Thoigian" => date('Y-m-d H:i:s')		
+		);
+		$this->db->insert('BINHLUANTINTUC', $data);
+		
+		if ($this->db->trans_status() === FALSE)
+			return FALSE;
+		else return TRUE;
+	}
+
 /*
 	function get_binhluan_sp($id){		
 		$query = $this->db->query("SELECT B.*, S.TENSANPHAM FROM sanpham S, binhluan B WHERE S.ID = B.MASANPHAM AND S.ID =".$id." ORDER BY B.THOIGIAN DESC");
 		return $query->result_array();
 	}	
 
-	function insert($MASANPHAM, $TENKHACHHANG, $EMAIL, $NOIDUNG)
-	{
-		$Matkhau = do_hash($Matkhau, 'md5');
-		$data = array(
-			"MASANPHAM" => $MASANPHAM,
-			"TENKHACHHANG" => $TENKHACHHANG,
-			"EMAIL" => $EMAIL,
-			"NOIDUNG" => $NOIDUNG,
-			"THOIGIAN" => date('Y-m-d',time()),						
-		);
-		$this->db->insert($this->table, $data);
-		if($this->db->insert_id() > 0) return TRUE;
-		return FALSE;
-	}
+	
 
 	
 	*/

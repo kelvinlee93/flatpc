@@ -18,7 +18,7 @@
                                               <input class=" form-control" id="hidden_field" name="hidden_field" type="hidden" value="1" readonly/>
                                               <input class=" form-control" id="avatar" name="avatar" type="hidden" value="<?=$product_info['Hinhdaidien']?>" readonly/>
                                               <input class=" form-control" id="productcategory" name="productcategory" type="hidden" value="<?=$product_info['Loaisanpham']?>" readonly/>
-                                              <input class=" form-control" id="provider" name="provider" type="hidden" value="<?=$product_info['Nhacungcap']?>" readonly/>
+                                              <input class=" form-control" id="provider" name="provider" type="hidden" value="<?=$product_info['Nhacungcap']?>" readonly/>                                              
                                           </div>                                                                                    
                                       </div>
                                       <div class="form-group ">

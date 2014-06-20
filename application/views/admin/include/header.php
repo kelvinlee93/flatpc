@@ -17,13 +17,13 @@
     <link href="'.base_url().'static/admin/css/owl.carousel.css"rel="stylesheet" type="text/css">
     '
     ?>
-    <?php if($subpage=='user-manage'||$subpage=='rating-manage'||$subpage=='comment-manage'||$subpage=='news-manage'||$subpage=='order-manage'||$subpage=='invoice-manage'||$subpage=='product-manage'||$subpage=='product-import-manage')
+    <?php if($subpage=='user-manage'||$subpage=='rating-manage'||$subpage=='comment-manage'||$subpage=='news-manage'||$subpage=='order-manage'||$subpage=='invoice-manage'||$subpage=='product-manage'||$subpage=='product-import-manage'||$subpage=='rating-info'||$subpage=='news-comment')
         echo '
     <link href="'.base_url().'static/admin/assets/advanced-datatable/media/css/demo_page.css" rel="stylesheet" />
     <link href="'.base_url().'static/admin/assets/advanced-datatable/media/css/demo_table.css" rel="stylesheet" />
     '
     ?>
-    <?php if($subpage=='user-add'||$subpage=='user-edit'||$subpage=='rating-edit'||$subpage=='comment-edit'||$subpage=='news-edit'||$subpage=='news-add'||$subpage=='order-add'||$subpage=='product-add'||$subpage=='product-edit'||$subpage=='product-import')
+    <?php if($subpage=='user-add'||$subpage=='user-edit'||$subpage=='rating-edit'||$subpage=='comment-edit'||$subpage=='news-edit'||$subpage=='news-add'||$subpage=='order-add'||$subpage=='product-add'||$subpage=='product-edit'||$subpage=='product-import'||$subpage=='news-comment-edit')
         echo '    
     <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/bootstrap-fileupload/bootstrap-fileupload.css" />
     <link rel="stylesheet" type="text/css" href="'.base_url().'static/admin/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />

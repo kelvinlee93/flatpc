@@ -349,6 +349,25 @@ class chucnang{
 		return "";
 	}
 
+	function GetEmail(){
+		$this->CI=&get_instance();
+		$temp = $this->getLoginUsername();
+		if(!empty($temp))
+		{
+			$query = $this->CI->db->get_where($this->admin,array("TENDANGNHAP" => $temp));
+			$Email = $query->row()->EMAIL;
+			if(!empty($Email))
+			{
+				return $Email;
+			}
+			else
+			{
+				return "";
+			}
+		}
+		return "";
+	}
+
 	function GetUserID(){
 		$this->CI=&get_instance();
 		$temp = $this->getLoginUsername();

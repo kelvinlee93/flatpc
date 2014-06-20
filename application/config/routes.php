@@ -40,6 +40,8 @@
 
 $route['default_controller'] = "home";
 $route['404_override'] = 'error404';
+$route['lien-he'] = 'home/lienhe';
+$route['san-pham/(:any)'] = 'sanpham/chitiet?id=$1';
 
 
 /* End of file routes.php */

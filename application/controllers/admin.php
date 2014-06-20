@@ -26,6 +26,7 @@ Class admin extends CI_Controller{
 				$this->data['title'] = 'Bảng thông tin';
 				$this->data['page'] = 'dashboard';
 				$this->data['subpage'] = 'dashboard';
+				$this->data['rp1'] = $this->public_model->get_rp1();				
 
 				$this->load->view('admin/include/header',$this->data);
 				$this->load->view('admin/include/sidebar',$this->data);									
@@ -432,15 +433,33 @@ Class admin extends CI_Controller{
 		                  'max_size'        => 10240,
 		                  'max_height'      => 2048,
 		                  'max_width'       => 2048  
-	                );        			        
+	                );  
+
 				    $this->load->library('upload', $this->setting);
-					if (isset($_POST["hidden_field"])){						
+				    																		
+					if ($this->form_validation->run() == TRUE)
+					{
 						$Tensanpham = $this->input->post('productname',TRUE);
+						$Id = $this->input->post('chonsanpham',TRUE);
 						$Loaisanpham = $this->input->post('productcategory',TRUE);
+						$Soluong = $this->input->post('soluong',TRUE);
+						$Tinhtrang = $this->input->post('tinhtrang',TRUE);
+						if ($Tinhtrang==-2)
+							$Tinhtrang = 0;
+						$Luotxem = $this->input->post('luotxem',TRUE);
+						$Luotmua = $this->input->post('luotmua',TRUE);
 						$Nhacungcap = $this->input->post('provider',TRUE);
 						$Mota = $this->input->post('desc',TRUE);
-						$Dongia = $this->input->post('price',TRUE);																		
-		                $Hinhdaidien = $this->input->post('avatar',TRUE);
+						$Dongia = $this->input->post('price',TRUE);
+						date_default_timezone_set('Asia/Jakarta');						
+						$Ngay = date('Y-m-d H:i:s');																		
+		                $Hinhdaidien = 0;
+
+		                if($this->upload->do_upload('avatar'))
+				        {			            	
+		                	$img_data = array('upload_data' => $this->upload->data());		                	
+		                	$Hinhdaidien = $img_data['upload_data']['file_name'];		                			                			                
+				        }			                
 
 		                $Hedieuhanh = $this->input->post('os',TRUE);
 		                $Manhinh = $this->input->post('screen',TRUE);
@@ -455,9 +474,9 @@ Class admin extends CI_Controller{
 		                $Pin = $this->input->post('pin',TRUE);
 		                $Trongluong = $this->input->post('weight',TRUE);
 		                $Baohanh = $this->input->post('warranty',TRUE);
-		                $Khuyenmai = $this->input->post('promotion',TRUE);
-
-		                $tmp = $this->sanpham_model->insert($Tensanpham, $Loaisanpham, $Nhacungcap, $Mota, $Dongia, $Hinhdaidien, $Hedieuhanh, $Manhinh, $Vixuly, $Chipset, $Dohoa, $RAM, $ROM, $Camera, $Ketnoi, $Diaquang, $Pin, $Trongluong, $Baohanh, $Khuyenmai);
+		                $Khuyenmai = $this->input->post('promotion',TRUE);		                
+		                
+		                $tmp = $this->sanpham_model->update($Id, $Tensanpham, $Loaisanpham, $Soluong, $Tinhtrang, $Luotxem, $Luotmua, $Nhacungcap, $Mota, $Dongia, $Ngay, $Hinhdaidien, $Hedieuhanh, $Manhinh, $Vixuly, $Chipset, $Dohoa, $RAM, $ROM, $Camera, $Ketnoi, $Diaquang, $Pin, $Trongluong, $Baohanh, $Khuyenmai);
 						
 						if($tmp)
 						{							
@@ -468,44 +487,30 @@ Class admin extends CI_Controller{
 						{ 
 							$this->session->set_userdata('sanpham_action', '3');
 							return redirect(base_url('admin/sanpham'));
-						}
-					}
-					elseif ($this->form_validation->run() == FALSE){
-						$this->data['loaisanpham'] = $this->sanpham_model->get_loaisanpham();
+						}	                				        				        		                					      				        			        				
+					}				   
+				    elseif ($this->form_validation->run() == FALSE&&isset($_POST["chonsanpham"]))
+				    {
+				    	$Chonsanpham = $this->input->post('chonsanpham',TRUE);				    					    	
+				    	$this->data['product'] = $this->sanpham_model->get_sanpham_moinhap_info($Chonsanpham);
+				    	$this->data['loaisanpham'] = $this->sanpham_model->get_loaisanpham();
 						$this->data['nhacungcap'] = $this->sanpham_model->get_nhacungcap();
 
-						$this->load->view('admin/include/header',$this->data);
+				    	$this->load->view('admin/include/header',$this->data);
 						$this->load->view('admin/include/sidebar',$this->data);									
 						$this->load->view('admin/sanpham/insert',$this->data);				
 						$this->load->view('admin/include/footer',$this->data);
-					}			
-					elseif ($this->form_validation->run() == TRUE){	
-						$Tensanpham = $this->input->post('productname',TRUE);
-						$Loaisanpham = $this->input->post('productcategory',TRUE);
-						$Nhacungcap = $this->input->post('provider',TRUE);
-						$Mota = $this->input->post('desc',TRUE);
-						$Dongia = $this->input->post('price',TRUE);																		
-		                $Hinhdaidien = 0;		                
+				    }
+				    elseif (!isset($_POST["chonsanpham"]))
+				    {
+				    	$this->data['product'] = $this->sanpham_model->get_sanpham_moinhap();
 
-				        if($this->upload->do_upload('avatar'))
-				        {			            	
-		                	$img_data = array('upload_data' => $this->upload->data());		                	
-		                	$Hinhdaidien = $img_data['upload_data']['file_name'];		                			                			                
-				        }				        		                					       
-
-				        $this->data['product_info'] = array('Tensanpham' => $Tensanpham, 'Loaisanpham' => $Loaisanpham, 'Nhacungcap' => $Nhacungcap, 'Mota' => $Mota, 'Dongia' => $Dongia, 'Hinhdaidien' => $Hinhdaidien);				        
-
-				        $this->data['loaisanpham'] = $this->sanpham_model->get_loaisanpham();
-						$this->data['nhacungcap'] = $this->sanpham_model->get_nhacungcap();
-						$this->data['title'] = $Tensanpham;
-						$this->data['page'] = 'product';
-						$this->data['subpage'] = 'product-add';
-				        				       
-			        	$this->load->view('admin/include/header',$this->data);
+						$this->load->view('admin/include/header',$this->data);
 						$this->load->view('admin/include/sidebar',$this->data);									
-						$this->load->view('admin/sanpham/detail',$this->data);				
-						$this->load->view('admin/include/footer',$this->data);				        				
-					}									
+						$this->load->view('admin/sanpham/them',$this->data);				
+						$this->load->view('admin/include/footer',$this->data);
+				    }
+
 				}
 				elseif ($chucnang == "capnhat") {
 					$id = $this->input->get("id");																				
@@ -657,17 +662,20 @@ Class admin extends CI_Controller{
 					}
 					else $this->data['nhaphang_action'] = $this->session->userdata('nhaphang_action');	
 					$this->session->set_userdata('nhaphang_action', '1');
-
 					
 					if (isset($_POST['nguoinhaphang2']))
 					{
 						$Nguoinhap = $this->chucnang->GetUserID();
+
 						$Danhsach = $this->session->userdata('import_list');
 						$Soluong = $this->input->post('sanpham',TRUE);
 						$Dongia = $this->input->post('dongia',TRUE);
-						$Test = array_combine($Danhsach, $Dongia);						
+
+						$Sanphammoi = $this->input->post('sanphammoi',TRUE);
+						$Soluongmoi = $this->input->post('soluongmoi',TRUE);
+						$Dongiamoi = $this->input->post('dongiamoi',TRUE);								
 						
-						$tmp = $this->sanpham_model->nhaphang($Nguoinhap, $Danhsach, $Soluong, $Dongia);
+						$tmp = $this->sanpham_model->nhaphang($Nguoinhap, $Danhsach, $Soluong, $Dongia, $Sanphammoi, $Soluongmoi, $Dongiamoi);
 						
 						if($tmp)
 						{			
@@ -683,12 +691,18 @@ Class admin extends CI_Controller{
 						}	
 						
 					}
-					elseif (isset($_POST['chonsanpham']))
+					elseif (isset($_POST['chonsanpham'])||isset($_POST['sanphammoi']))
 					{
+						if (!isset($_POST['chonsanpham']))
+							if ($_POST['sanphammoi']<1)
+								return redirect(current_url());
+
 						$this->data['import_list'] = $this->input->post('chonsanpham',TRUE);
+						$this->data['sanphammoi'] = $this->input->post('sanphammoi',TRUE);
 						$this->data['nguoinhaphang'] = $this->input->post('nguoinhaphang',TRUE);
 						$this->data['sanpham'] = $this->thongtindathang_model->get_sanpham();
 						$this->session->set_userdata('import_list', $this->data['import_list']);
+						$this->session->set_userdata('sanphammoi', $this->data['sanphammoi']);
 
 						$this->load->view('admin/include/header',$this->data);
 						$this->load->view('admin/include/sidebar',$this->data);									
@@ -1361,6 +1375,88 @@ Class admin extends CI_Controller{
 							$this->session->set_userdata('tintuc_action', '3');						
 							return redirect(base_url('admin/tintuc'));
 						}
+				}
+				elseif ($chucnang == "binhluan")
+				{					
+					if($this->session->userdata('tintuc_action')==FALSE){
+						$this->session->set_userdata('tintuc_action', '1');
+						$this->data['tintuc_action'] = $this->session->userdata('tintuc_action');
+					}
+					else $this->data['tintuc_action'] = $this->session->userdata('tintuc_action');	
+					$this->session->set_userdata('tintuc_action', '1');					
+
+					$id = $this->input->get("id");																									
+					$xoa = $this->input->get("xoa");																								
+					
+					if ($id)
+					{
+						if(!is_numeric($id)||$id<1)
+						{ 
+							$this->session->set_userdata('tintuc_action', '3');
+							return redirect(base_url('admin/tintuc/binhluan'));
+						}
+																
+						if (!isset($_POST["title"])){
+							$this->data['title'] = 'Bình luận tin tức';
+							$this->data['page'] = 'news';
+							$this->data['subpage'] = 'news-comment-edit';	
+
+							$this->data['result'] = $this->tintuc_model->get_chitiettintucbinhluan($id);
+
+							$this->load->view('admin/include/header',$this->data);
+							$this->load->view('admin/include/sidebar',$this->data);									
+							$this->load->view('admin/tintuc/edit-comment',$this->data);				
+							$this->load->view('admin/include/footer',$this->data);
+						}			
+						else{							
+							$Noidung = $this->input->post('content',TRUE);									               					        
+					        
+							$tmp = $this->tintuc_model->edit_cmt($id, $Noidung);
+							
+							if($tmp)
+							{							
+								$this->session->set_userdata('tintuc_action', '2');														
+								return redirect(base_url('admin/tintuc/binhluan'));
+							}							
+							else
+							{ 
+								$this->session->set_userdata('tintuc_action', '3');
+								return redirect(base_url('admin/tintuc/binhluan'));
+							}
+						}
+					}
+					elseif ($xoa)
+					{
+						if(!is_numeric($xoa)||$xoa<1)
+						{ 
+							$this->session->set_userdata('tintuc_action', '3');
+							return redirect(base_url('admin/tintuc/binhluan'));
+						}						
+						$tmp = $this->tintuc_model->delete_cmt($xoa);
+
+						if($tmp)
+						{							
+							$this->session->set_userdata('tintuc_action', '2');														
+							return redirect(base_url('admin/tintuc/binhluan'));
+						}							
+						else
+						{ 
+							$this->session->set_userdata('tintuc_action', '3');
+							return redirect(base_url('admin/tintuc/binhluan'));
+						}
+					}
+					else
+					{
+						$this->data['title'] = 'Bình luận tin tức';
+						$this->data['page'] = 'news';
+						$this->data['subpage'] = 'news-comment';
+
+						$this->data['result'] = $this->tintuc_model->get_tintucbinhluan();
+						$this->load->view('admin/include/header',$this->data);
+						$this->load->view('admin/include/sidebar',$this->data);									
+						$this->load->view('admin/tintuc/comment',$this->data);				
+						$this->load->view('admin/include/footer',$this->data);
+					}														
 				}												
 			}
 		}
@@ -1504,53 +1600,104 @@ Class admin extends CI_Controller{
 					$this->load->view('admin/danhgia/index',$this->data);				
 					$this->load->view('admin/include/footer',$this->data);	
 				}
-				elseif($chucnang == "capnhat")
-				{
-					$id = $this->input->get("id");																				
-					if(!is_numeric($id)||$id<1)
-					{ 
+				if($chucnang == "chitiet")
+				{					
+					if($this->session->userdata('danhgia_action')==FALSE){
+						$this->session->set_userdata('danhgia_action', '1');
+						$this->data['danhgia_action'] = $this->session->userdata('danhgia_action');
+					}
+					else $this->data['danhgia_action'] = $this->session->userdata('danhgia_action');	
+					$this->session->set_userdata('danhgia_action', '1');
+					
+					$id = $this->input->get("id");
+					$thaotac = $this->input->get("thaotac");
+					if (!($thaotac==1||$thaotac==2))
+						$thaotac=0;
+
+					if (!is_numeric($id)||$id<1)
+					{
 						$this->session->set_userdata('danhgia_action', '3');
 						return redirect(base_url('admin/danhgia'));
-					}				
+					}
 
-					$this->data['title'] = 'Cập nhật đánh giá';
+					$this->data['title'] = 'Chi tiết đánh giá';
 					$this->data['page'] = 'rating';
-					$this->data['subpage'] = 'rating-edit';
-
-					if (!isset($_POST["product_name"]))
-					{
-						$this->data['result'] = $this->danhgia_model->get_danhgiainfo($id);						
-						if($this->data['result']==FALSE)
-						{
+					$this->data['subpage'] = 'rating-info';
+					
+					if ($thaotac==1)
+					{						
+						$rate = $this->input->get("rate");
+						if(!is_numeric($rate)||$rate<1)
+						{ 
 							$this->session->set_userdata('danhgia_action', '3');
 							return redirect(base_url('admin/danhgia'));
+						}				
+
+						$this->data['title'] = 'Cập nhật đánh giá';
+						$this->data['page'] = 'rating';
+						$this->data['subpage'] = 'rating-edit';
+
+						if (!isset($_POST["product_name"]))
+						{
+							$this->data['result'] = $this->danhgia_model->get_danhgiainfo($rate);
+
+							if($this->data['result']==FALSE)
+							{
+								$this->session->set_userdata('danhgia_action', '3');
+								return redirect(base_url().'admin/danhgia/chitiet?id='.$id);
+							}
+							
+							$this->load->view('admin/include/header',$this->data);
+							$this->load->view('admin/include/sidebar',$this->data);									
+							$this->load->view('admin/danhgia/edit',$this->data);				
+							$this->load->view('admin/include/footer',$this->data);
 						}
-						
-						$this->load->view('admin/include/header',$this->data);
-						$this->load->view('admin/include/sidebar',$this->data);									
-						$this->load->view('admin/danhgia/edit',$this->data);				
-						$this->load->view('admin/include/footer',$this->data);
+						else
+						{							
+							$Diem = $this->input->post('point',TRUE);
+							$Noidung = $this->input->post('content',TRUE);																										        		        				        		                					        
+							
+							$tmp = $this->danhgia_model->update_danhgia($rate, $Diem, $Noidung);
+							
+							if($tmp)
+							{							
+								$this->session->set_userdata('danhgia_action', '2');														
+								return redirect(base_url().'admin/danhgia/chitiet?id='.$id);
+							}							
+							else
+							{ 
+								$this->session->set_userdata('danhgia_action', '3');
+								return redirect(base_url().'admin/danhgia/chitiet?id='.$id);
+							}
+						}
 					}
-					else
-					{
-						$Luotdanhgia = $this->input->post('rating_time',TRUE);
-						$Tongdiem = $this->input->post('total_point',TRUE);
-						$Diemdanhgia = $this->input->post('avg_point',TRUE);																										        		        				        		                					        
-						
-						$tmp = $this->danhgia_model->update_danhgia($id, $Luotdanhgia, $Tongdiem, $Diemdanhgia);
-						
+					elseif ($thaotac==2)
+					{											
+						$rate = $this->input->get("rate");
+						$tmp = $this->danhgia_model->xoa($rate);
+
 						if($tmp)
 						{							
 							$this->session->set_userdata('danhgia_action', '2');														
-							return redirect(base_url('admin/danhgia'));
+							return redirect(base_url().'admin/danhgia/chitiet?id='.$id);
 						}							
 						else
 						{ 
 							$this->session->set_userdata('danhgia_action', '3');
-							return redirect(base_url('admin/danhgia'));
+							return redirect(base_url().'admin/danhgia/chitiet?id='.$id);
 						}
 					}
-				}
+					else
+					{						
+						$this->data['result'] = $this->danhgia_model->get_danhgiachitiet($id);
+						$this->data['get_danhgiachitiet_tensp'] = $this->danhgia_model->get_danhgiachitiet_tensp($id);
+
+						$this->load->view('admin/include/header',$this->data);
+						$this->load->view('admin/include/sidebar',$this->data);									
+						$this->load->view('admin/danhgia/info',$this->data);				
+						$this->load->view('admin/include/footer',$this->data);
+					}										
+				}				
 			}
 		}
 		else
@@ -1567,10 +1714,15 @@ Class admin extends CI_Controller{
 			if($role == 0)
 				return redirect(base_url());
 			else{
-					list($ngay,$thang,$nam)=explode("-",$input);
-			    	if (checkdate($thang,$ngay,$nam))
+					$ngay = explode("-",$input);					
+					if (count($ngay)!=3)
+					{			
+						$this->form_validation->set_message('ktngaysinh', 'Ngày sinh không hợp lệ');
+			    		return FALSE;
+					}		
+			    	elseif (checkdate($ngay[1],$ngay[0],$ngay[2]))
 			    	{			    		
-			    		if ((date("Y")-$nam)>6) return TRUE;
+			    		if ((date("Y")-$ngay[2])>6) return TRUE;
 			    		else 
 			    		{
 			    			$this->form_validation->set_message('ktngaysinh', 'Chưa đủ tuổi');
@@ -1578,7 +1730,7 @@ Class admin extends CI_Controller{
 			    		}
 			    	} 			    	
 			    	else 
-			    	{
+			    	{    		
 						$this->form_validation->set_message('ktngaysinh', 'Ngày sinh không hợp lệ');
 			    		return FALSE;
 			    	}
@@ -1649,34 +1801,5 @@ Class admin extends CI_Controller{
 		}
 		else
 			return redirect(base_url('dangnhap'));
-	}
-
-	public function new_captcha(){
-		$check = $this->chucnang->ktdangnhap();		
-		if($check == 1 || $check == 2 )
-		{
-			$role = $this->data['Role'];
-			if($role == 0)
-				return redirect(base_url());
-			else{
-			        $this->load->helper(array('captcha', 'file'));
-			        $captcha = create_captcha(array(
-			            'word'        => strtoupper(substr(md5(time()), 0, 6)),
-			            'img_path'    => $this->captcha_path,
-			            'img_url'    => $this->captcha_path
-			        ));       
-			        $this->session->set_userdata('captcha', $captcha['word']);        
-			        $filename = $this->captcha_path . $captcha['time'] . '.jpg';
-			        $this->output->set_header('Expires: Sat, 26 Jul 1997 05:00:00 GMT');
-			        $this->output->set_header('Cache-Control: no-cache, no-store, must-revalidate, max-age=0');
-			        $this->output->set_header('Cache-Control: post-check=0, pre-check=0', FALSE);
-			        $this->output->set_header('Pragma: no-cache');
-			        $this->output->set_header('Content-Type: image/jpeg');
-			        $this->output->set_header('Content-Length: ' . filesize($filename));
-			        echo read_file($filename);
-			    }
-        }
-		else
-			return redirect(base_url('dangnhap'));
-    }      
+	}	   
 }

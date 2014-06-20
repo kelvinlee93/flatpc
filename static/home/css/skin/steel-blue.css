@@ -639,7 +639,7 @@ a.color3:hover {
   background-color: #feaa37;
 }
 .product-sale {
-  background-color: #009bdd;
+  background-color: #e65a4b;
 }
 .product-hot {
   background-color: #333333;
@@ -1373,8 +1373,14 @@ footer .copyrights {
   background-color: #eeeeee;
   color: #444444;
 }
-.product-details .short-info span.available {
-  color: lightgreen;
+.product-details .short-info span.a {  
+  color: green;
+}
+.product-details .short-info span.u {
+  color: red;
+}
+.product-details .short-info span.o {
+  color: orange;
 }
 .product-details .special-offers {
   background: #eeeeee;

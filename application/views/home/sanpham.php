@@ -36,11 +36,11 @@
                           echo '<i class="fa fa-star"></i>';
                       elseif (($i-1)==floor($danhgiasanpham[0]['DIEMDANHGIA']/2)) {
                           if (($danhgiasanpham[0]['DIEMDANHGIA']/2)>floor($danhgiasanpham[0]['DIEMDANHGIA']/2))                          
-                            echo '<i class="fa fa-star-half-o"></i>';                  
+                            echo '<i class="fa fa-star-half-o"></i>';
+                          else echo '<i class="fa fa-star-o"></i>';                   
                       }
                       else echo '<i class="fa fa-star-o"></i>';                      
-                  } 
-                  if ($danhgiasanpham[0]['DIEMDANHGIA']==0) echo '<i class="fa fa-star-o"></i>';
+                  }                   
               ?> <span>Lượt đánh giá: <?=$danhgiasanpham[0]['LUOTDANHGIA']?></span><span>Lượt xem: <?=$sanpham[0]['LUOTXEM']?></span><span>Lượt mua: <?=$sanpham[0]['LUOTMUA']?></span></div>
             </div>
             <!-- end: Title and rating info -->
@@ -78,7 +78,8 @@
                     <input type="hidden" id="img" name="img" value="<?=$sanpham[0]['TENANH']?>"/>
                     <input type="hidden" id="type" name="type" value="<?=$sanpham[0]['TENLOAI']?>"/>
                     <input type="hidden" id="ncc" name="ncc" value="<?=$sanpham[0]['TENNCC']?>"/>
-                    <button class="btn btn-addtocart" type="submit" <?php if ($sanpham[0]['TINHTRANG']!=1) echo 'disabled'; ?>> <i class="fa fa-shopping-cart fa-fw"></i> Thêm vào giỏ </button>                    
+                    <input type="hidden" id="soluong" name="soluong" value="<?=$sanpham[0]['SOLUONG']?>"/>
+                    <button class="btn btn-addtocart <?php if ($sanpham[0]['TINHTRANG']!=1) echo 'disabled'; ?>" type="submit"> <i class="fa fa-shopping-cart fa-fw"></i> Thêm vào giỏ </button>                    
                   </form>
                   </div>
                 </div>
@@ -115,9 +116,8 @@
       <!-- Nav tabs -->
       <ul class="nav nav-tabs blog-tabs nav-justified">
         <li class="active"><a href="#details-info" data-toggle="tab"><i class="fa  fa-th-list fa-fw"></i> Chi tiết sản phẩm</a></li>
-        <li><a href="#reviews" data-toggle="tab"><i class="fa fa-comments fa-fw"></i> Đánh giá</a></li>
-        <li> <a href="#tags" data-toggle="tab"><i class="fa fa-tags fa-fw"></i> Tags </a> </li>
-        <li><a href="#custom-tab" data-toggle="tab"><i class="fa fa-video-camera fa-fw"></i> Custom Tab</a></li>
+        <li><a href="#reviews" data-toggle="tab"><i class="fa fa-thumbs-up fa-fw"></i> Đánh giá (<?=$danhgiasanpham[0]['LUOTDANHGIA']?>)</a></li>
+        <li> <a href="#comment" data-toggle="tab"><i class="fa fa-comments fa-fw"></i> Bình luận (<?=$tongbinhluan[0]['SOLUONG']?>)</a> </li>        
       </ul>
       <!-- Tab panes -->
       <div class="tab-content">
@@ -220,81 +220,157 @@
           </div>
         </div>
         <div class="tab-pane" id="reviews">
-          <div class="heading"> <span><strong>"Ladies Stylish Handbag"</strong> has 30 review(s)</span>
-            <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-half-o"></i> <i class="fa fa-star-o"></i> </div>
-            <a href="#wr" class="btn color1 normal">Add Review</a> </div>
+          <?php if ($danhgiasanpham[0]['LUOTDANHGIA']==0) { ?>
+              <center><strong>Chưa có đánh giá cho sản phẩm này.</strong></center></br></br>
+          <?php } else { if (!$chitietdanhgia) echo '<center><strong>Không có đánh giá.</strong></center></br></br>'; foreach ($chitietdanhgia as $item) { ?>  
           <div class="review">
             <div class="review-info">
-              <div class="name"><i class="fa fa-comment-o fa-flip-horizontal fa-fw"></i> Fida Khattak</div>
-              <div class="date"> on <em>Aug 15, 2013</em></div>
-              <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-half-o"></i> <i class="fa fa-star-o"></i> </div>
-            </div>
-            <div class="text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown.</div>
-          </div>
-          <div class="review">
-            <div class="review-info">
-              <div class="name"><i class="fa fa-comment-o fa-flip-horizontal fa-fw"></i> Fida Khattak</div>
-              <div class="date"> on <em>Aug 15, 2013</em></div>
-              <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-half-o"></i> <i class="fa fa-star-o"></i> </div>
-            </div>
-            <div class="text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown.</div>
-          </div>
-          <span class="pull-left">Showing 1 to 2 of 123 (4 Pages)</span>
+              <div class="name"><i class="fa fa-comment-o fa-flip-horizontal fa-fw"></i> <?=$item['HODEM'].' '.$item['TENNGUOIDUNG']?></div>
+              <div class="date"><em><?=date('d-m-Y H:i',strtotime($item['THOIGIAN']))?></em></div>
+              <div class="rating">  
+              <?php for($i=1; $i<=5; $i++) if ($i<=$item["DIEM"]/2) echo '<i class="fa fa-star"></i> '; else echo '<i class="fa fa-star-o"></i> '; ?>
+              </div>
+            </div>            
+            <div class="text"><?=$item['NOIDUNG']?></div>
+          </div>  
+          <?php } ?>                  
           <div class="pull-right">
             <ul class="pagination pagination-xs">
-              <li class="disabled"><a href="#"><i class="fa fa-angle-left"></i></a></li>
-              <li  class="active"><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+              <li><a href="<?=base_url()?>sanpham/chitiet?id=<?=$chitietsanpham[0]['MASANPHAM']?>&page=1"><i class="fa fa-angle-left"></i><i class="fa fa-angle-left"></i></a></li>              
+              <li class="<?php if(($page-1)<1) echo 'disabled';?>"><a href="<?=base_url()?>sanpham/chitiet?id=<?=$chitietsanpham[0]['MASANPHAM']?>&page=<?=$page-1?>"><i class="fa fa-angle-left"></i></a></li>              
+              <?php for($i=1; $i<=ceil($tongdanhgia[0]['SOLUONG']/5); $i++) { ?>
+              <li <?php if ($i==$page) echo 'class="active"'; ?>><a href="<?=base_url()?>sanpham/chitiet?id=<?=$chitietsanpham[0]['MASANPHAM']?>&page=<?=$i?>"><?=$i?></a></li>          
+              <?php } ?>
+              <li class="<?php if(($page+1)>(ceil($tongdanhgia[0]['SOLUONG']/5))) echo 'disabled';?>"><a href="<?=base_url()?>sanpham/chitiet?id=<?=$chitietsanpham[0]['MASANPHAM']?>&page=<?=$page+1?>"><i class="fa fa-angle-right"></i></a></li>
+              <li><a href="<?=base_url()?>sanpham/chitiet?id=<?=$chitietsanpham[0]['MASANPHAM']?>&page=<?=ceil($tongdanhgia[0]['SOLUONG']/5)?>"><i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i></a></li>
             </ul>
           </div>
+          <?php } ?>
+          <?php if ($Login!=1) { ?>
+          <center>
+          <div class="col-md-4 col-xs-12">
+          </div>
+          <div class="col-lg-4 col-md-12">
+            <div class="box-content login-box">
+              <h4>Đăng nhập để đánh giá sản phẩm này!</h4>
+              <form id="login" method="post" action="<?=base_url()?>dangnhap?redirect=<?=urlencode($_SERVER["REQUEST_URI"])?>">
+                <input type="text" id="username" name="username" placeholder="Tên đăng nhập hoặc số điện thoại" class="input4">                        
+                <input type="password" id="password" name="password" placeholder="Mật khẩu" class="input4">
+                <label class="checkbox" for="remember">
+                  <input type="checkbox" id="remember" name="remember" value="1" data-toggle="checkbox" class="pull-left">
+                  <span class="pull-left">Ghi nhớ đăng nhập</span> </label>
+                <button class="btn medium color2 pull-right" type="submit" form="login">Đăng nhập</button>                
+              </form>
+            </div>
+          </div>
+          </center>
+          <?php } ?>
           <div class="write-reivew" id="#write-review">
-            <h3>Write a reivew</h3>
-            <div class="fr-border"></div>
-            
+          <?php if (!$ktdanhgia) { ?>
+            <h3>Viết đánh giá</h3>
+            <div class="fr-border"></div>            
             <!-- Form -->
-            <form action="#self" id="review_form" method="post">
+            <form action="" id="review_form" method="post">
               <div class="row">
-                <div class="col-md-4 col-xs-12"> <a name="wr"> </a>
+                <div class="col-md-4 col-xs-12"> 
                   <fieldset class="rating">
-                    <input type="radio" id="star5" name="rating" value="5" />
-                    <label for="star5" title="Rocks!" class="fa fa-star">5 stars</label>
-                    <input type="radio" id="star4" name="rating" value="4" />
-                    <label for="star4" title="Pretty good" class="fa fa-star">4 stars</label>
-                    <input type="radio" id="star3" name="rating" value="3" />
-                    <label for="star3" title="Cool" class="fa fa-star">3 stars</label>
-                    <input type="radio" id="star2" name="rating" value="2" />
-                    <label for="star2" title="Kinda bad" class="fa fa-star">2 stars</label>
-                    <input type="radio" id="star1" name="rating" value="1" />
-                    <label for="star1" title="Oops!" class="fa fa-star">1 star</label>
-                  </fieldset>
-                  <input type="text" id="name" placeholder="Name">
-                  <input type="text" id="email" placeholder="E-mail">
+                    <input type="radio" id="star5" name="rating" value="5" form="review_form" />
+                    <label for="star5" title="Rất tốt" class="fa fa-star">Rất tốt</label>
+                    <input type="radio" id="star4" name="rating" value="4" form="review_form" />
+                    <label for="star4" title="Tốt" class="fa fa-star">Tốt</label>
+                    <input type="radio" id="star3" name="rating" value="3" form="review_form"/>
+                    <label for="star3" title="Bình thường" class="fa fa-star">Bình thường</label>
+                    <input type="radio" id="star2" name="rating" value="2" form="review_form"/>
+                    <label for="star2" title="Kém" class="fa fa-star">Kém</label>
+                    <input type="radio" id="star1" name="rating" value="1" form="review_form"/>
+                    <label for="star1" title="Quá tệ" class="fa fa-star">Quá tệ</label>
+                  </fieldset>                  
                 </div>
                 <div class="col-md-8 col-xs-12">
-                  <textarea name="" id="review" placeholder="Review" rows="8"></textarea>
+                  <textarea form="review_form" name="review" id="review" placeholder="Nội dung đánh giá..." rows="8" cols="120"></textarea>
                 </div>
               </div>
-              <button class="btn normal color1 pull-right">Submit</button>
+              <button form="review_form" class="btn normal color1 pull-right" <?php if ($Login!=1) echo 'disabled'; ?>>Gửi đánh giá</button>
             </form>
-            <!-- end: Form --> 
+            <!-- end: Form -->
+          <?php } else { ?>
+            <h3>Đánh giá của bạn</h3>
+            <div class="fr-border"></div>            
+            <!-- Form -->            
+              <div class="row">
+                <div class="col-md-4 col-xs-12"> 
+                  <fieldset class="rating">
+                  <?php for($i=5;$i>=1;$i--) { ?>
+                    <input type="radio" id="star<?=$i?>" name="rating" value="<?=$i?>" <?php if ($i>=$ktdanhgia[0]['DIEM']/2) echo 'checked'; ?>/>
+                    <label for="star<?=$i?>" class="fa fa-star"></label>
+                  <?php } ?>                                     
+                  </fieldset>                  
+                </div>
+                <div class="col-md-8 col-xs-12">
+                  <textarea name="review" id="review" rows="8" cols="100" readonly><?=$ktdanhgia[0]['NOIDUNG']?></textarea>                  
+                </div>
+              </div>              
+          <?php } ?> 
+          </div>            
+        </div>
+        <div class="tab-pane" id="comment">
+          <?php if ($tongbinhluan[0]['SOLUONG']==0) { ?>
+              <center><strong>Chưa có bình luận cho sản phẩm này.</strong></center></br></br>
+          <?php } else { if (!$binhluansanpham) echo '<center><strong>Không có bình luận.</strong></center></br></br>'; foreach ($binhluansanpham as $item) { ?>  
+          <div class="review">
+            <div class="review-info">
+              <div class="name"><i class="fa fa-comment-o fa-flip-horizontal fa-fw"></i> <?=$item['TENKHACHHANG']?></div>
+              <div class="date"><em><?=date('d-m-Y H:i',strtotime($item['THOIGIAN']))?></em></div>              
+            </div>            
+            <div class="text"><?=$item['NOIDUNG']?></div>
+          </div>  
+          <?php } ?>                  
+          <div class="pull-right">
+            <ul class="pagination pagination-xs">
+              <li><a href="<?=base_url()?>sanpham/chitiet?id=<?=$binhluansanpham[0]['MASANPHAM']?>&comment=1"><i class="fa fa-angle-left"></i><i class="fa fa-angle-left"></i></a></li>              
+              <li class="<?php if(($comment-1)<1) echo 'disabled';?>"><a href="<?=base_url()?>sanpham/chitiet?id=<?=$binhluansanpham[0]['MASANPHAM']?>&comment=<?=$comment-1?>"><i class="fa fa-angle-left"></i></a></li>              
+              <?php for($i=1; $i<=ceil($tongbinhluan[0]['SOLUONG']/5); $i++) { ?>
+              <li <?php if ($i==$comment) echo 'class="active"'; ?>><a href="<?=base_url()?>sanpham/chitiet?id=<?=$binhluansanpham[0]['MASANPHAM']?>&comment=<?=$i?>"><?=$i?></a></li>          
+              <?php } ?>
+              <li class="<?php if(($comment+1)>(ceil($tongbinhluan[0]['SOLUONG']/5))) echo 'disabled';?>"><a href="<?=base_url()?>sanpham/chitiet?id=<?=$binhluansanpham[0]['MASANPHAM']?>&comment=<?=$page+1?>"><i class="fa fa-angle-right"></i></a></li>
+              <li><a href="<?=base_url()?>sanpham/chitiet?id=<?=$binhluansanpham[0]['MASANPHAM']?>&comment=<?=ceil($tongbinhluan[0]['SOLUONG']/5)?>"><i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i></a></li>
+            </ul>
           </div>
-        </div>
-        <div class="tab-pane" id="tags">
-          <div class="tags"> <a href="#a">Free</a> <a href="#a">Minimal</a> <a href="#a">Clean</a> <a href="#a">Flatro</a> <a href="#a">Metro</a> <a href="#a">Flat</a> <a href="#a">Blue</a> <a href="#a">Fashion</a> <a href="#a">Best</a> <a href="#a">Popular</a> <a href="#a">Good</a> <a href="#a">Free</a> <a href="#a">Minimal</a> <a href="#a">Clean</a> <a href="#a">Flatro</a> <a href="#a">Metro</a> <a href="#a">Flat</a> <a href="#a">Blue</a> <a href="#a">Fashion</a> <a href="#a">Best</a> <a href="#a">Popular</a> <a href="#a">Good</a> <a href="#a">Free</a> <a href="#a">Minimal</a> <a href="#a">Clean</a> <a href="#a">Flatro</a> <a href="#a">Metro</a> <a href="#a">Flat</a> <a href="#a">Blue</a> <a href="#a">Fashion</a> <a href="#a">Best</a> <a href="#a">Popular</a> <a href="#a">Good</a> <a href="#a">Free</a> <a href="#a">Minimal</a> <a href="#a">Clean</a> <a href="#a">Flatro</a> <a href="#a">Metro</a> <a href="#a">Flat</a> <a href="#a">Blue</a> <a href="#a">Fashion</a> <a href="#a">Best</a> <a href="#a">Popular</a> <a href="#a">Good</a> <a href="#a">Free</a> <a href="#a">Minimal</a> <a href="#a">Clean</a> <a href="#a">Flatro</a> <a href="#a">Metro</a> <a href="#a">Flat</a> <a href="#a">Blue</a> <a href="#a">Fashion</a> <a href="#a">Best</a> <a href="#a">Popular</a> <a href="#a">Good</a> </div>
-        </div>
-        <div class="tab-pane" id="custom-tab">
-          <p>Phosfluorescently productize technically sound process improvements for customized bandwidth. Competently coordinate leveraged catalysts for change without multimedia based services. Objectively fabricate user-centric experiences before.</p>
-          <div class="video-wrapper">
-            <div class="video-container">
-              <iframe width="560" height="315" src="https://www.youtube.com/embed/keDneypw3HY" frameborder="0" allowfullscreen></iframe>
+          <?php } ?>
+          <?php if ($Login!=1) { ?>
+          <center>
+          <div class="col-md-4 col-xs-12">
+          </div>
+          <div class="col-lg-4 col-md-12">
+            <div class="box-content login-box">
+              <h4>Đăng nhập để bình luận sản phẩm này!</h4>
+              <form id="login2" method="post" action="<?=base_url()?>dangnhap?redirect=<?=urlencode($_SERVER["REQUEST_URI"])?>">
+                <input type="text" id="username" name="username" placeholder="Tên đăng nhập hoặc số điện thoại" class="input4">                        
+                <input type="password" id="password" name="password" placeholder="Mật khẩu" class="input4">
+                <label class="checkbox" for="remember">
+                  <input type="checkbox" id="remember" name="remember" value="1" data-toggle="checkbox" class="pull-left">
+                  <span class="pull-left">Ghi nhớ đăng nhập</span> </label>
+                <button class="btn medium color2 pull-right" type="submit" form="login2">Đăng nhập</button>                
+              </form>
             </div>
-            <!-- /video --> 
           </div>
-          <!-- /video-wrapper --> 
-        </div>
+          </center>
+          <?php } ?>
+          <div class="write-reivew" id="#write-review">          
+            <h3>Đăng bình luận</h3>
+            <div class="fr-border"></div>            
+            <!-- Form -->
+            <form action="" id="comment_form" method="post">
+              <div class="row">                
+                <div class="col-md-12 col-xs-12">
+                  <textarea form="comment_form" name="comment" id="comment" placeholder="Nội dung bình luận..." rows="4" cols="150"></textarea>
+                </div>
+              </div>
+              <button form="comment_form" class="btn normal color1 pull-right" <?php if ($Login!=1) echo 'disabled'; ?>>Đăng bình luận</button>
+            </form>
+            <!-- end: Form -->                      
+          </div>            
+        </div>      
       </div>
       <!-- end: Tab panes --> 
       <!-- end: Details Info/Reviews/Tags -->
@@ -307,3 +383,118 @@
   <!-- row --> 
 </div>
 <!-- end: container --> 
+
+<div class="row clearfix f-space30"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-column box-block">
+        <a href="#"><div class="box-heading"><span>CÁC SẢN PHẨM GỢI Ý</span></div></a>
+        <div class="box-content">
+          <div class="box-products slide" id="tablet">
+            <div class="carousel-controls"> <a class="carousel-control left" data-slide="prev" href="#tablet"> <i class="fa fa-angle-left fa-fw"></i> </a> <a class="carousel-control right" data-slide="next" href="#tablet"> <i class="fa fa-angle-right fa-fw"></i> </a> </div>
+            <div class="carousel-inner"> 
+              <!-- Items Row -->              
+              <div class="item active">
+                <div class="row box-product">                             
+              <?php foreach ($sanphamlq_active as $item) { ?> 
+                  <!-- Product -->
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="product-block">
+                      <div class="image">
+                        <div class="product-label product-sale"><span>MỚI</span></div>                        
+                        <a class="img" href="<?=base_url()?>sanpham/chitiet?id=<?=$item['ID']?>"><img src="<?=base_url()?>static/img/<?=$item['TENANH']?>" title="<?=$item['TENSANPHAM']?>"></a> </div>
+                      <div class="product-meta">
+                        <div class="name"><a href="<?=base_url()?>sanpham/chitiet?id=<?=$item['ID']?>"><?=$item['TENSANPHAM']?></a></div>
+                        <div class="big-price"> <?=number_format($item['DONGIA'], 0, ',', '.');?> đ</div>
+                        <div class="big-btns"> 
+                            <a class="btn btn-default btn-view pull-left" href="<?=base_url()?>sanpham/chitiet?id=<?=$item['ID']?>">Chi tiết</a> 
+                            <form id="productform<?=$item['ID']?>" name="product-form-<?=$item['ID']?>" action="<?=base_url('giohang/add')?>" method="post">                    
+                              <input type="hidden" id="id" name="id" value="<?=$item['ID']?>"/>
+                              <input type="hidden" id="price" name="price" value="<?=$item['DONGIA']?>"/>
+                              <input type="hidden" id="name" name="name" value="<?=$item['TENSANPHAM']?>"/>                    
+                              <input type="hidden" id="img" name="img" value="<?=$item['TENANH']?>"/>
+                              <input type="hidden" id="type" name="type" value="<?=$item['TENLOAI']?>"/>
+                              <input type="hidden" id="ncc" name="ncc" value="<?=$item['TENNCC']?>"/>
+                              <input type="hidden" id="soluong" name="soluong" value="<?=$item['SOLUONG']?>"/>                              
+                              <a class="btn btn-default btn-addtocart pull-right" href="javascript:{}" onclick="document.getElementById('productform<?=$item['ID']?>').submit();">Thêm vào giỏ</a>
+                            </form>                            
+                        </div>
+                        <div class="small-price"> <?=number_format($item['DONGIA'], 0, ',', '.');?> đ</div>
+                        <div class="rating"> 
+                            <?php 
+                                for ($i=1; $i <=5; $i++) { 
+                                    if ($i<=floor($item['DIEMDANHGIA']/2))
+                                        echo '<i class="fa fa-star"></i>';
+                                    elseif (($i-1)==floor($item['DIEMDANHGIA']/2)) {
+                                        if (($item['DIEMDANHGIA']/2)>floor($item['DIEMDANHGIA']/2))                          
+                                          echo '<i class="fa fa-star-half-o"></i>';                  
+                                    }
+                                    else echo '<i class="fa fa-star-o"></i>';                      
+                                } 
+                                if ($item['DIEMDANHGIA']==0) echo '<i class="fa fa-star-o"></i>';
+                            ?> 
+                        </div>                        
+                      </div>
+                      <div class="meta-back"></div>
+                    </div>
+                  </div>                                    
+                  <!-- end: Product --> 
+              <?php } ?>
+                </div>
+              </div>
+              <!-- end: Items Row --> 
+              <!-- Items Row -->
+              <div class="item">
+                <div class="row box-product"> 
+              <?php foreach ($sanphamlq_deactive as $item) { ?> 
+                  <!-- Product -->
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="product-block">
+                      <div class="image">                        
+                        <a class="img" href="<?=base_url()?>sanpham/chitiet?id=<?=$item['ID']?>"><img src="<?=base_url()?>static/img/<?=$item['TENANH']?>" title="<?=$item['TENSANPHAM']?>"></a> </div>
+                      <div class="product-meta">
+                        <div class="name"><a href="<?=base_url()?>sanpham/chitiet?id=<?=$item['ID']?>"><?=$item['TENSANPHAM']?></a></div>
+                        <div class="big-price"> <?=number_format($item['DONGIA'], 0, ',', '.');?> đ</div>
+                        <div class="big-btns"> 
+                            <a class="btn btn-default btn-view pull-left" href="<?=base_url()?>sanpham/chitiet?id=<?=$item['ID']?>">Chi tiết</a> 
+                            <form id="productform<?=$item['ID']?>" name="product-form-<?=$item['ID']?>" action="<?=base_url('giohang/add')?>" method="post">                    
+                              <input type="hidden" id="id" name="id" value="<?=$item['ID']?>"/>
+                              <input type="hidden" id="price" name="price" value="<?=$item['DONGIA']?>"/>
+                              <input type="hidden" id="name" name="name" value="<?=$item['TENSANPHAM']?>"/>                    
+                              <input type="hidden" id="img" name="img" value="<?=$item['TENANH']?>"/>
+                              <input type="hidden" id="type" name="type" value="<?=$item['TENLOAI']?>"/>
+                              <input type="hidden" id="ncc" name="ncc" value="<?=$item['TENNCC']?>"/> 
+                              <input type="hidden" id="soluong" name="soluong" value="<?=$item['SOLUONG']?>"/>                             
+                              <a class="btn btn-default btn-addtocart pull-right" href="javascript:{}" onclick="document.getElementById('productform<?=$item['ID']?>').submit();">Thêm vào giỏ</a>
+                            </form>                            
+                        </div>
+                        <div class="small-price"> <?=number_format($item['DONGIA'], 0, ',', '.');?> đ</div>
+                        <div class="rating"> 
+                            <?php 
+                                for ($i=1; $i <=5; $i++) { 
+                                    if ($i<=floor($item['DIEMDANHGIA']/2))
+                                        echo '<i class="fa fa-star"></i>';
+                                    elseif (($i-1)==floor($item['DIEMDANHGIA']/2)) {
+                                        if (($item['DIEMDANHGIA']/2)>floor($item['DIEMDANHGIA']/2))                          
+                                          echo '<i class="fa fa-star-half-o"></i>';                  
+                                    }
+                                    else echo '<i class="fa fa-star-o"></i>';                      
+                                } 
+                                if ($item['DIEMDANHGIA']==0) echo '<i class="fa fa-star-o"></i>';
+                            ?> 
+                        </div>                        
+                      </div>
+                      <div class="meta-back"></div>
+                    </div>
+                  </div>                                    
+                  <!-- end: Product --> 
+              <?php } ?>
+                </div>
+              </div>
+              <!-- end: Items Row --> 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

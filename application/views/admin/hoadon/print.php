@@ -50,7 +50,7 @@
                                       <?=$chitiet[0]['TENNGUOINHAN']?> <br>
                                       <?php if ($chitiet[0]['DIACHI']) echo $chitiet[0]['DIACHI'].'<br>'?>                                      
                                       <?='SĐT: '.$chitiet[0]['SDTNGUOINHAN']?><br>
-                                      <?php echo 'Vận chuyển: '; if ($chitiet[0]['PTVANCHUYEN']==1) echo 'NGOẠI THÀNH'; else echo 'NỘI THÀNH'; ?><br>
+                                      <?php echo 'Vận chuyển: '; if ($chitiet[0]['PTVANCHUYEN']==1) echo 'NHANH'; else echo 'THÔNG THƯỜNG'; ?><br>
                                   </p>
                               </div>
                               <div class="col-lg-4 col-sm-4">

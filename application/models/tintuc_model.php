@@ -53,9 +53,45 @@ Class Tintuc_model extends CI_Model{
 		else return TRUE;	
 	}
 
+	function delete_cmt($id)
+	{
+		$this->db->trans_start();
+		$this->db->delete("BINHLUANTINTUC",array('id'=>$id));
+		$this->db->trans_complete();
+		if ($this->db->trans_status() === FALSE)
+			return FALSE;
+		else return TRUE;	
+	}
+
 	function get_tintucinfo($id){		
 		$query = $this->db->query("SELECT T.*, N.TENDANGNHAP, L.TENLOAI, H.TENANH FROM tintuc T,nguoidung N, loaitintuc L, HINHANH H WHERE T.TACGIA = N.ID AND T.LOAITIN = L.ID AND T.HINH = H.ID AND T.ID = ".$id);
 		return $query->result_array();		
+	}
+
+	function get_tintucbinhluan(){		
+		$query = $this->db->query("SELECT C.*, N.TENNGUOIDUNG, T.TIEUDE  FROM tintuc T,nguoidung N, BINHLUANTINTUC C WHERE T.ID = C.MATINTUC AND N.ID = C.MAKHACHHANG");
+		return $query->result_array();		
+	}
+
+	function get_chitiettintucbinhluan($id){		
+		$query = $this->db->query("SELECT C.*, N.TENNGUOIDUNG, T.TIEUDE  FROM tintuc T,nguoidung N, BINHLUANTINTUC C WHERE T.ID = C.MATINTUC AND N.ID = C.MAKHACHHANG AND C.ID = ".$id);
+		return $query->result_array();		
+	}
+
+	function edit_cmt($id, $Noidung)
+	{				
+		$data = array(						
+			"Noidung" => $Noidung			
+		);		
+
+		$this->db->trans_start();
+		$this->db->where("Id", $id);
+		$query = $this->db->update("BINHLUANTINTUC", $data);
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE)
+			return FALSE;
+		else return TRUE;
 	}
 
 	function edit($id, $Tieude, $Loaitin, $Mota, $Noidung, $Ngaydang, $Anhtieubieu, $Tacgia, $Tinhtrang)

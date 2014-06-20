@@ -3,7 +3,14 @@
 class giohang extends Public_Controller {
 
 	public function __construct(){
-		parent:: __construct();		
+		parent:: __construct();
+		$this->data['page_title'] = 'Giỏ hàng';
+		$this->data['page_link'] = 'giohang';
+		$this->data['page_title2'] = 0;
+		$this->data['page_link2'] = 0;
+		$this->data['page_type'] = 0;
+		$this->data['subpage_title'] = 0;
+		$this->data['subpage_link'] = 0;		
 	}
 
 	public function index()
@@ -23,7 +30,8 @@ class giohang extends Public_Controller {
                'name'    => $this->input->post('name',TRUE),
                'img'    => $this->input->post('img',TRUE),               
                'type'    => $this->input->post('type',TRUE),               
-               'ncc'    => $this->input->post('ncc',TRUE),               
+               'ncc'    => $this->input->post('ncc',TRUE),
+               'soluong' => $this->input->post('soluong',TRUE), 
             );	   
                  		
 		$this->cart->insert($data);
@@ -43,6 +51,7 @@ class giohang extends Public_Controller {
 	            );		
 			$this->cart->update($data);
 		}
+		var_dump($date);
 		if ($cart_delete)
 		{
 			$data = array(
